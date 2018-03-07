@@ -9,7 +9,7 @@ body {
 body, body>#vue-app, body>#vue-error {
     background-color: transparent !important;
 }
-.container-max:not(.navbar > .container-max){
+.container-max {
     box-shadow: 0 0 1px 0 rgba(0,0,0,.7);
 }
 .homepage-title {
