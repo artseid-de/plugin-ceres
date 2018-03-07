@@ -9,6 +9,9 @@ body {
 body, body>#vue-app, body>#vue-error {
     background-color: transparent !important;
 }
+.featured-category, .featured-sale-new, .wrapper-main .navbar {
+    font-family: "Bree Serif", serif;
+}
 #vue-app > .wrapper > * > .container-max {
     box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
