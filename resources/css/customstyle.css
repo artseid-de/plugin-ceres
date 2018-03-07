@@ -33,6 +33,7 @@ body, body>#vue-app, body>#vue-error {
     background: #fff;
 }
 .anicon:hover > .anicon-search-item::after {
+    background: rgba(255,255,255,0.3);
     border: 1px solid #fff;
 }
 #vue-app > .wrapper > * > .container-max {
