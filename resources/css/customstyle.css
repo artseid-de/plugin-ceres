@@ -17,3 +17,22 @@ body, body>#vue-app, body>#vue-error {
     border-bottom: 0px solid #fff !important;
     letter-spacing: 0px !important;
 }
+.top-bar {
+    position: relative !important;
+    width: 100%;
+    z-index: 1060;
+    color: #fff;
+    background-color: #4D4F4D;
+    box-shadow: 0 0 7px 0 rgba(0,0,0,.5);
+}
+.wrapper-main .navbar {
+    background: #fff !important;
+    border-bottom: 1px solid #fff !important;
+    box-shadow: 0 0 7px 0 rgba(0,0,0,.5) !important;
+}
+.wrapper-main #page-body {
+    margin-top: 0px !important;
+}
+.footer {
+    background-color: transparent !important;
+}
