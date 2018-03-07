@@ -25,6 +25,14 @@ body, body>#vue-app, body>#vue-error {
     background-color: #4D4F4D;
     box-shadow: 0 0 7px 0 rgba(0,0,0,.5);
 }
+.ganzoben {
+    position: fixed;
+    z-index: 222;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
 .wrapper-main .navbar {
     background: #fff !important;
     border-bottom: 1px solid #fff !important;
