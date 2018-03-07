@@ -9,6 +9,23 @@ body {
 body, body>#vue-app, body>#vue-error {
     background-color: transparent !important;
 }
+.container-max:before, .container-max:after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    background-color: #000;
+    filter: blur(3px);
+    z-index: -1;
+}
+.container-max:before {
+    left: -15px;
+}
+.container-max:after {
+    right: -15px;
+}
 .homepage-title {
     background: transparent !important;
 }
@@ -22,14 +39,16 @@ body, body>#vue-app, body>#vue-error {
     width: 100%;
     z-index: 1060;
     color: #fff;
-    background-color: #4D4F4D;
-    box-shadow: 0 0 7px 0 rgba(0,0,0,.5);
+    background-color: transparent;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,.7);
 }
 .ganzoben {
     position: fixed;
     z-index: 222;
     top: 0;
     left: 0;
+    right: 0;
+    margin: auto;
     width: 100%;
     box-sizing: border-box;
     background-color: #d2ab7c !important;
