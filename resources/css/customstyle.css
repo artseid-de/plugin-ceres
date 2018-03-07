@@ -58,3 +58,7 @@ body, body>#vue-app, body>#vue-error {
 .footer {
     background-color: transparent !important;
 }
+.copyright > small {
+    display: block;
+    margin-top: 30px;
+}
