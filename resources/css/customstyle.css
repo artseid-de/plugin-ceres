@@ -12,6 +12,29 @@ body, body>#vue-app, body>#vue-error {
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
 }
+.anicon > .anicon-search-item::before {
+    height: 2px;
+    width: 8px;
+    border-radius: 2.86px;
+    left: 0;
+    background: #000;
+}
+.anicon > .anicon-search-item::after {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    right: 0;
+    background: transparent;
+    border: 1px solid #000;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+.anicon:hover > .anicon-search-item::before {
+    background: #fff;
+}
+.anicon:hover > .anicon-search-item::after {
+    border: 1px solid #fff;
+}
 #vue-app > .wrapper > * > .container-max {
     box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
@@ -49,7 +72,7 @@ body, body>#vue-app, body>#vue-error {
     margin-top: 30px;
 }
 .top-bar .controls-list>li a {
-    color: #000 !important;
+    color: #000;
 }
 .top-bar .controls-list>li a:hover, .top-bar .controls-list>li a[aria-expanded=true] {
     background-color: #523922 !important;
