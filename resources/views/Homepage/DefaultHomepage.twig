@@ -71,11 +71,6 @@
     {{ component( "Ceres::Basket.Components.AddToBasket" ) }}
 
     <div class="home container-max">
-        <div class="row">
-            <div class="homepage-title m-b-1">
-                <h1>{{ config("Ceres.header.company_name") }}</h1>
-            </div>
-        </div>
 
         <div class="row">
             <div class="cmp cmp-hero">
@@ -217,6 +212,12 @@
                     </div>
                 {% endif %}
             </div>
+            
+        <div class="row">
+            <div class="homepage-title m-b-1">
+                <h1>{{ config("Ceres.header.company_name") }}</h1>
+            </div>
+        </div>
 
             {% set homepageContainer4 = LayoutContainer.show("Ceres::Homepage.Container4") %}
             {% set homepageContainer5 = LayoutContainer.show("Ceres::Homepage.Container5") %}
