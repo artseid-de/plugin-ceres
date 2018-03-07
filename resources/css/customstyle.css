@@ -1,0 +1,8 @@
+body {
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpeg)  !important;
+    background-color: none !important;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: "Bree Serif", serif;
+}
