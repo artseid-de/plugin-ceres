@@ -186,6 +186,33 @@ a:focus, a:hover {
 }
 .featured-sale-new:hover .featured-category-inner {
     background: #523922;
+    flex: 1 1 500px;
+    top: 0;
+    left: 0;
+    -webkit-transform: none;
+    transform: none;
+}
+.featured-sale-new {
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+    justify-content: stretch;
+}
+.featured-sale-new .imgbox {
+    flex: 1 1 250px;
+    width: 100%;
+    height: auto;
+}
+.featured-sale-new>img {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 200px;
+    min-height: 0px;
+    min-width: 0px;
 }
 @media (min-width: 992px) {
 .featured-sale-new .featured-category-inner {
