@@ -193,6 +193,9 @@ a:focus, a:hover {
     height: 100%;
 }
 }
+.homepage-text {
+    padding: 1rem calc(1.5rem + 10%);
+}
 .footer {
     background-color: transparent !important;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
