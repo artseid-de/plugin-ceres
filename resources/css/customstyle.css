@@ -211,7 +211,7 @@ a:focus, a:hover {
 .featured-sale-new {
     display: flex;
     flex-flow: row-reverse;
-    align-items: center;
+    align-items: stretch;
     justify-content: stretch;
 }
 .featured-sale-new .imgbox {
