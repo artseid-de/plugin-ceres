@@ -176,6 +176,22 @@ a:focus, a:hover {
 .section-header a.section-link-all {
     color: #000;
 }
+.vat-porto-info.small.text-muted {
+    font-size: 0.6em;
+    width: 100%;
+    display: block;
+}
+.featured-sale-new .featured-category-inner {
+    background: #d2ab7c;
+}
+.featured-sale-new:hover .featured-category-inner {
+    background: #523922;
+}
+@media (min-width: 992px)
+.featured-sale-new .featured-category-inner {
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+}
 .footer {
     background-color: transparent !important;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
