@@ -231,10 +231,11 @@ a:focus, a:hover {
     top: 0;
     right: 0;
     z-index: 1;
-    width: auto;
-    height:100%;
-    min-height: 0px;
-    min-width: 0px;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    align-self: center;
+    max-width: 10000%;
 }
 @media (min-width: 992px) {
 .featured-sale-new .featured-category-inner {
