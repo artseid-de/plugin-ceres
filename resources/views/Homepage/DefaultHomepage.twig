@@ -219,7 +219,13 @@
                 <small>bei der {{ config("Ceres.header.company_name") }}</small></h1>
             </div>
         </div>
-
+        <div class="row">
+            <div class="homepage-text">
+                <p>
+                {% Link(410) %}
+                </p>
+            </div>
+        </div>
             {% set homepageContainer9 = LayoutContainer.show("Ceres::Homepage.Container9") %}
             {% if categoryList2 is not empty or homepageContainer9 | trim is not empty %}
                 <div class="m-b-2 clearfix">
