@@ -220,8 +220,38 @@
             </div>
         </div>
 
+            {% set homepageContainer9 = LayoutContainer.show("Ceres::Homepage.Container9") %}
+            {% if categoryList2 is not empty or homepageContainer9 | trim is not empty %}
+                <div class="m-b-2 clearfix">
+                    {% if homepageContainer9 | trim is empty %}
+                        <div class="section-header m-b-1">
+                            <h2>{{ category6.details[0].name }}</h2>
+                            <a href="{{ services.category.getURL(category6, lang) }}"
+                               class="section-link-all"><i
+                                        class="fa fa-angle-double-right"
+                                        aria-hidden="true"></i> {{ trans("Ceres::Template.homepageShowAll") }}</a>
+                        </div>
+                        <!-- crosssell start -->
+                        <ul class="product-list row grid">
+                            {% for item in categoryList2 %}
+                                <li class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                                    {% include "Ceres::Category.Item.Partials.CategoryListItem" with { 'item': item } %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        {{ homepageContainer9 }}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {{ LayoutContainer.show("Ceres::Homepage.Container10") }}
+
+
             {% set homepageContainer4 = LayoutContainer.show("Ceres::Homepage.Container4") %}
             {% set homepageContainer5 = LayoutContainer.show("Ceres::Homepage.Container5") %}
+
+
 
             {% if category1.details is not empty or homepageContainer4 | trim is not empty or category2.details is not empty or homepageContainer5 | trim is not empty %}
                 <div class="row prop-row m-y-2 sale-new">
@@ -364,33 +394,6 @@
             {% endif %}
 
             <!-- END CATEGORIES -->
-
-            {% set homepageContainer9 = LayoutContainer.show("Ceres::Homepage.Container9") %}
-            {% if categoryList2 is not empty or homepageContainer9 | trim is not empty %}
-                <div class="m-b-2 clearfix">
-                    {% if homepageContainer9 | trim is empty %}
-                        <div class="section-header m-b-1">
-                            <h2>{{ category6.details[0].name }}</h2>
-                            <a href="{{ services.category.getURL(category6, lang) }}"
-                               class="section-link-all"><i
-                                        class="fa fa-angle-double-right"
-                                        aria-hidden="true"></i> {{ trans("Ceres::Template.homepageShowAll") }}</a>
-                        </div>
-                        <!-- crosssell start -->
-                        <ul class="product-list row grid">
-                            {% for item in categoryList2 %}
-                                <li class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                    {% include "Ceres::Category.Item.Partials.CategoryListItem" with { 'item': item } %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        {{ homepageContainer9 }}
-                    {% endif %}
-                </div>
-            {% endif %}
-
-            {{ LayoutContainer.show("Ceres::Homepage.Container10") }}
 
         </div>
     </div>
