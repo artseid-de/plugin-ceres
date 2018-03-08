@@ -100,8 +100,14 @@ body>#vue-app, body>#vue-error {
 }
 .homepage-title>h1 {
     color: #000 !important;
+    font-size: 3.5rem;
     border-bottom: 0px solid #fff !important;
     letter-spacing: 0px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+.homepage-title>h1>small {
+    font-size: 0.7em;
 }
 .wrapper-main #page-body {
     margin-top: 0px !important;
