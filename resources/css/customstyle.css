@@ -146,6 +146,7 @@ a {
     position: relative;
     top: 0;
     background: transparent;
+    padding: 0 10%;
 }
 .breadcrumb-item.active {
     color: #d2ab7c;
