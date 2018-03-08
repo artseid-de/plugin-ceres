@@ -133,6 +133,11 @@ body>#vue-app, body>#vue-error {
     background-size: cover;
     background-repeat: no-repeat;
     padding-top: 80px;
+    font-size: 1.2rem;
+}
+.footer .footer-column h2 {
+    font-weight: 400;
+    font-size: 1.3rem;
 }
 .copyright > small {
     display: block;
