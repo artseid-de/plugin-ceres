@@ -14,6 +14,9 @@ body>#vue-app, body>#vue-error {
     position: relative;
     box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
+a {
+    color: inherit;
+}
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
 }
@@ -124,6 +127,28 @@ body>#vue-app, body>#vue-error {
 }
 .wrapper-main #page-body {
     margin-top: 0px !important;
+}
+.page-content {
+    background-color: transparent;
+    padding: 0 10%;
+}
+.list-controls .list-controls-inner {
+    background: transparent;
+    padding: 0;
+}
+.list-controls .list-itemsperpage, .list-controls .list-sort {
+    padding: 0;
+}
+.parallax-img-container .parallax-text-wrapper {
+    padding: 0 10%;
+}
+#twig-rendered-breadcrumbs {
+    position: relative;
+    top: 0;
+    background: transparent;
+}
+.breadcrumb-item.active {
+    color: #d2ab7c;
 }
 .footer {
     background-color: transparent !important;
