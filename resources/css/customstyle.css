@@ -17,6 +17,7 @@ body>#vue-app, body>#vue-error {
     background-attachment: fixed;
     max-width: 1200px;
     margin: 0 auto;
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
@@ -47,9 +48,6 @@ body>#vue-app, body>#vue-error {
 }
 .container-max {
     max-width: 100%;
-}
-#vue-app > .wrapper > * > .container-max {
-    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
 .homepage-title {
     background: transparent !important;
