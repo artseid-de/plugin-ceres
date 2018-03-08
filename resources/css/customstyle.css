@@ -183,14 +183,27 @@ a:focus, a:hover {
 }
 .featured-sale-new .featured-category-inner {
     background: #d2ab7c;
-}
-.featured-sale-new:hover .featured-category-inner {
-    background: #523922;
     flex: 1 1 500px;
     top: 0;
     left: 0;
     -webkit-transform: none;
     transform: none;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.featured-sale-new:hover .featured-category-inner {
+    background: #523922;
+}
+.featured-sale-new .featured-category-headline {
+    width: auto;
+    position: relative;
+    top: 0;
+    -webkit-transform: none;
+    transform: none;
+    left: 0;
+    text-align: left;
 }
 .featured-sale-new {
     display: flex;
@@ -205,6 +218,8 @@ a:focus, a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 .featured-sale-new>img {
     position: relative;
