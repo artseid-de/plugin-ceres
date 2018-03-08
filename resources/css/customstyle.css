@@ -23,6 +23,9 @@ body>#vue-app, body>#vue-error {
 #mainNavbarCollapsable ul.mainmenu {
     color: #000;
 }
+.top-bar .controls-list .control-basket .toggle-basket-preview {
+    background-color: #000;
+}
 .anicon > .anicon-search-item::before {
     height: 2px;
     width: 8px;
