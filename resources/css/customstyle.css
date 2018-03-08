@@ -8,6 +8,7 @@ body {
 }
 body, body>#vue-app, body>#vue-error {
     background-color: transparent !important;
+    position: relative;
 }
 body>#vue-app, body>#vue-error {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpeg)  !important;
@@ -73,6 +74,7 @@ body>#vue-app, body>#vue-error {
     right: 0;
     margin: auto;
     width: 100%;
+    max-width: 1200px;
     box-sizing: border-box;
     background-color: #d2ab7c !important;
 }
