@@ -92,6 +92,12 @@ body>#vue-app, body>#vue-error {
     background: rgba(255,255,255,0.3) !important;
     border: 1px solid #fff;
 }
+.mobile-navigation {
+    background: #d2ab7c;
+    width: 50%;
+    min-width: 200px;
+    left: auto;
+}
 .container-max {
     max-width: 100%;
 }
