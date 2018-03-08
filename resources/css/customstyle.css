@@ -97,6 +97,10 @@ body>#vue-app, body>#vue-error {
     width: 50%;
     min-width: 200px;
     left: auto;
+    box-shadow: 0 0 0px #000;
+}
+.mobile-navigation.open {
+    box-shadow: 0 0 8px #000;
 }
 .container-max {
     max-width: 100%;
