@@ -187,10 +187,11 @@ a:focus, a:hover {
 .featured-sale-new:hover .featured-category-inner {
     background: #523922;
 }
-@media (min-width: 992px)
+@media (min-width: 992px) {
 .featured-sale-new .featured-category-inner {
     width: 100%;
     height: 100%;
+}
 }
 .footer {
     background-color: transparent !important;
