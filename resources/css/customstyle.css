@@ -154,6 +154,28 @@ a:focus, a:hover {
 .breadcrumb-item.active {
     color: #d2ab7c;
 }
+.m-b-2, .m-y-2 {
+    margin-bottom: 1.5rem!important;
+    padding: 0 10%;
+}
+.basket-preview .totals, .btn-labeled, .small, small {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.section-header {
+    padding: 0;
+    border-bottom: 0;
+    background: transparent;
+    color: #000;
+    position: relative;
+    font-family: inherit;
+}
+.section-header h1, .section-header h2, .section-header h3, .section-header h4, .section-header h5, .section-header h6 {
+    color: #000;
+}
+.section-header a.section-link-all {
+    color: #000;
+}
 .footer {
     background-color: transparent !important;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
