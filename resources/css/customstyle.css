@@ -132,12 +132,15 @@ body>#vue-app, body>#vue-error {
     background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;
-    padding-top: 80px;
+    padding: 80px 10% 0px;
     font-size: 1.2rem;
 }
 .footer .footer-column h2 {
     font-weight: 400;
     font-size: 1.3rem;
+}
+.container-max.footer-content {
+    padding: 0;
 }
 .copyright > small {
     display: block;
