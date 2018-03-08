@@ -244,6 +244,7 @@ a:focus, a:hover {
 }
 .homepage-text {
     padding: 1rem calc(1.5rem + 10%);
+    margin-bottom: 50px;
 }
 .footer {
     background-color: transparent !important;
