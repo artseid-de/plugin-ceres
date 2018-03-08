@@ -20,6 +20,9 @@ body>#vue-app, body>#vue-error {
 .wrapper-main .navbar a {
     color: #000;
 }
+#mainNavbarCollapsable ul.mainmenu {
+    color: #000;
+}
 .anicon > .anicon-search-item::before {
     height: 2px;
     width: 8px;
