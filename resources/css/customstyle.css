@@ -99,6 +99,12 @@ body>#vue-app, body>#vue-error {
 }
 .footer {
     background-color: transparent !important;
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
+    background-color: none !important;
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 80px;
 }
 .copyright > small {
     display: block;
