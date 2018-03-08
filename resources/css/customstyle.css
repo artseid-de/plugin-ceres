@@ -1,5 +1,5 @@
 body {
-    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpeg)  !important;
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background_notr.jpeg)  !important;
     background-color: none !important;
     background-position: center;
     background-size: cover;
@@ -8,6 +8,14 @@ body {
 }
 body, body>#vue-app, body>#vue-error {
     background-color: transparent !important;
+}
+body>#vue-app, body>#vue-error {
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpeg)  !important;
+    background-color: none !important;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1200px;
 }
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
@@ -35,6 +43,9 @@ body, body>#vue-app, body>#vue-error {
 .anicon:hover > .anicon-search-item::after {
     background: rgba(255,255,255,0.3) !important;
     border: 1px solid #fff;
+}
+.container-max {
+    max-width: 100%;
 }
 #vue-app > .wrapper > * > .container-max {
     box-shadow: 0 0 5px rgba(0,0,0,.7);
