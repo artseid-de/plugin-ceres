@@ -60,6 +60,13 @@ a:focus, a:hover {
 .cmp-hero .hero-main .carousel .carousel-control span:before {
     color: #FFF !important;
 }
+.cmp-hero .hero-main .carousel .carousel-indicators li.active {
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
+}
+.carousel-indicators li {
+    border: 1px solid #fff !important;
+}
 header:after {
     display: block;
     content:"";
