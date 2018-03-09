@@ -57,6 +57,18 @@ a:focus, a:hover {
 .sliderbefore a img {
     width: 100%;
 }
+header:after {
+    display: block;
+    content:"";
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+    filter: blur(1px);
+    z-index: -1;
+    position: absolute;
+    margin-bottom: 0px;
+    bottom: -1px;
+}
 .top-bar {
     position: fixed;
     width: 100%;
@@ -64,7 +76,6 @@ a:focus, a:hover {
     z-index: 1060;
     color: #fff;
     background-color: transparent;
-    box-shadow: 0 0 1px 0 rgba(0,0,0,.7);
 }
 .container-max.ganzoben {
     position: relative;
@@ -81,7 +92,6 @@ a:focus, a:hover {
 .wrapper-main .navbar {
     background: #fff !important;
     border-bottom: 0px solid #fff !important;
-    box-shadow: 0 0 7px 0 rgba(0,0,0,.5) !important;
     margin-top: 0px;
 }
 .top-bar .controls-list>li a {
