@@ -247,6 +247,10 @@ a:focus, a:hover {
     padding: 1rem calc(1.5rem + 10%);
     margin-bottom: 50px;
 }
+.container-max.page-header > .row #searchBox, .cmp-country-settings, .cmp-currency-select {
+    position: relative;
+    top: 0px;
+}
 .footer {
     background-color: transparent !important;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
