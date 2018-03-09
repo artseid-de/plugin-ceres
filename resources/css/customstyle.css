@@ -420,6 +420,13 @@ header:after {
     border-color: transparent;
     color: #000;
 }
+.basket-preview {
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/groemitzer_tiernahrung_manufaktur_semi.png);
+    background-color: #ece3d8;
+    background-size: auto 250px;
+    background-position: -20% calc(100% + 100px);
+    background-repeat: no-repeat;
+}
 .cmp-basket-preview-item .item-unit-price {
     float: none;
 }
