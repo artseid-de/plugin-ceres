@@ -379,6 +379,18 @@ header:after {
     border-color: #523922;
     transition: all 0.3s ease-in;
 }
+.btn-outline-primary {
+    color: #000;
+    background-image: none;
+    background-color: transparent;
+    border-color: #d2ab7c;
+    transition: all 0.3s ease-in;
+}
+.btn-outline-primary:hover {
+    background-color: #d2ab7c;
+    border-color: #d2ab7c;
+    transition: all 0.3s ease-in;
+}
 .cmp-search-box .search-submit {
     color: #d2ab7c;
 }
@@ -407,4 +419,12 @@ header:after {
     background-color: #fbf0e2;
     border-color: transparent;
     color: #000;
+}
+.cmp-basket-preview-item .item-unit-price {
+    float: none;
+}
+.cmp-basket-preview-item .item-remove {
+    text-align: right;
+    float: right;
+    padding-right: 4px;
 }
