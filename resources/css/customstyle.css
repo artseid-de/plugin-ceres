@@ -385,10 +385,13 @@ header:after {
 .cmp-search-box .search-submit:hover {
     color: #523922;
 }
-.cmp-country-settings ul li.active a, .cmp-currency-select ul li.active a {
-    border: 1px solid #000;
-    background-color: transparent;
-    border-radius: 9px;
+.cmp-country-settings ul li a, .cmp-currency-select ul li a {
+    transition: all 0.3s ease-in;
+}
+.cmp-country-settings ul li.active a, .cmp-currency-select ul li.active a, .cmp-country-settings ul li a:hover, .cmp-currency-select ul li a:hover {
+    background-color: #d2ab7c;
+    border-radius: 5px;
+    filter: drop-shadow(0 0 1px rgba(0,0,0,0.7));
 }
 .alert-info {
     background-color: #fbf0e2;
