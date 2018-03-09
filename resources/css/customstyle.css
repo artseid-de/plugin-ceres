@@ -221,11 +221,11 @@ header:after {
     display: block;
 }
 .wrapper-main #page-body {
-    margin-top: 85px !important;
+    margin-top: 0px !important;
 }
 .page-content {
-    background-color: transparent;
-    padding: 0 10%;
+    background-color: transparent !important;
+    padding: 0 10% !important;
 }
 .list-controls .list-controls-inner {
     background: transparent;
@@ -407,7 +407,7 @@ header:after {
 }
 .modal-content {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/groemitzer_tiernahrung_manufaktur_semi.png);
-    Background-color: #ece3d8;
+    background-color: #ece3d8;
     background-size: auto 250px;
     background-position: -20% calc(100% + 100px);
     background-repeat: no-repeat;
@@ -427,4 +427,23 @@ header:after {
     text-align: right;
     float: right;
     padding-right: 4px;
+    color: #d2ab7c;
+}
+
+.cmp-basket-preview-item .item-name::after {
+    content: "…";
+    display: inline-block;
+    height: 50%;
+    position: absolute;
+    right: .25em;
+    bottom: 0;
+    background-color: #d2ab7c;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 0.6em;
+}
+.bg-faded {
+    background-color: transparent;
 }
