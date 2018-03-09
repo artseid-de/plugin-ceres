@@ -227,6 +227,7 @@ header:after {
 }
 .wrapper-main #page-body {
     margin-top: 0px !important;
+    padding-bottom: 400px;
 }
 .page-content {
     background-color: transparent !important;
