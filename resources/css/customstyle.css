@@ -379,10 +379,10 @@ header:after {
     border-color: #523922;
     transition: all 0.3s ease-in;
 }
-.search-submit {
+.cmp-search-box .search-submit {
     color: #d2ab7c;
 }
-.search-submit:hover {
+.cmp-search-box .search-submit:hover {
     color: #523922;
 }
 .alert-info {
