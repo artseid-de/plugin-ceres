@@ -24,7 +24,7 @@ a:focus, a:hover {
     font-family: "Bree Serif", serif;
 }
 .top-bar {
-    position: relative !important;
+    position: fixed;
     width: 100%;
     z-index: 1060;
     color: #fff;
@@ -32,7 +32,7 @@ a:focus, a:hover {
     box-shadow: 0 0 1px 0 rgba(0,0,0,.7);
 }
 .container-max.ganzoben {
-    position: fixed;
+    position: relative;
     z-index: 222;
     top: 0;
     left: 0;
@@ -47,7 +47,7 @@ a:focus, a:hover {
     background: #fff !important;
     border-bottom: 0px solid #fff !important;
     box-shadow: 0 0 7px 0 rgba(0,0,0,.5) !important;
-    margin-top: 30px;
+    margin-top: 0px;
 }
 .top-bar .controls-list>li a {
     color: #000;
@@ -129,7 +129,7 @@ a:focus, a:hover {
     display: block;
 }
 .wrapper-main #page-body {
-    margin-top: 0px !important;
+    margin-top: 85px !important;
 }
 .page-content {
     background-color: transparent;
