@@ -78,6 +78,17 @@
                 {% if homepageContainer1 | trim is empty %}
                     {% if slider1.url or slider2.url or slider3.url %}
                         <div class="hero-main">
+                            <div class="sliderbefore">
+                                <a href="" title="Zur Startseite">
+                                {% set comLogo  = config("Ceres.header.company_logo") %}
+                                {% set comName  = config("Ceres.header.company_name") %}
+                                {% if ('http' in comLogo) or ('layout/' in comLogo) %}
+                                    <img alt="{{ comName }}" src="{{ comLogo }}"/>
+                                {% else %}
+                                       <img alt="{{ comName }}" src="{{ plugin_path('Ceres') }}/{{ comLogo }}"/>
+                                {% endif %}
+                                </a>
+                            </div>
                             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     {% set slideCount = 0 %}
