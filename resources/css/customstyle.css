@@ -400,6 +400,9 @@ header:after {
     background-position: -20% 360%;
     background-repeat: no-repeat;
 }
+.modal-header, .modal-footer {
+    border: none !important;
+}
 .alert-info {
     background-color: #fbf0e2;
     border-color: transparent;
