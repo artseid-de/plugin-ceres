@@ -343,6 +343,7 @@ header:after {
 .container-max.page-header > .row #searchBox, .cmp-country-settings, .cmp-currency-select {
     position: relative;
     top: 0px;
+    background-color: #d2ab7c;
 }
 .footer {
     background-color: transparent !important;
@@ -377,6 +378,12 @@ header:after {
     background-color: #523922;
     border-color: #523922;
     transition: all 0.3s ease-in;
+}
+.search-submit {
+    color: #d2ab7c;
+}
+.search-submit:hover {
+    color: #523922;
 }
 .alert-info {
     background-color: #fbf0e2;
