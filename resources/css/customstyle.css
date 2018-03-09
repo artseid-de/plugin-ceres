@@ -447,3 +447,7 @@ header:after {
 .bg-faded {
     background-color: transparent;
 }
+.basket-preview > * {
+    border: none !important;
+}
+    
