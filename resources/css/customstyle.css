@@ -57,13 +57,16 @@ a:focus, a:hover {
 .sliderbefore a img {
     width: 100%;
 }
+.cmp-hero .hero-main .carousel .carousel-control span:before {
+    color: #FFF !important;
+}
 header:after {
     display: block;
     content:"";
     width: 100%;
-    height: 1px;
+    height: 2px;
     background-color: #000;
-    filter: blur(1px);
+    filter: blur(2px);
     z-index: -1;
     position: absolute;
     margin-bottom: 0px;
