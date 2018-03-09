@@ -393,8 +393,15 @@ header:after {
     border-radius: 5px;
     filter: drop-shadow(0 0 1px rgba(0,0,0,0.7));
 }
+.modal-content {
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/groemitzer_tiernahrung_manufaktur_semi.png);
+    Background-color: #ece3d8;
+    background-size: auto 250px;
+    background-position: -20% 360%;
+    background-repeat: no-repeat;
+}
 .alert-info {
     background-color: #fbf0e2;
-    border-color: #523922;
+    border-color: transparent;
     color: #000;
 }
