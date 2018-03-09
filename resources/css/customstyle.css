@@ -68,12 +68,19 @@ a:focus, a:hover {
 .carousel-control .icon-next {
     right: 0;
     margin-right: 0 !important;
+}
+.carousel-control .icon-next:before {
     background-position: center left;
 }
 .carousel-control .icon-prev {
     left: 0;
-    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+.carousel-control .icon-prev:before {
     background-position: center right;
+}
+.carousel-control .icon-prev:before, .carousel-control .icon-next:before {
+    width: 52px;
 }
 .carousel-control .icon-prev, .carousel-control .icon-next {
     width: 52px;
