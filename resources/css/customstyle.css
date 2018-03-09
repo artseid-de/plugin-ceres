@@ -58,11 +58,12 @@ a:focus, a:hover {
     width: 100%;
 }
 .carousel-indicators , .carousel-control {
-    filter: drop-shadow(0 0 7px #000);
+    filter: drop-shadow(0 0 2px #000);
+    transition: all 0.3s ease-in;
 }
 .cmp-hero .hero-main .carousel .carousel-control span {
     font-size: 60px;
-    bottom: 30%;
+    bottom: 25%;
     top: auto;
 }
 .carousel-control .icon-next {
@@ -81,6 +82,7 @@ a:focus, a:hover {
 }
 .carousel-control .icon-prev:before, .carousel-control .icon-next:before {
     width: 52px;
+    display: block;
 }
 .carousel-control .icon-prev, .carousel-control .icon-next {
     width: 52px;
