@@ -397,7 +397,7 @@ header:after {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/groemitzer_tiernahrung_manufaktur_semi.png);
     Background-color: #ece3d8;
     background-size: auto 250px;
-    background-position: -20% 360%;
+    background-position: -20% calc(100% + 100px);
     background-repeat: no-repeat;
 }
 .modal-header, .modal-footer {
