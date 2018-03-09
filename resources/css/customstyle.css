@@ -25,6 +25,15 @@ a:focus, a:hover {
 }
 .hero-main {
     position: relative;
+    height: 50vw;
+    max-height: 600px;
+}
+.carousel-example-generic {
+    position: absolute;
+    width: 100%;
+    height:50%;
+    bottom: 0;
+    left:0;
 }
 .sliderbefore {
     position: absolute;
@@ -37,6 +46,17 @@ a:focus, a:hover {
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sliderbefore a {
+    display: block;
+    width: 35%;
+    min-width: 100px;
+}
+.sliderbefore a img {
+    width: 100%;
 }
 .top-bar {
     position: fixed;
