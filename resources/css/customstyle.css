@@ -57,8 +57,36 @@ a:focus, a:hover {
 .sliderbefore a img {
     width: 100%;
 }
+.carousel-indicators , .carousel-control {
+    filter: drop-shadow(0 0 7px #000);
+}
+.cmp-hero .hero-main .carousel .carousel-control span {
+    font-size: 60px;
+    bottom: 30%;
+    top: auto;
+}
+.carousel-control .icon-next {
+    right: 0;
+    margin-right: 0 !important;
+    background-position: center left;
+}
+.carousel-control .icon-prev {
+    left: 0;
+    margin-right: 0 !important;
+    background-position: center right;
+}
+.carousel-control .icon-prev, .carousel-control .icon-next {
+    width: 52px;
+    display: block;
+    height: 52px;
+}
 .cmp-hero .hero-main .carousel .carousel-control span:before {
     color: #FFF !important;
+    font-size: 3rem;
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/sliderarrowbg.png);
+    background-size: cover;
+    padding: 5px;
+    background-repeat: no-repeat;
 }
 .cmp-hero .hero-main .carousel .carousel-indicators li.active {
     background: #fff;
