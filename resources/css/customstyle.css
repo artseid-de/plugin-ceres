@@ -385,6 +385,11 @@ header:after {
 .cmp-search-box .search-submit:hover {
     color: #523922;
 }
+.cmp-country-settings ul li.active a, .cmp-currency-select ul li.active a {
+    border: 1px solid #000;
+    background-color: transparent;
+    border-radius: 9px;
+}
 .alert-info {
     background-color: #fbf0e2;
     border-color: #523922;
