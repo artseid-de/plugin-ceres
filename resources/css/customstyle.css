@@ -531,6 +531,7 @@ header:after {
 .footer .footer-column h2 {
     font-weight: 400;
     font-size: 1.3rem;
+    color: #000;
 }
 .container-max.footer-content {
     padding: 0;
@@ -581,10 +582,16 @@ header:after {
     flex: 1 1 200px;
 }
 .footerrow h2 {
-    color: #4e4e4e;
+    color: #000;
     text-transform: none;
-    font-size: 1.2rem;
-}
+    font-size: 1.3rem;
+} 
+.footerrow strong {
+    color: #000;
+    text-transform: none;
+    font-size: 1.3rem;
+    font-weight: 400;
+} 
 .footerrow .cmp-product-thumb .thumb-inner {
     position: relative;
     height: 100%;
