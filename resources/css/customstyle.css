@@ -590,3 +590,6 @@ header:after {
 .footerrow .cmp-product-thumb .thumb-content {
     flex: 1 1 200px;
 }
+.footerrow .cmp-product-thumb .thumb-content span.vat.small.text-muted {
+    display: none;
+}
