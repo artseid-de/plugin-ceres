@@ -528,6 +528,9 @@ header:after {
     font-size: 1rem;
     width: 100%;
 }
+.footer hr {
+    display: none;
+}
 .footer .footer-column h2 {
     font-weight: 400;
     font-size: 1.3rem;
