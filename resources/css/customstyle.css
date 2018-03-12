@@ -472,3 +472,9 @@ header:after {
 .cmp-totals hr {
     border-top: 1px solid #4e4e4e;
 }
+.checkout .checkout-content {
+    background: transparent;
+}
+.registry-form-container > div > div > div {
+    padding: 0;
+}
