@@ -581,7 +581,12 @@ header:after {
     display: none;
 }
 .footerrow .cmp-product-thumb .thumb-image, .footerrow .cmp-product-thumb .thumb-content {
-    flex: 1 1 200px;
     width: auto;
     display: block;
+}
+.footerrow .cmp-product-thumb .thumb-image {
+    flex: 1 1 70px;
+}
+.footerrow .cmp-product-thumb .thumb-content {
+    flex: 1 1 200px;
 }
