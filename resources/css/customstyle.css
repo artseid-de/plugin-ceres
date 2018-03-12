@@ -455,7 +455,7 @@ header:after {
     content: "…";
     display: inline-block;
     height: 50%;
-    position: absolute;
+    position: relative;
     right: .25em;
     bottom: 0;
     background-color: #d2ab7c;
@@ -464,6 +464,7 @@ header:after {
     border-radius: 100%;
     text-align: center;
     line-height: 0.6em;
+    min-width: 20px;
 }
 .bg-faded {
     background-color: transparent;
@@ -498,5 +499,5 @@ header:after {
     color: #000;
     cursor: default;
     background-color: #fbf0e2;
-    border-color: #fbf0e2d;
+    border-color: #523922;
 }
