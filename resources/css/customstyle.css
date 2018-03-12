@@ -376,7 +376,7 @@ header:after {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
     background-color: none !important;
     background-position: center top;
-    background-size: contain;
+    background-size: 100%;
     background-repeat: no-repeat;
     padding: 110px 10% 0px;
     font-size: 1.2rem;
