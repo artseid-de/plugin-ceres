@@ -543,7 +543,7 @@ header:after {
 }
 .footerrow, .subnavrow {
     padding-bottom: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 30px !important;
     border-bottom: 1px solid #000;
 }
 .footer .footer-services {
