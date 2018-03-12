@@ -87,28 +87,26 @@
             {% endfor %}
             <hr class="hidden-sm-up m-y-2">
         </div>
-        <div class="row">
-            <div class="col-xs-6 col-sm-3">
-                <div class="footer-column">
-                    {{ LayoutContainer.show("Ceres::Footer.RowOne") }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-3">
-                <div class="footer-column row">
-                    {% set rowTwo = LayoutContainer.show("Ceres::Footer.RowTwo") %}
-                    
+        {% set rowOne = LayoutContainer.show("Ceres::Footer.RowOne") %}
+        {% if rowOne|trim is not empty %}
+        <div class="row footerrow fr1">
+                    {{ rowOne }}
+        </div>
+        {% endif %}
+        
+        {% set rowTwo = LayoutContainer.show("Ceres::Footer.RowTwo") %}
+        {% if rowTwo|trim is not empty %}
+        <div class="row footerrow fr2">
                     {{ rowTwo }}
-
-                    {% if rowTwo|trim is not empty %}
-                    <div class="col-xs-12 col-sm-6 col-lg-12">
-                    {% else %}
-                    <div class="col-xs-12 column3">
-                    {% endif %}
-                        {{ LayoutContainer.show("Ceres::Footer.RowThree") }}
-                    </div>
-                </div>
-            </div>
-        </div>            
+        </div>
+        {% endif %}
+        
+        {% set rowThree = LayoutContainer.show("Ceres::Footer.RowThree") %}
+        {% if rowThree|trim is not empty %}
+        <div class="row footerrow fr3">
+                    {{ rowThree }}
+        </div>
+        {% endif %}           
 
         {% set cat = services.category.get(config('Ceres.global.category.legal_disclosure')) %}
         <div class="copyright text-xs-center m-y-1">
