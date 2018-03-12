@@ -549,6 +549,18 @@ header:after {
     max-width: 100px;
     margin-right: 10px;
 }
+.subnavrow {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.subnavrow c-sm {
+    flex: 1 1 150px;
+}
+.subnavrow c-mi {
+    flex: 1 1 300px;
+}
 .footerrow {
     margin: 0;
 }
