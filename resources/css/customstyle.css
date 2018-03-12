@@ -16,10 +16,6 @@ body>#vue-app, body>#vue-error {
     background-color: transparent !important;
     position: relative;
     box-shadow: 0 0 5px rgba(0,0,0,.7);
-    min-height: 100vh;
-}
-.wrapper-main {
-    min-height: 100vh;
 }
 a {
     color: inherit;
@@ -242,7 +238,6 @@ header:after {
 }
 .wrapper-main #page-body {
     margin-top: 0px !important;
-    padding-bottom: 400px;
 }
 .page-not-found {
     margin-top: 120px;
@@ -385,8 +380,6 @@ header:after {
     background-repeat: no-repeat;
     padding: 80px 10% 0px;
     font-size: 1.2rem;
-    position: absolute;
-    bottom: 0;
     width: 100%;
 }
 .footer .footer-column h2 {
@@ -569,6 +562,11 @@ header:after {
     float: none;
     flex: 1 1 200px;
 }
+.footerrow h2 {
+    color: #4e4e4e;
+    text-transform: none;
+    font-size: 1.2rem;
+}
 .footerrow .cmp-product-thumb .thumb-inner {
     position: relative;
     height: 100%;
@@ -576,6 +574,7 @@ header:after {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    min-height: 100px;
 }
 .footerrow .cmp-product-thumb .thumb-background {
     display: none;
@@ -592,4 +591,12 @@ header:after {
 }
 .footerrow .cmp-product-thumb .thumb-content span.vat.small.text-muted {
     display: none;
+}
+.footerrow .cmp-product-thumb .thumb-title {
+    font-size: 1rem;
+}
+.footerrow .vat.small.text-muted {
+    font-size: 1rem;
+    color: #000 !important;
+    text-align: right;
 }
