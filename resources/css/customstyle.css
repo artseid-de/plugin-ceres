@@ -556,13 +556,13 @@ header:after {
     max-width: 100px;
     margin-right: 10px;
 }
-.footerrow {
+.footerrow .row > div {
     display: flex;
-    flex-flow: column;
+    flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
 }
-.footerrow > div {
+.footerrow .row > div > div {
     float: none;
-    width: 100%;
+    width: 200px;
 }
