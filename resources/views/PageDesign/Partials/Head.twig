@@ -2,9 +2,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% set lang = services.sessionStorage.getLang() %}
-{% set favicon = url ~ '/tpl/favicon_' ~ services.webstoreConfig.getWebstoreConfig().webstoreId ~ '.ico' %}
-<link rel="icon" type="img/ico" href="{{ favicon }}">
+<link rel="icon" type="img/ico" href="https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/favicon.png">
+<link href="https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/apple-touch-icon.png" rel="apple-touch-icon">
 
 {% set requestUrl = services.webstoreConfig.getWebstoreConfig().domainSsl ~ request.getRequestUri() %}
 {% set canonicalUrl = services.url.getCanonicalURL() %}
