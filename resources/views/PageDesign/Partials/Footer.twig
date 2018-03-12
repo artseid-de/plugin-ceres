@@ -31,33 +31,28 @@
 
 
     <div class="container-max footer-content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="footer-services m-t-2">
-                    {% set paymentMethodContent = LayoutContainer.show("Ceres::Homepage.PaymentMethods") %}
-                    {% if paymentMethodContent|trim is not empty %}
-                        <div class="services-payment m-b-1">
-                            <strong class="services-title">{{ trans("Ceres::Template.orderPaymentMethods") }}</strong>
-                            {{ paymentMethodContent }}
-                        </div>
-                    {% endif %}
-                    {% set shippingContent = LayoutContainer.show("Ceres::Homepage.Shipping") %}
-                    {% if shippingContent|trim is not empty %}
-                        <div class="services-shipping m-b-1">
-                            <strong class="services-title">{{ trans("Ceres::Template.generalOrderShippedBy") }}</strong>
-                            {{ shippingContent }}
-                        </div>
-                    {% endif %}
-                    {% set certifiedContent = LayoutContainer.show("Ceres::Homepage.Certified") %}
-                    {% if certifiedContent|trim is not empty %}
-                        <div class="services-certificate m-b-1">
-                            <strong class="services-title">{{ trans("Ceres::Template.generalCertifiedBy") }}</strong>
-                            {{ certifiedContent }}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
+    
+        {% set rowOne = LayoutContainer.show("Ceres::Footer.RowOne") %}
+        {% if rowOne|trim is not empty %}
+        <div class="row footerrow fr1">
+                    {{ rowOne }}
         </div>
+        {% endif %}
+        
+        {% set rowTwo = LayoutContainer.show("Ceres::Footer.RowTwo") %}
+        {% if rowTwo|trim is not empty %}
+        <div class="row footerrow fr2">
+                    {{ rowTwo }}
+        </div>
+        {% endif %}
+        
+        {% set rowThree = LayoutContainer.show("Ceres::Footer.RowThree") %}
+        {% if rowThree|trim is not empty %}
+        <div class="row footerrow fr3">
+                    {{ rowThree }}
+        <p class="vat small text-muted">* inkl. ges. MwSt. zzgl. <a data-toggle="modal" href="#shippingscosts" title="Versandkosten">Versandkosten</a></p>
+        </div>
+        {% endif %}  
         
         <div class="row">
             {% for i in 1..numberOfCols %}
@@ -85,29 +80,41 @@
                     </nav>
                 </div>
             {% endfor %}
+            <div class="col-xs-6 col-sm-3 col-lg-2">
+                <h2 class="h5">Werksverkauf</h2>
+                <p>Grömitzer Tiernahrung Manufaktur<br>Körnickerfeld 1<br>23743 Grömitz</p>
+                <p>{{ config("Ceres.contact.opening_times") }}</p>
+            </div>
             <hr class="hidden-sm-up m-y-2">
-        </div>
-        {% set rowOne = LayoutContainer.show("Ceres::Footer.RowOne") %}
-        {% if rowOne|trim is not empty %}
-        <div class="row footerrow fr1">
-                    {{ rowOne }}
-        </div>
-        {% endif %}
+        </div>  
         
-        {% set rowTwo = LayoutContainer.show("Ceres::Footer.RowTwo") %}
-        {% if rowTwo|trim is not empty %}
-        <div class="row footerrow fr2">
-                    {{ rowTwo }}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="footer-services m-t-2">
+                    {% set paymentMethodContent = LayoutContainer.show("Ceres::Homepage.PaymentMethods") %}
+                    {% if paymentMethodContent|trim is not empty %}
+                        <div class="services-payment m-b-1">
+                            <strong class="services-title">{{ trans("Ceres::Template.orderPaymentMethods") }}</strong>
+                            {{ paymentMethodContent }}
+                        </div>
+                    {% endif %}
+                    {% set shippingContent = LayoutContainer.show("Ceres::Homepage.Shipping") %}
+                    {% if shippingContent|trim is not empty %}
+                        <div class="services-shipping m-b-1">
+                            <strong class="services-title">{{ trans("Ceres::Template.generalOrderShippedBy") }}</strong>
+                            {{ shippingContent }}
+                        </div>
+                    {% endif %}
+                    {% set certifiedContent = LayoutContainer.show("Ceres::Homepage.Certified") %}
+                    {% if certifiedContent|trim is not empty %}
+                        <div class="services-certificate m-b-1">
+                            <strong class="services-title">{{ trans("Ceres::Template.generalCertifiedBy") }}</strong>
+                            {{ certifiedContent }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        {% endif %}
-        
-        {% set rowThree = LayoutContainer.show("Ceres::Footer.RowThree") %}
-        {% if rowThree|trim is not empty %}
-        <div class="row footerrow fr3">
-                    {{ rowThree }}
-        <p class="vat small text-muted">* inkl. ges. MwSt. zzgl. <a data-toggle="modal" href="#shippingscosts" title="Versandkosten">Versandkosten</a></p>
-        </div>
-        {% endif %}           
 
         {% set cat = services.category.get(config('Ceres.global.category.legal_disclosure')) %}
         <div class="copyright text-xs-center m-y-1">
