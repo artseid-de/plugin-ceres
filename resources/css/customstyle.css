@@ -525,7 +525,7 @@ header:after {
     background-size: 100%;
     background-repeat: no-repeat;
     padding: 110px 10% 0px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     width: 100%;
 }
 .footer .footer-column h2 {
@@ -589,7 +589,7 @@ header:after {
     text-transform: none;
     font-size: 1.3rem;
 } 
-.footerrow strong {
+.footer-services strong {
     color: #000;
     text-transform: none;
     font-size: 1.3rem;
@@ -610,6 +610,13 @@ header:after {
 .footerrow .cmp-product-thumb .thumb-image, .footerrow .cmp-product-thumb .thumb-content {
     width: auto;
     display: block;
+}
+.footerrow .cmp-product-thumb .add-to-basket-lg-container {
+    border-width: 0 50px 50px 0;
+}
+.footerrow .cmp-product-thumb .add-to-basket-lg-container > i {
+    right: -42px;
+    top: 8px;
 }
 .footerrow .cmp-product-thumb .thumb-image {
     flex: 1 1 70px;
