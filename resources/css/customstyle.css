@@ -255,7 +255,7 @@ header:after {
 .breadcrumb-item.active {
     color: #d2ab7c;
 }
-.m-b-2, .m-y-2 {
+.home.container-max .m-b-2, .home.container-max .m-y-2 {
     margin-bottom: 1.5rem!important;
     padding: 0 10%;
 }
@@ -381,14 +381,14 @@ header:after {
 }
 .btn-primary, .btn-success {
     color: #000;
-    background-color: #d2ab7c;
-    border-color: #d2ab7c;
+    background-color: #d2ab7c !important;
+    border-color: #d2ab7c !important;
     transition: all 0.3s ease-in;
 }
 .btn-primary:hover, .btn-success.focus, .btn-success:focus, .btn-success:hover {
     color: #fff;
-    background-color: #523922;
-    border-color: #523922;
+    background-color: #523922 !important;
+    border-color: #523922 !important;
     transition: all 0.3s ease-in;
 }
 .btn-outline-primary {
@@ -500,4 +500,27 @@ header:after {
     cursor: default;
     background-color: #fbf0e2;
     border-color: #523922;
+}
+.card {
+    position: relative;
+    display: block;
+    margin-bottom: .75rem;
+    background-color: #d2ab7c;
+    border-radius: 0px;
+    border: 1px solid #d2ab7c;
+}
+.card-footer, .card-header {
+    background-color: #d2ab7c;
+}
+.card hr {
+    border-top: 1px solid #523922;
+}
+.footer .footer-services .services-certificate, .footer .footer-services .services-payment, .footer .footer-services .services-shipping {
+    justify-content: flex-start;
+    align-items: center;
+}
+.footer .footer-services img {
+    max-height: 30px;
+    max-width: 100px;
+    margin-right: 10px;
 }
