@@ -244,6 +244,15 @@ header:after {
     margin-top: 0px !important;
     padding-bottom: 400px;
 }
+.page-not-found {
+    margin-top: 120px;
+}
+.page-not-found .default-not-found {
+    background-color: transparent;
+}
+.jumbotron {
+    padding: 0;
+}
 .page-content {
     background-color: transparent !important;
     padding: 0 10% !important;
