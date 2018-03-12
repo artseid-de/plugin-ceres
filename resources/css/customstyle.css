@@ -546,6 +546,9 @@ header:after {
     margin-bottom: 30px;
     border-bottom: 1px solid #000;
 }
+.footer .footer-services {
+    margin-top: 0 !important;
+}
 .footer .footer-services .services-certificate, .footer .footer-services .services-payment, .footer .footer-services .services-shipping {
     justify-content: flex-start;
     align-items: center;
