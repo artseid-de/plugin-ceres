@@ -556,6 +556,9 @@ header:after {
     max-width: 100px;
     margin-right: 10px;
 }
+.footerrow {
+    margin: 0;
+}
 .footerrow .row > div {
     display: flex;
     flex-flow: row wrap;
@@ -564,5 +567,21 @@ header:after {
 }
 .footerrow .row > div > div {
     float: none;
-    width: 200px;
+    flex: 1 1 200px;
+}
+.footerrow .cmp-product-thumb .thumb-inner {
+    position: relative;
+    height: 100%;
+    transition: all .4s;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+.footerrow .cmp-product-thumb .thumb-background {
+    display: none;
+}
+.footerrow .cmp-product-thumb .thumb-image, .footerrow .cmp-product-thumb .thumb-content {
+    flex: 1 1 200px;
+    width: auto;
+    display: block;
 }
