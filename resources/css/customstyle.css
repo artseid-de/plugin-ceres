@@ -371,29 +371,6 @@ header:after {
     top: 0px;
     background-color: #d2ab7c;
 }
-.footer {
-    background-color: transparent !important;
-    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
-    background-color: none !important;
-    background-position: center top;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    padding: 110px 10% 0px;
-    font-size: 1.2rem;
-    width: 100%;
-}
-.footer .footer-column h2 {
-    font-weight: 400;
-    font-size: 1.3rem;
-}
-.container-max.footer-content {
-    padding: 0;
-}
-.copyright > small {
-    display: block;
-    margin-top: 30px;
-    font-size: 0.9rem;
-}
 .btn-primary, .btn-success, a.bg-primary {
     color: #000;
     background-color: #d2ab7c !important;
@@ -539,6 +516,34 @@ header:after {
 .cmp-address-list .items > div:first-child {
     margin-bottom: 0;
     padding-top: 40px;
+}
+.footer {
+    background-color: transparent !important;
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
+    background-color: none !important;
+    background-position: center top;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding: 110px 10% 0px;
+    font-size: 1.2rem;
+    width: 100%;
+}
+.footer .footer-column h2 {
+    font-weight: 400;
+    font-size: 1.3rem;
+}
+.container-max.footer-content {
+    padding: 0;
+}
+.copyright > small {
+    display: block;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
+.footerrow, .subnavrow {
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #000;
 }
 .footer .footer-services .services-certificate, .footer .footer-services .services-payment, .footer .footer-services .services-shipping {
     justify-content: flex-start;
