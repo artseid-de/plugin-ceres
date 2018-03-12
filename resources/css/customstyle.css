@@ -27,6 +27,19 @@ a {
 a:focus, a:hover {
     color: #523922;
 }
+.text-muted {
+    color: #6f6f6f !important;
+}
+.btn {
+    display: inline-flex;
+    padding: .5rem;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.btn > i  {
+    margin-right: 5px;
+}
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
 }
@@ -379,13 +392,13 @@ header:after {
     margin-top: 30px;
     font-size: 0.9rem;
 }
-.btn-primary, .btn-success {
+.btn-primary, .btn-success, a.bg-primary {
     color: #000;
     background-color: #d2ab7c !important;
     border-color: #d2ab7c !important;
     transition: all 0.3s ease-in;
 }
-.btn-primary:hover, .btn-success.focus, .btn-success:focus, .btn-success:hover {
+.btn-primary:hover, .btn-success.focus, .btn-success:focus, .btn-success:hover, a.bg-primary:focus, a.bg-primary:hover {
     color: #fff;
     background-color: #523922 !important;
     border-color: #523922 !important;
@@ -431,6 +444,12 @@ header:after {
     background-color: #fbf0e2;
     border-color: transparent;
     color: #000;
+    padding: 1em;
+}
+.alert-warning {
+    background-color: #523922;
+    border-color: #523922;
+    color: #fff;
 }
 .basket-preview {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/groemitzer_tiernahrung_manufaktur_semi.png);
@@ -501,26 +520,30 @@ header:after {
     background-color: #fbf0e2;
     border-color: #523922;
 }
-.card {
-    position: relative;
-    display: block;
-    margin-bottom: .75rem;
-    background-color: #d2ab7c;
-    border-radius: 0px;
-    border: 1px solid #d2ab7c;
-}
 .card-footer, .card-header {
     background-color: #d2ab7c;
 }
 .card hr {
     border-top: 1px solid #523922;
 }
+.card .item-edit .fa, .cmp-address-list .items > div:first-child .item-edit .fa {
+    color: #d2ab7c;
+    transition: all .2s ease-in-out;
+}
+.card .item-edit .fa:hover, .cmp-address-list .items > div:first-child .item-edit .fa:hover {
+    color: #523922;
+    border-color: #523922;
+}
+.cmp-address-list .items > div:first-child {
+    margin-bottom: 0;
+    padding-top: 40px;
+}
 .footer .footer-services .services-certificate, .footer .footer-services .services-payment, .footer .footer-services .services-shipping {
     justify-content: flex-start;
     align-items: center;
 }
 .footer .footer-services img {
-    max-height: 30px;
+    max-height: 60px;
     max-width: 100px;
     margin-right: 10px;
 }
