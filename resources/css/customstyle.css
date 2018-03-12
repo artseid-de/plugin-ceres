@@ -243,11 +243,12 @@ header:after {
 .parallax-img-container .parallax-text-wrapper {
     padding: 0 10%;
 }
-#twig-rendered-breadcrumbs {
+#twig-rendered-breadcrumbs, #vue-rendered-breadcrumbs {
     position: relative;
-    top: 0;
+    margin-top: 120px;
     background: transparent;
     padding: 0 10%;
+    top: 0;
 }
 .breadcrumb-item.active {
     color: #d2ab7c;
