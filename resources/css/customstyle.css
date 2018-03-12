@@ -413,7 +413,7 @@ header:after {
     transition: all 0.3s ease-in;
 }
 .cmp-country-settings ul li.active a, .cmp-currency-select ul li.active a, .cmp-country-settings ul li a:hover, .cmp-currency-select ul li a:hover {
-    background-color: #d2ab7c;
+    background-color: #d2ab7c !important;
     border-radius: 5px;
     filter: drop-shadow(0 0 1px rgba(0,0,0,0.7));
 }
@@ -487,4 +487,16 @@ header:after {
     font-size: 1em;
     text-transform: none;
     font-weight: 400;
+}
+.cmp-address-list .item input:checked + .item-inner {
+    box-shadow: inset 0 0 0 .1rem transparent;
+    color: #000;
+    background-color: #fbf0e2;
+}
+.page-item.active .page-link, .page-item.active .page-link:focus, .page-item.active .page-link:hover {
+    z-index: 2;
+    color: #000;
+    cursor: default;
+    background-color: #fbf0e2;
+    border-color: #fbf0e2d;
 }
