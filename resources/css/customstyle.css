@@ -477,7 +477,7 @@ header:after {
 .checkout .checkout-content {
     background: transparent;
 }
-.registry-form-container > div > div > div {
+.registry-form-container > div > div > div, .cmp-method-list {
     padding: 0;
 }
 .cmp-method-list .method-list-item input:checked + label {
