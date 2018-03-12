@@ -54,9 +54,9 @@
         </div>
         {% endif %}  
         
-        <div class="row">
+        <div class="row subnavrow">
             {% for i in 1..numberOfCols %}
-                <div class="col-xs-6 col-sm-3 col-lg-2">
+                <div class="c-sm">
                     <nav class="footer-column m-b-2">
                         <h2 class="h5">{{ config('Ceres.footer.col_' ~ i ~ '_title') }}</h2>
                         <ul class="list-unstyled">
@@ -80,10 +80,12 @@
                     </nav>
                 </div>
             {% endfor %}
-            <div class="col-xs-6 col-sm-3 col-lg-2">
-                <h2 class="h5">Werksverkauf</h2>
-                <p>Grömitzer Tiernahrung Manufaktur<br>Körnickerfeld 1<br>23743 Grömitz</p>
-                <p>{{ config("Ceres.contact.opening_times") }}</p>
+            <div class="c-mi">
+                <div class="footer-column m-b-2">
+                    <h2 class="h5">Werksverkauf</h2>
+                    <p>Grömitzer Tiernahrung Manufaktur<br>Körnickerfeld 1<br>23743 Grömitz</p>
+                    <p>{{ config("Ceres.contact.opening_times") }}</p>
+                </div>
             </div>
             <hr class="hidden-sm-up m-y-2">
         </div>  
