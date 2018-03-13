@@ -114,7 +114,7 @@ a:focus, a:hover {
     display: block;
     height: 52px;
 }
-.cmp-hero .hero-main .carousel .carousel-control span:before, owl-single-item-control:before  {
+.cmp-hero .hero-main .carousel .carousel-control span:before, .owl-single-item-control:before  {
     color: #FFF !important;
     font-size: 2.3rem;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/sliderarrowbg.png);
