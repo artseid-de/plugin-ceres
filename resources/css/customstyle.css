@@ -262,7 +262,7 @@ header:after {
 .jumbotron {
     padding: 0;
 }
-.container-max .modal-body, .container-max .modal-body {
+.container-max .modal-body, .container-max .modal-footer {
     padding: 0;
 }
 .page-content {
