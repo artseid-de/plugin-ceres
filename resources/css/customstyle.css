@@ -670,3 +670,13 @@ header:after {
     background-color: #523922;
     opacity: 1;
 }
+.sk-fading-circle {
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/favicon.png);
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+}
+.sk-fading-circle .sk-circle::before {
+    width: 5%;
+    height: 5%;
+}
