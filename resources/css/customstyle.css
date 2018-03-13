@@ -126,6 +126,10 @@ a:focus, a:hover {
     background: #fff;
     box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
+.cmp-hero .hero-main .carousel-indicators {
+    top: auto;
+    bottom: 0;
+}
 .carousel-indicators li {
     border: 1px solid #fff !important;
 }
@@ -307,6 +311,9 @@ header:after {
 .section-header a.section-link-all {
     color: #000;
 }
+.home .product-list .col-xs-12 {
+    margin: 0;
+}
 .vat-porto-info.small.text-muted {
     font-size: 0.6em;
     width: 100%;
@@ -330,6 +337,7 @@ header:after {
 .featured-sale-new .featured-category-headline {
     width: auto;
     min-width: 80%;
+    max-width: 90%;
     position: relative;
     top: 0;
     -webkit-transform: none;
@@ -532,7 +540,7 @@ header:after {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
     background-color: none !important;
     background-position: center top;
-    background-size: 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     padding: 110px 10% 0px;
     font-size: 1rem;
@@ -608,7 +616,7 @@ header:after {
     text-transform: none;
     font-size: 1.3rem;
     font-weight: 400;
-} 
+}
 .footerrow .cmp-product-thumb .thumb-inner {
     position: relative;
     height: 100%;
@@ -617,7 +625,6 @@ header:after {
     flex-flow: row wrap;
     justify-content: space-between;
     min-height: 100px;
-    max-height: 180px;
 }
 .footerrow .cmp-product-thumb .thumb-background {
     display: none;
@@ -649,4 +656,14 @@ header:after {
     font-size: 1rem;
     color: #000 !important;
     text-align: right;
+}
+.to-top {
+    background-color: #d2ab7c;
+    margin: -30px 0 40px;
+    transition: all 0.3s ease-in;
+    opacity: 0.5;
+}
+.to-top:hover {
+    background-color: #523922;
+    opacity: 1;
 }
