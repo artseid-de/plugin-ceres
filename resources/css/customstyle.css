@@ -262,6 +262,9 @@ header:after {
 .jumbotron {
     padding: 0;
 }
+.container-max .modal-body, .container-max .modal-body {
+    padding: 0;
+}
 .page-content {
     background-color: transparent !important;
     padding: 0 10% !important;
