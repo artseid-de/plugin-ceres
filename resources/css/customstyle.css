@@ -253,7 +253,7 @@ header:after {
 .wrapper-main #page-body {
     margin-top: 0px !important;
 }
-.page-not-found, .container-max.login, .container-max.registration {
+.page-not-found, .container-max.login, .container-max.registration, .page-content.basket, .page-content.checkout, .page-content.myaccount {
     margin-top: 120px;
 }
 .page-not-found .default-not-found {
@@ -469,6 +469,9 @@ header:after {
     float: right;
     padding-right: 4px;
     color: #d2ab7c;
+    width: 100%;
+    text-align: right;
+    display: block;
 }
 .cmp-basket-preview-item .item-name::after {
     content: "…";
@@ -490,6 +493,9 @@ header:after {
 }
 .basket-preview > * {
     border: none !important;
+}
+.cmp-basket-item, .cmp-order-item {
+    border-bottom: 1px solid #000;
 }
 .cmp-totals hr {
     border-top: 1px solid #4e4e4e;
@@ -537,6 +543,19 @@ header:after {
 .cmp-address-list .items > div:first-child {
     margin-bottom: 0;
     padding-top: 40px;
+}
+.cmp-basket-item .item-remove, .cmp-order-item .item-remove {
+    color: inherit;
+}
+.cmp-basket-item .expand-btn, .cmp-order-item .expand-btn {
+    text-alig: center;
+}
+.cmp-basket-item .expand-btn::before, .cmp-order-item .expand-btn::before {
+    border-bottom: 0px solid #dcdbd8;
+}
+.cmp-basket-item .expand-btn::after, .cmp-order-item .expand-btn::after {
+    font-weight: 400;
+    color: #000;
 }
 .footer {
     background-color: transparent !important;
