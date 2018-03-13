@@ -95,14 +95,14 @@ a:focus, a:hover {
     right: 0;
     margin-right: 0 !important;
 }
-.carousel-control .icon-next:before {
+.carousel-control .icon-next:before, .fa-chevron-right::before {
     background-position: center left;
 }
 .carousel-control .icon-prev {
     left: 0;
     margin-left: 0 !important;
 }
-.carousel-control .icon-prev:before {
+.carousel-control .icon-prev:before, .fa-chevron-left::before {
     background-position: center right;
 }
 .carousel-control .icon-prev:before, .carousel-control .icon-next:before {
@@ -114,7 +114,7 @@ a:focus, a:hover {
     display: block;
     height: 52px;
 }
-.cmp-hero .hero-main .carousel .carousel-control span:before {
+.cmp-hero .hero-main .carousel .carousel-control span:before, owl-single-item-control:before  {
     color: #FFF !important;
     font-size: 2.3rem;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/sliderarrowbg.png);
@@ -596,6 +596,7 @@ header:after {
 .footerrow .row > div > div {
     float: none;
     flex: 1 1 200px;
+    max-width: 50%;
 }
 .footerrow h2 {
     color: #000;
@@ -616,6 +617,7 @@ header:after {
     flex-flow: row wrap;
     justify-content: space-between;
     min-height: 100px;
+    max-height: 180px;
 }
 .footerrow .cmp-product-thumb .thumb-background {
     display: none;
