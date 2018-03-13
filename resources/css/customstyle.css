@@ -253,8 +253,11 @@ header:after {
 .wrapper-main #page-body {
     margin-top: 0px !important;
 }
-.page-not-found, .container-max.login, .container-max.registration, .page-content.basket, .page-content.checkout, .page-content.myaccount {
+page-body > .container-max {
     margin-top: 120px;
+}
+page-body > .container-max.home {
+    margin-top: 0px;
 }
 .page-not-found .default-not-found {
     background-color: transparent;
