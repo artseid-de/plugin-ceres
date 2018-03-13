@@ -232,6 +232,12 @@
         </div>
         <div class="row">
             <div class="homepage-text">
+                {{ category1.details.first.description | raw }}
+            </div>
+            <div class="homepage-text">
+                {{ category1.details[0].description | raw }}
+            </div>
+            <div class="homepage-text">
                 {{ category4.details.first.description | raw }}
             </div>
             <div class="homepage-text">
@@ -355,7 +361,7 @@
 
             
             {#<!-- CATEGORIES -->#}
-            {% set homepageContainer7 = LayoutContainer.show("Ceres::Homepage.Container7") %}
+            <!--{% set homepageContainer7 = LayoutContainer.show("Ceres::Homepage.Container7") %}
             {% set homepageContainer8 = LayoutContainer.show("Ceres::Homepage.Container8") %}
             {% if category4.details is not empty or homepageContainer7 | trim is not empty or category5.details is not empty or homepageContainer8 | trim is not empty %}
                 <div class="row prop-row m-y-2 featured-categories">
@@ -386,7 +392,7 @@
                         </div>
                     {% endif %}
                 </div>
-            {% endif %}
+            {% endif %} -->
             
             <!-- END CATEGORIES -->
 
