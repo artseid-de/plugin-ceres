@@ -249,7 +249,7 @@ header:after {
 .wrapper-main #page-body {
     margin-top: 0px !important;
 }
-.page-not-found {
+.page-not-found, .login, .registration {
     margin-top: 120px;
 }
 .page-not-found .default-not-found {
