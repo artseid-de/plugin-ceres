@@ -223,7 +223,7 @@
                     </div>
                 {% endif %}
             </div>
-            
+        <!-- Text Homepage -->    
         <div class="row">
             <div class="homepage-title m-b-1">
                 <h1>Willkommen<br>
@@ -232,9 +232,11 @@
         </div>
         <div class="row">
             <div class="homepage-text">
-                {{ category4.details[0].description | raw }}
+                {{ category4.details.first.description | raw }}
             </div>
         </div>
+        
+        <!-- Text Ende -->
             {% set homepageContainer9 = LayoutContainer.show("Ceres::Homepage.Container9") %}
             {% if categoryList2 is not empty or homepageContainer9 | trim is not empty %}
                 <div class="m-b-2 clearfix">
