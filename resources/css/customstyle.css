@@ -720,3 +720,19 @@ header:after {
     width: 5%;
     height: 5%;
 }
+.cookie-bar__wrapper {
+    background-color: #523922 !important;
+}
+a.cookie-bar__link:hover {
+    color: #d2ab7c;
+}
+.cookie-bar__btn {
+    background-color: #523922;
+    color: #d2ab7c;
+    border: 1px solid #d2ab7c;
+}
+.cookie-bar__btn:hover {
+    background-color: #d2ab7c;
+    color: #523922;
+
+}
