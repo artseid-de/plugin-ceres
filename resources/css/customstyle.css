@@ -6,7 +6,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 body>#vue-app, body>#vue-error {
-    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpeg)  !important;
+    background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpg)  !important;
     background-color: none !important;
     background-position: center;
     background-size: contain;
