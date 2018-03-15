@@ -256,11 +256,27 @@ header:after {
 #page-body > .container-max {
     margin-top: 120px;
 }
-#page-body > .container-max.home {
+#page-body > .container-max.home, #page-body > .container-max.hasbg {
     margin-top: 0px;
 }
 .page-not-found .default-not-found {
     background-color: transparent;
+}
+.hasbg > .row {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 40vw;
+    max-height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.hasbg > .row > .row {
+    flex: 1 1 100%;
+}
+.hasbg > .row > .row h1 {
+    color: #fff;
 }
 .jumbotron {
     padding: 0;
