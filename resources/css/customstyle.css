@@ -9,7 +9,8 @@ body>#vue-app, body>#vue-error {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpeg)  !important;
     background-color: none !important;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: repeat-y;
     background-attachment: fixed;
     max-width: 1200px;
     margin: 0 auto;
