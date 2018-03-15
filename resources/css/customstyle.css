@@ -262,7 +262,7 @@ header:after {
 .page-not-found .default-not-found {
     background-color: transparent;
 }
-.hasbg > .row {
+.hasbg > .row:nth-child(1) {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -272,11 +272,12 @@ header:after {
     justify-content: center;
     align-items: flex-end;
 }
-.hasbg > .row > .row {
+.hasbg > .row:nth-child(1) > .row {
     flex: 1 1 100%;
 }
-.hasbg > .row > .row h1 {
-    color: #fff;
+.hasbg > .row:nth-child(1) > .row h1 {
+    color: #fff !important;
+    text-shadow: 1px 1px 15px #000;
 }
 .jumbotron {
     padding: 0;
