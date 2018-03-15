@@ -271,6 +271,7 @@ header:after {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    margin-bottom: 30px;
 }
 .hasbg > .row:nth-child(1) > .row {
     flex: 1 1 100%;
