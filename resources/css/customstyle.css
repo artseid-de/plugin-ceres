@@ -579,6 +579,36 @@ header:after {
     font-weight: 400;
     color: #000;
 }
+.nav-tabs {
+    border-bottom: 0px solid #ddd;
+}
+.single .nav-tabs .nav-item .nav-link {
+    border: 0px solid #ddd !important;
+    border-radius: 10px 10px 0px 0px;
+    background: #fbf0e2;
+    transition: background 0.3s ease-in, color 0.3s ease-in;
+    z-index:-1;
+    filter: drop-shadow(0px 0px 2px #000);
+    position: relative;
+}
+.single .nav-tabs .nav-item .nav-link.active {
+    z-index:1;
+}
+.single .nav-tabs .nav-item .nav-link.active:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 4px;
+    background: #fff;
+}
+.single .tab-content {
+    padding: 20px;
+    box-sixing: border-box;
+    z-index: 0;
+    filter: drop-shadow(0px 0px 2px #000);
+}
 .footer {
     background-color: transparent !important;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/footerbg.png);
