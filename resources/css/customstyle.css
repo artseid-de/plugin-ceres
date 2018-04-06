@@ -10,7 +10,7 @@ body>#vue-app, body>#vue-error {
     background-color: none !important;
     background-position: center;
     background-size: contain;
-    background-repeat: repeat-y;
+    background-repeat: repeat;
     background-attachment: fixed;
     max-width: 1200px;
     margin: 0 auto;
