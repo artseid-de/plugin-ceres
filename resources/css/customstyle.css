@@ -590,10 +590,10 @@ header:after {
     flex-flow: row wrap;
 }
 .nav-tabs .nav-item {
-    flex 1 1 200px;
+    flex: 1 1 200px;
     margin-bottom: -6px;
 }
-.nav-tabs.activeparent {
+.nav-item.activeparent {
     order: 1;
 }
 .single .nav-tabs .nav-item .nav-link {
