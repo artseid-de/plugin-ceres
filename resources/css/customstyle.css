@@ -605,6 +605,11 @@ header:after {
     margin-bottom: -6px;
 }
 }
+@media(min-width:859px){
+.nav-tabs .nav-item:last-child {
+    z-index: -1;
+}
+}
 .single .nav-tabs .nav-item .nav-link {
     border: 0px solid #ddd !important;
     border-radius: 10px 10px 0px 0px;
