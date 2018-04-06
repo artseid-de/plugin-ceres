@@ -9,7 +9,10 @@
 
 <!DOCTYPE html>
 
-{% set lang = services.sessionStorage.getLang() %}
+{% set lang = "de" %}
+{% if services.sessionStorage.getLang() %}
+    {% set lang = services.sessionStorage.getLang() %}
+{% endif %}
 
 {% set metaLang = "de" %}
 {% if lang == "de" or lang == "en" %}
@@ -33,12 +36,7 @@
 {% set categories = services.category.getNavigationTree(showCategoryTypes, lang, 6) %}
 
 <html lang="{{ lang }}" data-framework="vue" prefix="og: http://ogp.me/ns#">
-<script>
-var lang = document.getElementsByTagName("html")[0].getAttribute("lang");
-if (lang != 'de') {
-    window.location = "/de/";
-}
-</script>
+
     <head>
         {% include getPartial('head') %}
 
