@@ -591,7 +591,10 @@ header:after {
 }
 .nav-tabs .nav-item {
     flex 1 1 200px;
-    #margin-bottom: -6px;
+    margin-bottom: -6px;
+}
+.nav-tabs.activeparent {
+    order: 1;
 }
 .single .nav-tabs .nav-item .nav-link {
     border: 0px solid #ddd !important;
