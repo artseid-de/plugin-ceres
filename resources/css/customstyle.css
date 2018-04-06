@@ -590,7 +590,7 @@ header:after {
     flex-flow: row wrap;
 }
 .nav-tabs .nav-item {
-    flex: 1 1 130px;
+    flex: 1 1 120px;
     margin-bottom: -1px;
 }
 .single .nav-tabs .nav-item + .nav-item {
