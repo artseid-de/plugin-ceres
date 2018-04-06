@@ -34,7 +34,7 @@
 
 <html lang="{{ lang }}" data-framework="vue" prefix="og: http://ogp.me/ns#">
 <script>
-var lang = document.getElementsByTagName("html").getAttribute("lang");
+var lang = document.getElementsByTagName("html")[0].getAttribute("lang");
 if (lang != 'de') {
     window.location = "/de/";
 }
