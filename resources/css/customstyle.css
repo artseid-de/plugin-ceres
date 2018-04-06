@@ -584,6 +584,14 @@ header:after {
 }
 .nav-tabs {
     border-bottom: 0px solid #ddd;
+    display: flex;
+    align-items: flex-start;
+    justify-content: stretch;
+    flex-flow: row wrap;
+}
+.nav-tabs .nav-item {
+    flex 1 1 200px;
+    #margin-bottom: -6px;
 }
 .single .nav-tabs .nav-item .nav-link {
     border: 0px solid #ddd !important;
@@ -596,6 +604,7 @@ header:after {
 }
 .single .nav-tabs .nav-item .nav-link.active {
     z-index:2;
+    background: #fff;
 }
 .single .nav-tabs .nav-item .nav-link.active:after {
     content: "";
@@ -605,9 +614,6 @@ header:after {
     width: 100%;
     height: 5px;
     background: #fff;
-}
-.single .nav-tabs .nav-item+.nav-item {
-    margin-left: 5px;
 }
 .single .tab-content {
     padding: 20px;
