@@ -601,9 +601,9 @@ header:after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -3px;
     width: 100%;
-    height: 4px;
+    height: 5px;
     background: #fff;
 }
 .single .nav-tabs .nav-item+.nav-item {
