@@ -33,7 +33,12 @@
 {% set categories = services.category.getNavigationTree(showCategoryTypes, lang, 6) %}
 
 <html lang="{{ lang }}" data-framework="vue" prefix="og: http://ogp.me/ns#">
-
+<script>
+var lang = document.getElementsByTagName("html").getAttribute("lang");
+if (lang != 'de') {
+    window.location = "/de/";
+}
+</script>
     <head>
         {% include getPartial('head') %}
 
