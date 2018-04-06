@@ -10,9 +10,9 @@
 <!DOCTYPE html>
 
 {% set lang = "de" %}
-{% if services.sessionStorage.getLang() %}
+{# {% if services.sessionStorage.getLang() %}
     {% set lang = services.sessionStorage.getLang() %}
-{% endif %}
+{% endif %} #}
 
 {% set metaLang = "de" %}
 {% if lang == "de" or lang == "en" %}
