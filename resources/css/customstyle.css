@@ -593,6 +593,9 @@ header:after {
     flex: 1 1 130px;
     margin-bottom: -1px;
 }
+.single .nav-tabs .nav-item + .nav-item {
+    margin-left: 0;
+}
 @media {max-width:858px){
 .nav-item.activeparent {
     order: 1;
