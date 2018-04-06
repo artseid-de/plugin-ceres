@@ -185,12 +185,9 @@
             }
         </script>
         <script>
-        $('.nav-link').each(function(){
-            if ($(this).hasClass('active')) {
-                $(this).parent('.nav-item').addClass('activeparent');
-            } else {
-                $(this).parent('.nav-item').removeClass('activeparent');
-            }
+        $('.single .nav-link').click(function(){
+            $(this).parent('.nav-item').addClass('activeparent');
+            $('.single .nav-link').not(this).parent('.nav-item').removeClass('activeparent');
          });
          </script>
     </body>
