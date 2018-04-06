@@ -612,6 +612,9 @@ header:after {
 .nav-tabs .nav-item:nth-last-child(2) {
     z-index: 1;
 }
+.nav-tabs .nav-item.activeparent {
+    z-index: 2;
+}
 }
 .single .nav-tabs .nav-item .nav-link {
     border: 0px solid #ddd !important;
