@@ -607,7 +607,10 @@ header:after {
 }
 @media(min-width:859px){
 .nav-tabs .nav-item:last-child {
-    z-index: -1;
+    z-index: 0;
+}
+.nav-tabs .nav-item:nth-last-child(2) {
+    z-index: 1;
 }
 }
 .single .nav-tabs .nav-item .nav-link {
