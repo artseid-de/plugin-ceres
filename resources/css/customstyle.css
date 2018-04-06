@@ -590,11 +590,16 @@ header:after {
     flex-flow: row wrap;
 }
 .nav-tabs .nav-item {
-    flex: 1 1 200px;
-    margin-bottom: -6px;
+    flex: 1 1 130px;
+    margin-bottom: -1px;
 }
+@media {max-width:858px){
 .nav-item.activeparent {
     order: 1;
+}
+.nav-tabs .nav-item {
+    margin-bottom: -6px;
+}
 }
 .single .nav-tabs .nav-item .nav-link {
     border: 0px solid #ddd !important;
