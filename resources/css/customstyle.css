@@ -596,7 +596,7 @@ header:after {
 .single .nav-tabs .nav-item + .nav-item {
     margin-left: 0;
 }
-@media (max-width:858px){
+@media(max-width:858px){
 .nav-item.activeparent {
     order: 1;
 }
