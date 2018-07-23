@@ -805,3 +805,17 @@ a.cookie-bar__link:hover {
     color: #523922;
 
 }
+.homepage-text.columns{
+    -webkit-columns: 400px;
+    -moz-columns: 400px;
+    columns: 400px;
+        column-count: auto;
+    column-count: auto;
+    -webkit-column-gap: 40px;
+    -moz-column-gap: 40px;
+    column-gap: 40px;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 40px;
+    max-width: 100%;
+}
