@@ -153,7 +153,7 @@
                         </div>
                         {{ component( "Ceres::Item.Components.OrderPropertyListGroup" ) }}
 
-<script type="x/template" id="vue-order-property-list">
+<!--<script type="x/template" id="vue-order-property-list">-->
     <div class="order-property-slider mb-3">
         <div class="order-property-slider-inner" :style="{transform: 'translateX(-' + (activeSlide * 100) + '%)'}">
             <div v-for="(propertyGroup, index) in sortedGroupedProperties" :class="{'active': index === activeSlide}">
@@ -180,7 +180,7 @@
             </div>
         </div>
     </div>
-</script>
+<!--</script>-->
                         <div class="tab-pane" id="assessments-details" role="tabpanel">
                             <div class="m-y-2">
                                 <table class="table table-striped table-hover table-sm">
