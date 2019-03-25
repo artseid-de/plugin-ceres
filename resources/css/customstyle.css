@@ -52,6 +52,10 @@ a:focus, a:hover {
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
 }
+.cmp.cmp-hero {
+    width: 100%;
+    position: relative;
+}
 .hero-main {
     position: relative;
     height: 60vw;
@@ -60,8 +64,11 @@ a:focus, a:hover {
 #carousel-example-generic {
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 0px;
     left:0;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
 }
 .sliderbefore {
     position: absolute;
@@ -86,9 +93,22 @@ a:focus, a:hover {
 .sliderbefore a img {
     width: 100%;
 }
+.cmp-hero .hero-main .carousel .carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
 .carousel-indicators , .carousel-control {
     filter: drop-shadow(0 0 2px rgba(0,0,0,0.7));
     transition: all 0.3s ease-in;
+    position: absolute;
+    bottom: 20%;
+}
+.carousel-control.left {
+    left: 0;
+}
+.carousel-control.right {
+    right: 0;
 }
 .cmp-hero .hero-main .carousel .carousel-control span {
     font-size: 60px;
