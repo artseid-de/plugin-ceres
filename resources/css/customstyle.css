@@ -169,13 +169,14 @@ header:after {
     margin-bottom: 0px;
     bottom: -1px;
 }
-.top-bar {
+body .wrapper-main #page-header.top-bar {
     position: fixed;
     width: 100%;
     max-width: 1200px;
     z-index: 1060;
     color: #fff;
-    background-color: transparent;
+    background-color: #000;
+    margin: 0 auto;
 }
 .container-max.ganzoben {
     position: relative;
