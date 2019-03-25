@@ -19,6 +19,12 @@
 		padding-left: .5rem;
 	}
 
+	& .item-bundle {
+		width: 300px;
+		font-weight: 700;
+		font-size: 80%;
+	}
+
 	.item-name{
 	    display: -webkit-box;
         text-overflow: ellipsis;
@@ -56,7 +62,7 @@
 		transition: color 250ms;
 
 	    &:hover{
-	    	color: $brand-danger;
+	    	color: $danger;
 	    }
 	}
 
@@ -81,10 +87,19 @@
 	@include media-breakpoint-up(lg){
 
 	}
+
+	.item-word-break {
+		word-wrap: break-word;
+
+		@include media-breakpoint-down(xs){
+			word-break: break-all;
+		}
+	}
+
 }
 
 .payment-link-style {
-	color: $brand-primary !important;
+	color: $primary !important;
 	cursor: pointer!important;
 	padding: 0 15px!important;
 	span {

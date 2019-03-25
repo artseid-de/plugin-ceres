@@ -1,6 +1,5 @@
 
 .single {
-    
     .list-item-carousel {
         .list-control-special{
             width: 5%;
@@ -77,6 +76,12 @@
         }
     }
 
+    .tab-content {
+        img {
+            max-width: 100%;
+        }
+    }
+
     .graduated-prices-table {
         td:first-child {
             padding-right: 1rem;
@@ -84,7 +89,7 @@
         }  
         
         & i {
-            color: $brand-success;
+            color: $success;
         }
     }
 
@@ -99,20 +104,25 @@
         transition: border-color .3s ease-out;
 
         &.active {
-            border-color: $brand-success;
+            border-color: $success;
         }
     }
 }
 
-.availability_1,
-.availability_2 {background-color: $availability_1;}
-.availability_3,
-.availability_4 {background-color: $availability_3;}
-.availability_5 {background-color: $availability_5;}
+.availability_1  { @include context-bg($availability_1); }
+.availability_2  { @include context-bg($availability_2); }
+.availability_3  { @include context-bg($availability_3); }
+.availability_4  { @include context-bg($availability_4); }
+.availability_5  { @include context-bg($availability_5); }
+.availability_6  { @include context-bg($availability_6); }
+.availability_7  { @include context-bg($availability_7); }
+.availability_8  { @include context-bg($availability_8); }
+.availability_9  { @include context-bg($availability_9); }
+.availability_10 { @include context-bg($availability_10); }
 
 
 .rating{
-    .tag{
+    .tag, .badge {
         padding-right: 0;
         overflow: hidden;
         cursor: pointer;
@@ -125,9 +135,6 @@
     }
 }
 
-
-
-
 .rezension {
     display: inline-block;
 }
@@ -138,19 +145,6 @@
     padding: .75rem .45rem .25rem 0;
 }
 
-.single-rightside {
-    .shariff {
-        .orientation-horizontal {
-            li {
-                .fa {
-                    line-height: 30px;
-                    text-align: center;
-                    margin-left: 0.5rem;
-                }
-            }
-        }
-    }
-}
 @include media-breakpoint-only(md) {
     .single {
         .price {
@@ -158,6 +152,7 @@
         }
     }
 }
+
 
 @include media-breakpoint-up(md) {
     .single {
@@ -181,5 +176,91 @@
                 }
             }
         }
+    }
+}
+
+.order-property-slider {
+    overflow: hidden;
+    
+    .order-property-slider-inner {
+        white-space: nowrap;
+        transition: transform 300ms ease;
+        
+        > div {
+            display: inline-block;
+            width: 100%;
+            visibility: hidden;
+            
+            &.active {
+                visibility: visible;
+            }
+        }
+    }
+    
+    .order-property-slider-controls {
+        display: flex;
+        flex-direction: row;
+        
+        .slider-nav {
+            flex: 1;
+            text-align: center;
+            
+            span {
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                border-radius: 50%;
+                border: 1px solid $gray-lighter;
+                background-color: #fff;
+                margin: 12px 5px 0;
+                cursor: pointer;
+                transition: all .3s ease;
+                
+                &.active {
+                    background-color: $gray-lighter;
+
+                    &.error {
+                        // background-color: lighten($danger, 25%);
+                        background-color: mix($danger, $gray-lighter);
+                        border-color: mix(lighten($danger, 25%), $gray-lighter);
+                    }
+                }
+
+                &.highlight {
+                    background-color: $primary;
+                    border-color: lighten($primary, 25%);
+                }
+
+                &.error {
+                    background-color: $danger;
+                    border-color: lighten($danger, 25%);
+                }
+            }
+        }
+    }
+}
+
+.add-to-basket-container {
+    display: flex;
+
+    .quantity-input-container {
+        margin-right: 15px;
+    }
+}
+
+.single-rightside
+{
+    margin-top: 1rem;
+}
+
+@include media-breakpoint-up(md)
+{
+    .single-rightside
+    {
+        margin-top: 0;
+        position: absolute;
+        left: (7/12)*100%;
+        top: 0;
+        bottom: 0;
     }
 }

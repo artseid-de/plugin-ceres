@@ -1,6 +1,9 @@
-body {
+html {
+	font-size: $font-size-root;
+}
 
-	background-image: url(https://cdn02.plentymarkets.com/lwgtmdjtl1jp/plugin/production/ceres/images/background.jpeg);
+body {
+	background-color: $gray-lightest;
 
 	> #vue-app,
 	> #vue-error {
@@ -10,15 +13,10 @@ body {
 		&>.wrapper-top, &>.wrapper-left, &>.wrapper-right, &>.wrapper-bottom {
 			position 	: absolute;
 			z-index 	: $zIndex-8;
-
-			.wrapper-inner{
-				
-			}
 		} 
 
 		.wrapper-main{
 			position: relative;
-			//z-index: $zIndex-1;
 		}
 		
 		.wrapper-top {
@@ -65,6 +63,12 @@ body {
 		&.open-left,
 		&.open-top,
 		&.open-bottom{
+
+			@include media-breakpoint-down(sm)
+			{
+				margin-top: 0 !important;
+			}
+			
 			// dark overlay on body
 			&::after{
 				content : "";
@@ -84,30 +88,43 @@ body {
 		&.open-right{
 			overflow: hidden;
 
+			@include media-breakpoint-down(sm) {
+				position: fixed;
+			}
+
 			.wrapper-right{
-				width: 100vw;
+				@include media-breakpoint-up(md) {
+					width: 100vw;
+				}
+				
 				transform: translateX(-100%);
 
 				transition: width 0ms,
 							transform 300ms 10ms ease-in-out;
+
+				@include media-breakpoint-down(md) {
+					width: 100%;
+				}
 			}
 		}
 
-		@include media-breakpoint-up(sm){
+		&.open-hover {
+			@include media-breakpoint-down(xs) {
+				position: fixed;
+			}
+
+			.basket-preview-hover-wrapper {
+				display: block;
+				transform: translateX(0%);
+			}
+		}
+
+		@include media-breakpoint-up(md){
 			&.open-right{
 				.wrapper-right{
 					width: $aside-columns-width;
 				}
 			}
-
-		}
-
-		@include media-breakpoint-up(md){
-			
-		}
-
-		@include media-breakpoint-up(lg){
-			
 		}
 	}
 }

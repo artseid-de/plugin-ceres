@@ -1,5 +1,15 @@
 .input-group{
 
+	.input-unit + .input-group-btn
+	{
+		padding-bottom: $grid-gutter-width/2;
+
+		.btn
+		{
+			height: calc(2.8em + 1px);
+		}
+	}
+
 	&.vert{
 		.input-group-btn{
 			display: block;
@@ -72,7 +82,7 @@ button:focus {
 
 // create gray outline button 
 .btn-outline-default{
-	@include button-outline-variant($btn-default-color);
+	@include button-outline-variant($gray-light);
 }
 
 .btn {
@@ -97,8 +107,13 @@ button:focus {
 		}
 	}
 
+	& > span + .fa {
+		margin-left: 5px;
+		margin-top: 1px;
+	}
+
 	&.btn-remove-address {
-		background-color: $brand-danger;
+		background-color: $danger;
 		margin-right: -5px;
 		color: #fff;
 
@@ -108,24 +123,37 @@ button:focus {
 	}
 
 	&.btn-medium {
-		width: 10rem;
+		min-width: 10rem;
 	}
 
 	&.btn-medium-large {
-		width: 12rem;
+		min-width: 12rem;
 	}
 
 	&.btn-large {
-		width: 15rem;
+		min-width: 15rem;
 	}
 
 	&.btn-m-r {
 		margin-right: 10px;
 	}
+
+	&.btn-block {
+		> .fa {
+			line-height: inherit;
+		}
+	}
+
 }
 
 .btn-right {
 	float: right;
+}
+
+.btn-xs-max-width {
+	@include media-breakpoint-down(xs) {
+		width: 100% !important;
+	}
 }
 
 .btn-labeled {
@@ -164,3 +192,51 @@ button:focus {
 		}
 	}
 }
+
+.btn-icon
+{
+	padding: .5rem;
+	
+	.fa
+	{
+		width: 14px;
+		text-align: center;
+	}
+	
+	&.btn-sm
+	{
+		padding: .2rem;
+		
+		.fa
+		{
+			width: 12px;
+		}
+	}
+}
+
+// Responsive button text and icon visibility
+
+@each $bp in map-keys($grid-breakpoints) {
+	.btn-only-icon-#{$bp}-up {
+	  @include media-breakpoint-up($bp) {
+		width: 2.2rem !important;
+        padding-right: 8px;
+        height: 2.2rem;
+
+        & span {
+            display: none !important;
+        }
+	  }
+	}
+	.btn-only-icon-#{$bp}-down {
+	  @include media-breakpoint-down($bp) {
+        & span {
+			display: none !important;
+		}
+		i {
+			margin: 0 !important;
+			float: none !important;
+		}
+	  }
+	}
+  }

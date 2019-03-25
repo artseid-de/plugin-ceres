@@ -105,30 +105,6 @@
 		}
 	}
 
-	.copy-mail-check{
-		margin-bottom: 10px;
-		text-align: initial;
-
-		input{
-			vertical-align: text-bottom;
-			margin-right: 4px;
-		}
-
-		@include media-breakpoint-up(sm){
-
-		}
-
-		@include media-breakpoint-up(md){
-			margin-bottom: 0;
-			text-align: right;
-			line-height: 2.3;
-		}
-
-		@include media-breakpoint-up(lg){
-
-		}
-	}
-
 	.send-mail{
 		i{
 			margin-right: 5px;
