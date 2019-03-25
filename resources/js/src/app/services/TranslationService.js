@@ -1,5 +1,5 @@
-import {isNullOrUndefined}from "../helper/utils";
-import {replaceAll, capitalize}from "../helper/strings";
+import { defaultValue, isNullOrUndefined } from "../helper/utils";
+import { replaceAll, capitalize } from "../helper/strings";
 
 const TranslationService = (function($)
 {
@@ -98,21 +98,23 @@ const TranslationService = (function($)
             .sort((keyA, keyB) => keyB.length - keyA.length)
             .forEach(
                 key =>
-{
+                {
+                    const value = "" + defaultValue(values[key], "");
+
                     input = replaceAll(
                         input,
                         ":" + key,
-                        values[key]
+                        value
                     );
                     input = replaceAll(
                         input,
                         ":" + capitalize(key),
-                        capitalize(values[key])
+                        capitalize(value)
                     );
                     input = replaceAll(
                         input,
                         ":" + key.toUpperCase(),
-                        values[key].toUpperCase()
+                        value.toUpperCase()
                     );
                 }
             );

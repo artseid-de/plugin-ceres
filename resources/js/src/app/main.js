@@ -1,10 +1,45 @@
+const browserDetect = require("detect-browser");
+const NotificationService = require("services/NotificationService");
+const AutoFocusService = require("services/AutoFocusService");
+
 // Frontend end scripts
 // eslint-disable-next-line
 var init = (function($, window, document)
 {
+    var headerCollapses = [];
+
+    function HeaderCollapse(selector)
+    {
+        headerCollapses.push(selector);
+        $(document).ready(function()
+        {
+            $(selector).on("show.bs.collapse", () =>
+            {
+                headerCollapses.forEach(element =>
+                {
+                    if (!$(element).is(selector))
+                    {
+                        $(element).collapse("hide");
+                    }
+                });
+            });
+
+        });
+    }
 
     function CeresMain()
     {
+        const browser = browserDetect.detect();
+
+        if (browser && browser.name)
+        {
+            $("html").addClass(browser.name);
+        }
+        else
+        {
+            $("html").addClass("unkown-os");
+        }
+
         $(window).scroll(function()
         {
             if ($(".wrapper-main").hasClass("isSticky"))
@@ -20,71 +55,47 @@ var init = (function($, window, document)
             }
         });
 
+        window.onpopstate = function(event)
+        {
+            if (event.state && event.state.requireReload)
+            {
+                window.location.reload();
+            }
+        };
+
         // init bootstrap tooltips
         $("[data-toggle=\"tooltip\"]").tooltip();
 
-        // Replace all SVG images with inline SVG, class: svg
-        $("img[src$=\".svg\"]").each(function()
-        {
-            var $img = jQuery(this);
-            var imgURL = $img.attr("src");
-            var attributes = $img.prop("attributes");
-
-            $.get(imgURL, function(data)
-            {
-                // Get the SVG tag, ignore the rest
-                var $svg = jQuery(data).find("svg");
-
-                // Remove any invalid XML tags
-                $svg = $svg.removeAttr("xmlns:a");
-
-                // Loop through IMG attributes and apply on SVG
-                $.each(attributes, function()
-                {
-                    $svg.attr(this.name, this.value);
-                });
-
-                // Replace IMG with SVG
-                $img.replaceWith($svg);
-            }, "xml");
-        });
+        HeaderCollapse("#countrySettings");
+        HeaderCollapse("#currencySelect");
+        HeaderCollapse("#searchBox");
 
         var $toggleListView = $(".toggle-list-view");
         var $mainNavbarCollapse = $("#mainNavbarCollapse");
 
         $(document).on("click", function(evt)
         {
-            if ($("#vue-app").hasClass("open-right"))
+            const basketOpenClass = (App.config.basket.previewType === "right") ? "open-right" : "open-hover";
+
+            if ($("#vue-app").hasClass(basketOpenClass))
             {
                 if ((evt.target != $(".basket-preview")) &&
+                    (evt.target != document.querySelector(".basket-preview-hover")) &&
                     (evt.target.classList[0] != "message") &&
-                    ($(evt.target).parents(".basket-preview").length <= 0))
+                    ($(evt.target).parents(".basket-preview").length <= 0 && $(evt.target).parents(".basket-preview-hover").length <= 0))
                 {
                     evt.preventDefault();
-                    $("#vue-app").toggleClass("open-right");
+                    $("#vue-app").toggleClass(basketOpenClass || "open-hover");
                 }
             }
 
-            if ((evt.target.id != "countrySettings") &&
-                ($(evt.target).parents("#countrySettings").length <= 0) &&
-                ($("#countrySettings").attr("aria-expanded") == "true"))
+            headerCollapses.forEach(element =>
             {
-                $("#countrySettings").collapse("hide");
-            }
-
-            if ((evt.target.id != "searchBox") &&
-                ($(evt.target).parents("#searchBox").length <= 0) &&
-                ($("#searchBox").attr("aria-expanded") == "true"))
-            {
-                $("#searchBox").collapse("hide");
-            }
-
-            if ((evt.target.id != "currencySelect") &&
-                ($(evt.target).parents("#currencySelect").length <= 0) &&
-                ($("#currencySelect").attr("aria-expanded") == "true"))
-            {
-                $("#currencySelect").collapse("hide");
-            }
+                if (evt.target !== element && $(evt.target).parents(element).length <= 0)
+                {
+                    $(element).collapse("hide");
+                }
+            });
         });
 
         $toggleListView.on("click", function(evt)
@@ -123,6 +134,18 @@ var init = (function($, window, document)
 
             var isDesktop = window.matchMedia("(min-width: 768px)").matches;
 
+            AutoFocusService.autoFocus();
+
+            $("#searchBox").on("shown.bs.collapse", function()
+            {
+                var searchInput = document.querySelector("input.search-input");
+
+                if (searchInput)
+                {
+                    searchInput.focus();
+                }
+            });
+
             $(window).scroll(function()
             {
                 if (isDesktop)
@@ -149,7 +172,7 @@ var init = (function($, window, document)
             {
                 event.preventDefault();
 
-                $("html, body").animate({scrollTop: 0}, duration);
+                $("html, body").animate({ scrollTop: 0 }, duration);
 
                 return false;
             });
@@ -158,29 +181,51 @@ var init = (function($, window, document)
             {
                 event.preventDefault();
 
-                $("html, body").animate({scrollTop: 0}, duration);
+                $("html, body").animate({ scrollTop: 0 }, duration);
 
                 return false;
-            });
-
-            $("#searchBox").on("show.bs.collapse", function()
-            {
-                $("#countrySettings").collapse("hide");
-            });
-
-            $("#countrySettings").on("show.bs.collapse", function()
-            {
-                $("#searchBox").collapse("hide");
             });
 
             $("#accountMenuList").click(function()
             {
                 $("#countrySettings").collapse("hide");
                 $("#searchBox").collapse("hide");
+                $("#currencySelect").collapse("hide");
             });
         });
     }
 
     window.CeresMain = new CeresMain();
+    window.CeresNotification = NotificationService;
+
+    var showShopNotification = function(event)
+    {
+        if (event.detail.type)
+        {
+            switch (event.detail.type)
+            {
+            case "info":
+                NotificationService.info(event.detail.message);
+                break;
+            case "log":
+                NotificationService.log(event.detail.message);
+                break;
+            case "error":
+                NotificationService.error(event.detail.message);
+                break;
+            case "success":
+                NotificationService.success(event.detail.message);
+                break;
+            case "warning":
+                NotificationService.warn(event.detail.message);
+                break;
+            default:
+                console.log("no type such as:" + event.detail.type);
+                break;
+            }
+        }
+    };
+
+    document.addEventListener("showShopNotification", showShopNotification);
 
 })(jQuery, window, document);

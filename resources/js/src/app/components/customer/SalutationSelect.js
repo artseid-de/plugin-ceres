@@ -1,20 +1,36 @@
-import AddressFieldService from "services/AddressFieldService";
+import { isNullOrUndefined } from "../../helper/utils";
 
 Vue.component("salutation-select", {
 
-    delimiters: ["${", "}"],
-
-    props: [
-        "template",
-        "addressData",
-        "addressType"
-    ],
+    props:
+    {
+        template:
+        {
+            type: String,
+            default: "#vue-salutation-select"
+        },
+        addressData:
+        {
+            type: Object,
+            required: true
+        },
+        addressType:
+        {
+            type: [Number, String],
+            default: 1
+        },
+        enabledAddressFields:
+        {
+            type: Object,
+            default: () => []
+        }
+    },
 
     data()
     {
         return {
-            salutations      : {
-                complete      : {
+            salutations: {
+                complete: {
                     de: [
                         {
                             value: "Herr",
@@ -27,10 +43,6 @@ Vue.component("salutation-select", {
                         {
                             value: "Firma",
                             id   : 2
-                        },
-                        {
-                            value: "Familie",
-                            id   : 3
                         }
                     ],
                     en: [
@@ -45,10 +57,6 @@ Vue.component("salutation-select", {
                         {
                             value: "Company",
                             id   : 2
-                        },
-                        {
-                            value: "Family",
-                            id   : 3
                         }
                     ]
                 },
@@ -61,10 +69,6 @@ Vue.component("salutation-select", {
                         {
                             value: "Frau",
                             id   : 1
-                        },
-                        {
-                            value: "Familie",
-                            id   : 3
                         }
                     ],
                     en: [
@@ -75,16 +79,29 @@ Vue.component("salutation-select", {
                         {
                             value: "Ms.",
                             id   : 1
-                        },
-                        {
-                            value: "Family",
-                            id   : 3
                         }
                     ]
                 }
-            },
-            currentSalutation: {}
+            }
         };
+    },
+
+    computed:
+    {
+        currentSalutation()
+        {
+            const countryId = parseInt(this.addressData.countryId) || 1;
+            const addressKey = parseInt(this.addressType) === 1 ? "billing_address" : "delivery_address";
+            const languageKey = App.language === "de" ? "de" : "en";
+            const countryKey = countryId === 12 ? "gb" : "de";
+
+            if (this.enabledAddressFields[countryKey].includes(`${addressKey}.name1`))
+            {
+                return this.salutations.complete[languageKey];
+            }
+
+            return this.salutations.withoutCompany[languageKey];
+        }
     },
 
     /**
@@ -94,24 +111,11 @@ Vue.component("salutation-select", {
     {
         this.$options.template = this.template;
 
-        if (App.language === "de")
+        const selectedSalutation = this.addressData.addressSalutation;
+
+        if (isNullOrUndefined(selectedSalutation))
         {
-            if (AddressFieldService.isAddressFieldEnabled(this.addressData.countryId, this.addressType, "name1"))
-            {
-                this.currentSalutation = this.salutations.complete.de;
-            }
-            else
-            {
-                this.currentSalutation = this.salutations.withoutCompany.de;
-            }
-        }
-        else if (AddressFieldService.isAddressFieldEnabled(this.addressData.countryId, this.addressType, "name1"))
-        {
-            this.currentSalutation = this.salutations.complete.en;
-        }
-        else
-        {
-            this.currentSalutation = this.salutations.withoutCompany.en;
+            this.emitInputEvent(this.currentSalutation[0].id);
         }
     },
 
@@ -119,11 +123,56 @@ Vue.component("salutation-select", {
     {
         emitInputEvent(value)
         {
-            this.$emit("input", {field: "addressSalutation", value});
+            const gender = this.mapSalutationIdToGender(value);
 
-            if (this.addressData.addressSalutation !== 2 && typeof this.addressData.name1 !== "undefined" && this.addressData.name1 !== "")
+            this.$emit("input", { field: "gender", value: gender });
+            this.$emit("input", { field: "addressSalutation", value: value });
+            this.$emit("input", { field: "name1", value: "" });
+            this.$emit("input", { field: "name2", value: "" });
+            this.$emit("input", { field: "name3", value: "" });
+            this.$emit("input", { field: "vatNumber", value: "" });
+            this.$emit("input", { field: "contactPerson", value: "" });
+        },
+
+        mapSalutationIdToGender(id)
+        {
+            if (id === 0)
             {
-                this.$emit("input", {field: "name1", value: ""});
+                return "male";
+            }
+            else if (id === 1)
+            {
+                return "female";
+            }
+            return null;
+
+        },
+
+        checkGenderCompany(id)
+        {
+            if (id === 2)
+            {
+                const gender = this.mapSalutationIdToGender(id);
+
+                return (gender === null && this.addressData.name1 !== null) || (gender === null && this.addressData.name1 !== "");
+            }
+            return true;
+        }
+    },
+
+    watch:
+    {
+        currentSalutation(newVal, oldVal)
+        {
+            if (newVal !== oldVal)
+            {
+                const selectedSalutation = this.addressData.addressSalutation;
+
+                // cleanse the current selected salutation, if it's not longer included in the choice
+                if (!newVal.map(salutation => salutation.id).includes(selectedSalutation))
+                {
+                    this.emitInputEvent(newVal[0].id);
+                }
             }
         }
     }

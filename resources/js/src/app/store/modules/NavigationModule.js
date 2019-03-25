@@ -1,5 +1,3 @@
-import {updateCategoryHtml}from "services/CategoryService";
-
 const state =
     {
         tree: [],
@@ -21,17 +19,17 @@ const mutations =
 
 const actions =
     {
-        initNavigationTree({dispatch, commit}, navigationTree)
+        initNavigationTree({ dispatch, commit }, navigationTree)
         {
             if (navigationTree)
             {
-                dispatch("buildNavigationTreeItem", {navigationTree});
+                dispatch("buildNavigationTreeItem", { navigationTree });
             }
 
             commit("setNavigationTree", navigationTree);
         },
 
-        buildNavigationTreeItem({state, commit, dispatch}, {navigationTree, parent})
+        buildNavigationTreeItem({ state, commit, dispatch }, { navigationTree, parent })
         {
             let showChildren = false;
 
@@ -46,14 +44,34 @@ const actions =
                 }
                 else
                 {
-                    const parentUrl = parent ? parent.url : "";
+                    let parentUrl = "";
+
+                    if (parent)
+                    {
+                        parentUrl = parent.url;
+
+                        if (App.urlTrailingSlash)
+                        {
+                            parentUrl = parentUrl.substring(0, parentUrl.length - 1);
+                        }
+                    }
+                    else if (App.defaultLanguage != category.details[0].lang)
+                    {
+                        parentUrl = "/" + category.details[0].lang;
+                    }
 
                     category.url = parentUrl + "/" + category.details[0].nameUrl;
+
+                    if (App.urlTrailingSlash)
+                    {
+                        category.url += "/";
+                    }
+
                     showChildren = true;
 
                     if (category.children)
                     {
-                        dispatch("buildNavigationTreeItem", {navigationTree: category.children, parent: category});
+                        dispatch("buildNavigationTreeItem", { navigationTree: category.children, parent: category });
                     }
                 }
             }
@@ -64,29 +82,7 @@ const actions =
             }
         },
 
-        selectCategory({state, commit, dispatch}, {category, categoryId, withReload})
-        {
-            if (category)
-            {
-                commit("setCurrentCategory", category);
-            }
-            else if (categoryId)
-            {
-                dispatch("setCurrentCategoryById", {categoryId});
-            }
-
-            if (!withReload)
-            {
-                updateCategoryHtml();
-
-                commit("setItemListPage", 1);
-                commit("setSelectedFacetsByIds", []);
-
-                dispatch("retrieveItemList");
-            }
-        },
-
-        setCurrentCategoryById({state, commit, dispatch}, {categoryId, categories})
+        setCurrentCategoryById({ state, commit, dispatch }, { categoryId, categories })
         {
             categories = categories || state.tree;
 
@@ -99,7 +95,7 @@ const actions =
                 }
                 else if (category.children)
                 {
-                    dispatch("setCurrentCategoryById", {categoryId, categories: category.children});
+                    dispatch("setCurrentCategoryById", { categoryId, categories: category.children });
                 }
             }
         }

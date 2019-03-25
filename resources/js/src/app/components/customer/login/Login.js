@@ -1,6 +1,7 @@
 const ApiService          = require("services/ApiService");
 const NotificationService = require("services/NotificationService");
 const ModalService        = require("services/ModalService");
+const AutoFocusService    = require("services/AutoFocusService");
 
 import ValidationService from "services/ValidationService";
 import TranslationService from "services/TranslationService";
@@ -22,8 +23,7 @@ Vue.component("login", {
             password: "",
             username: "",
             loginFields: [],
-            isDisabled: false,
-            isPwdReset: false
+            isDisabled: false
         };
     },
 
@@ -37,6 +37,10 @@ Vue.component("login", {
         this.$nextTick(() =>
         {
             this.loginFields = $(".login-container").find(".input-unit");
+
+            this.removeLoginModal();
+
+            AutoFocusService.triggerAutoFocus();
         });
     },
 
@@ -64,33 +68,24 @@ Vue.component("login", {
 
         validateLogin()
         {
-            if (!this.isPwdReset)
-            {
-                ValidationService.validate($("#login-form-" + this._uid))
-                    .done(() =>
-                    {
-                        this.sendLogin();
-                    })
-                    .fail(invalidFields =>
-                    {
-                        ValidationService.markInvalidFields(invalidFields, "error");
-                    });
-            }
+            ValidationService.validate($("#login-form-" + this._uid))
+                .done(() =>
+                {
+                    this.sendLogin();
+                })
+                .fail(invalidFields =>
+                {
+                    ValidationService.markInvalidFields(invalidFields, "error");
+                });
         },
 
-        validateResetPwd()
+        removeLoginModal()
         {
-            if (this.isPwdReset)
+            if (!this.modalElement)
             {
-                ValidationService.validate($("#reset-pwd-form-" + this._uid))
-                    .done(() =>
-                    {
-                        this.sendResetPwd();
-                    })
-                    .fail(invalidFields =>
-                    {
-                        ValidationService.markInvalidFields(invalidFields, "error");
-                    });
+                const loginModal = document.getElementById("login");
+
+                loginModal.parentNode.removeChild(loginModal);
             }
         },
 
@@ -101,18 +96,18 @@ Vue.component("login", {
         {
             this.isDisabled = true;
 
-            ApiService.post("/rest/io/customer/login", {email: this.username, password: this.password}, {supressNotifications: true})
+            ApiService.post("/rest/io/customer/login", { email: this.username, password: this.password }, { supressNotifications: true })
                 .done(response =>
                 {
                     ApiService.setToken(response);
 
                     NotificationService.success(
-                        TranslationService.translate("Ceres::Template.accLoginSuccessful")
+                        TranslationService.translate("Ceres::Template.loginSuccessful")
                     ).closeAfter(10000);
 
                     if (this.backlink !== null && this.backlink)
                     {
-                        location.assign(this.backlink);
+                        location.assign(decodeURIComponent(this.backlink));
                     }
                     else if (this.hasToForward)
                     {
@@ -131,9 +126,16 @@ Vue.component("login", {
                     {
                     case 401:
                         this.loginFields.addClass("has-login-error");
+
+                        var translationKey = "Ceres::Template.loginFailed";
+
+                        if (response.error.message.length > 0 && response.error.message === "user is blocked")
+                            {
+                            translationKey = "Ceres::Template.loginBlocked";
+                        }
                         NotificationService.error(
-                            TranslationService.translate("Ceres::Template.accLoginFailed")
-                        ).closeAfter(10000);
+                                TranslationService.translate(translationKey)
+                            ).closeAfter(10000);
                         break;
                     default:
                         return;
@@ -141,97 +143,31 @@ Vue.component("login", {
                 });
         },
 
-        /**
-         *  Reset password
-         */
-        sendResetPwd()
-        {
-            this.isDisabled = true;
-
-            ApiService.post("/rest/io/customer/password_reset", {email: this.username, template: "Ceres::Customer.ResetPasswordMail", subject: "Ceres::Template.resetPasswordMailSubject"})
-                .done(() =>
-                {
-                    if (document.getElementById(this.modalElement) !== null)
-                    {
-                        ModalService.findModal(document.getElementById(this.modalElement)).hide();
-
-                        this.isDisabled = false;
-
-                        this.cancelResetPwd();
-                    }
-                    else
-                    {
-                        window.location.assign(window.location.origin);
-                    }
-
-                    NotificationService.success(
-                        TranslationService.translate("Ceres::Template.generalSendEmailOk")
-                    ).closeAfter(5000);
-
-                })
-                .fail(() =>
-                {
-                    this.isDisabled = false;
-
-                    NotificationService.error(
-                        TranslationService.translate("Ceres::Template.accResetPwDErrorOnSendEmail")
-                    ).closeAfter(5000);
-                });
-        },
-
         showResetPwdView()
         {
             this.resetError();
-            this.isPwdReset = true;
 
-            if (document.getElementById(this.modalElement) !== null)
+            if (this.modalElement)
             {
-                $(".login-modal .modal-title").html(
-                    TranslationService.translate("Ceres::Template.accForgotPassword")
-                );
+                ModalService
+                    .findModal(document.getElementById(this.modalElement))
+                    .hide()
+                    .then(() =>
+                    {
+                        ModalService.findModal(document.getElementById("resetPwd")).show();
+                    });
             }
             else
             {
-                $(".login-view-title").html(
-                    TranslationService.translate("Ceres::Template.accForgotPassword")
-                );
+                ModalService.findModal(document.getElementById("resetPwd")).show();
             }
 
-            $(".login-container").slideUp("fast", function()
-            {
-                $(".reset-pwd-container").slideDown("fast");
-            });
-        },
-
-        cancelResetPwd()
-        {
-            this.resetError();
-            this.isPwdReset = false;
-
-            if (document.getElementById(this.modalElement) !== null)
-            {
-                $(".login-modal .modal-title").text(
-                    TranslationService.translate("Ceres::Template.accLogin")
-                );
-            }
-            else
-            {
-                $(".login-view-title").text(
-                    TranslationService.translate("Ceres::Template.accLogin")
-                );
-            }
-
-            $(".reset-pwd-container").slideUp("fast", function()
-            {
-                $(".login-container").slideDown("fast");
-            });
         },
 
         resetError()
         {
             this.loginFields.removeClass("has-login-error");
             ValidationService.unmarkAllFields($("#login-form-" + this._uid));
-            ValidationService.unmarkAllFields($("#reset-pwd-form-" + this._uid));
         }
     }
 });

@@ -4,11 +4,18 @@ import TranslationService from "services/TranslationService";
 
 Vue.component("coupon", {
 
-    delimiters: ["${", "}"],
-
-    props: [
-        "template"
-    ],
+    props: {
+        template:
+        {
+            type: String,
+            default: "#vue-coupon"
+        },
+        appearance:
+        {
+            type: String,
+            default: "primary"
+        }
+    },
 
     data()
     {
@@ -16,6 +23,14 @@ Vue.component("coupon", {
             waiting: false,
             couponCode: ""
         };
+    },
+
+    watch:
+    {
+        redeemedCouponCode(val)
+        {
+            this.couponCode = val;
+        }
     },
 
     computed:
@@ -108,11 +123,11 @@ Vue.component("coupon", {
         getCouponRedemtionErrorMessage(error)
         {
             const errorMessageKeys = {
-                18:     "couponminOrderValueNotReached",
+                18:     "couponMinOrderValueNotReached",
                 51:     "couponnotUsableForSpecialOffer",
-                70:     "couponalreadyUsedOrInvalidCouponCode",
-                78:     "couponcampaignExpired",
-                126:    "couponnoMatchingItemInBasket",
+                70:     "couponAlreadyUsedOrInvalidCouponCode",
+                78:     "couponCampaignExpired",
+                126:    "couponNoMatchingItemInBasket",
                 329:    "couponOnlySubscription",
                 330:    "couponOnlySingleUsage",
                 331:    "couponNoOpenAmount",
@@ -129,9 +144,9 @@ Vue.component("coupon", {
                 343:    "couponCampaignNoWebstoreIdGiven"
             };
 
-            if (error && error.error && error.error.code && errorMessageKeys[error.error.code])
+            if (error && error.error && error.code && errorMessageKeys[error.code])
             {
-                return TranslationService.translate("Ceres::Template." + errorMessageKeys[error.error.code]);
+                return TranslationService.translate("Ceres::Template." + errorMessageKeys[error.code]);
             }
 
             return TranslationService.translate("Ceres::Template.couponRedeemFailure");

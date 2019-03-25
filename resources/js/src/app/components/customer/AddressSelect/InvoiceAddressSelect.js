@@ -1,3 +1,6 @@
+import TranslationService from "services/TranslationService";
+const NotificationService = require("services/NotificationService");
+
 Vue.component("invoice-address-select", {
 
     delimiters: ["${", "}"],
@@ -5,21 +8,38 @@ Vue.component("invoice-address-select", {
     template: `
         <address-select 
             ref="invoice"
-            template="#vue-address-select"
-            v-on:address-changed="addressChanged"
+            @address-changed="addressChanged"
             address-type="1"
-            :show-error='showError'>
+            :show-error="showError"
+            :optional-address-fields="optionalAddressFields"
+            :required-address-fields="requiredAddressFields">
         </address-select>
     `,
 
-    props: [
-        "selectedAddressId",
-        "addressList",
-        "hasToValidate"
-    ],
+    props: {
+        optionalAddressFields: {
+            type: Object,
+            default: () =>
+            {
+                return {};
+            }
+        },
+        requiredAddressFields: {
+            type: Object,
+            default: () =>
+            {
+                return {};
+            }
+        },
+        hasToValidate: {
+            type: Boolean,
+            default: false
+        }
+    },
 
     computed: Vuex.mapState({
         billingAddressId: state => state.address.billingAddressId,
+        billingAddressList: state => state.address.billingAddressList,
         showError: state => state.checkout.validation.invoiceAddress.showError
     }),
 
@@ -28,8 +48,6 @@ Vue.component("invoice-address-select", {
      */
     created()
     {
-        this.$store.dispatch("initBillingAddress", {id: this.selectedAddressId, addressList: this.addressList});
-
         if (this.hasToValidate)
         {
             this.$store.commit("setInvoiceAddressValidator", this.validate);
@@ -43,9 +61,9 @@ Vue.component("invoice-address-select", {
     {
         this.$nextTick(() =>
         {
-            if (App.isCheckoutView && this.addressList && this.addressList.length <= 0)
+            if (!App.isShopBuilder && App.isCheckoutView && this.billingAddressList && this.billingAddressList.length <= 0)
             {
-                this.$refs.invoice.showInitialAddModal();
+                this.$refs.invoice.showAddModal("initial");
             }
         });
     },
@@ -58,16 +76,16 @@ Vue.component("invoice-address-select", {
          */
         addressChanged(selectedAddress)
         {
-            this.$store.dispatch("selectAddress", {selectedAddress, addressType: "1"})
+            this.$store.dispatch("selectAddress", { selectedAddress, addressType: "1" })
                 .then(
-                response =>
-                {
-                    document.dispatchEvent(new CustomEvent("afterInvoiceAddressChanged", {detail: this.billingAddressId}));
-                },
-                error =>
-                {
+                    response =>
+                    {
+                        document.dispatchEvent(new CustomEvent("afterInvoiceAddressChanged", { detail: this.billingAddressId }));
+                    },
+                    error =>
+                    {
 
-                });
+                    });
 
             if (this.hasToValidate)
             {
@@ -77,7 +95,27 @@ Vue.component("invoice-address-select", {
 
         validate()
         {
-            this.$store.commit("setInvoiceAddressShowError", this.billingAddressId <= 0);
+            const showError = this.billingAddressId <= 0;
+
+            this.$store.commit("setInvoiceAddressShowError", showError);
+
+            if (showError)
+            {
+                NotificationService.error(
+                    TranslationService.translate("Ceres::Template.checkoutCheckInvoiceAddress")
+                );
+            }
+        }
+    },
+
+    watch:
+    {
+        billingAddressId()
+        {
+            if (this.hasToValidate && this.showError)
+            {
+                this.validate();
+            }
         }
     }
 });

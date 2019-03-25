@@ -3,17 +3,48 @@ Vue.component("category-image-carousel", {
     delimiters: ["${", "}"],
 
     props: {
-        imageUrlsData  : {type: Array},
-        itemUrl        : {type: String},
-        altText        : {type: String},
-        showDots       : {type: String},
-        showNav        : {type: String},
+        imageUrlsData:
+        {
+            type: Array
+        },
+        itemUrl:
+        {
+            type: String
+        },
+        altText:
+        {
+            type: String
+        },
+        titleText:
+        {
+            type: String
+        },
+        showDots:
+        {
+            type: Boolean,
+            default: App.config.item.categoryShowDots
+        },
+        showNav:
+        {
+            type: Boolean,
+            default: App.config.item.categoryShowNav
+        },
         disableLazyLoad: {
-            type   : Boolean,
+            type: Boolean,
             default: false
         },
-        enableCarousel : {type: Boolean},
-        template       : {type: String}
+        disableCarouselOnMobile:
+        {
+            type: Boolean
+        },
+        enableCarousel:
+        {
+            type: Boolean
+        },
+        template:
+        {
+            type: String
+        }
     },
 
     data()
@@ -47,7 +78,10 @@ Vue.component("category-image-carousel", {
     {
         this.$options.template = this.template;
 
-        this.$_enableCarousel = this.enableCarousel && this.imageUrls.length > 1;
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const shouldCarouselBeEnabled = this.enableCarousel && this.imageUrls.length > 1;
+
+        this.$_enableCarousel = this.disableCarouselOnMobile && isMobile ? false : shouldCarouselBeEnabled;
     },
 
     mounted()
@@ -66,13 +100,13 @@ Vue.component("category-image-carousel", {
         initializeCarousel()
         {
             $("#owl-carousel-" + this._uid).owlCarousel({
-                dots     : (this.showDots === "true"),
+                dots     : !!this.showDots,
                 items    : 1,
                 mouseDrag: false,
                 loop     : this.imageUrls.length > 1,
                 lazyLoad : !this.disableLazyLoad,
                 margin   : 10,
-                nav      : (this.showNav === "true"),
+                nav      : !!this.showNav,
                 navText  : [
                     `<i id="owl-nav-text-left-${this._uid}" class='fa fa-chevron-left' aria-hidden='true'></i>`,
                     `<i id="owl-nav-text-right-${this._uid}" class='fa fa-chevron-right' aria-hidden='true'></i>`
@@ -82,11 +116,11 @@ Vue.component("category-image-carousel", {
                     const target = $(event.currentTarget);
                     const owlItem = $(target.find(".owl-item.active"));
 
-                    owlItem.find(".img-fluid.lazy").show().lazyload({threshold : 100});
+                    owlItem.find(".img-fluid.lazy").show().lazyload({ threshold : 100 });
                 },
                 onInitialized: event =>
                 {
-                    if (this.showNav === "true")
+                    if (this.showNav)
                     {
                         document.querySelector(`#owl-nav-text-left-${this._uid}`).parentElement.onclick = event => event.preventDefault();
                         document.querySelector(`#owl-nav-text-right-${this._uid}`).parentElement.onclick = event => event.preventDefault();

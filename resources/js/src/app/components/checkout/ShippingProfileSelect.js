@@ -1,10 +1,14 @@
+import TranslationService from "services/TranslationService";
+const NotificationService = require("services/NotificationService");
+
 Vue.component("shipping-profile-select", {
 
-    delimiters: ["${", "}"],
-
-    props: [
-        "template"
-    ],
+    props: {
+        template: {
+            type: String,
+            default: "#vue-shipping-profile-select"
+        }
+    },
 
     computed: Vuex.mapState({
         shippingProfileList: state => state.checkout.shipping.shippingProfileList,
@@ -32,7 +36,7 @@ Vue.component("shipping-profile-select", {
             this.$store.dispatch("selectShippingProfile", this.shippingProfileList.find(shippingProfile => shippingProfile.parcelServicePresetId === shippingProfileId))
                 .then(data =>
                 {
-                    document.dispatchEvent(new CustomEvent("afterShippingProfileChanged", {detail: this.shippingProfileId}));
+                    document.dispatchEvent(new CustomEvent("afterShippingProfileChanged", { detail: this.shippingProfileId }));
                 },
                 error =>
                 {
@@ -44,7 +48,16 @@ Vue.component("shipping-profile-select", {
 
         validate()
         {
-            this.$store.commit("setShippingProfileShowError", !(this.shippingProfileId > 0));
+            const showError = this.shippingProfileId <= 0 || this.shippingProfileList.length <= 0;
+
+            this.$store.commit("setShippingProfileShowError", showError);
+
+            if (showError)
+            {
+                NotificationService.error(
+                    TranslationService.translate("Ceres::Template.checkoutCheckShippingProfile")
+                );
+            }
         }
     }
 });

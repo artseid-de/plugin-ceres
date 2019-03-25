@@ -5,10 +5,38 @@ import TranslationService from "services/TranslationService";
 
 Vue.component("checkout", {
 
-    props: [
-        "template",
-        "initialCheckout"
-    ],
+    props: {
+        template: {
+            type: String,
+            default: "#vue-checkout"
+        },
+        initialCheckout: {
+            type: Object,
+            required: true
+        },
+        deliveryAddressList:
+        {
+            type: Array,
+            default: () =>
+            []
+        },
+        selectedDeliveryAddress:
+        {
+            type: Number,
+            default: -99
+        },
+        billingAddressList:
+        {
+            type: Array,
+            default: () =>
+            []
+        },
+        selectedBillingAddress:
+        {
+            type: Number,
+            default: 0
+        }
+    },
 
     computed: Vuex.mapState({
         checkout: state => state.checkout
@@ -17,7 +45,11 @@ Vue.component("checkout", {
     created()
     {
         this.$options.template = this.template;
+
         this.$store.dispatch("setCheckout", this.initialCheckout);
+        this.$store.dispatch("initBillingAddress", { id: this.selectedBillingAddress, addressList: this.billingAddressList });
+        this.$store.dispatch("initDeliveryAddress", { id: this.selectedDeliveryAddress, addressList: this.deliveryAddressList });
+
         this.addEventHandler();
     },
 
@@ -30,6 +62,30 @@ Vue.component("checkout", {
                 {
                     this.handleCheckoutChangedEvent(checkout.checkout);
                 });
+
+            document.addEventListener("afterPaymentMethodChanged", event =>
+            {
+                const newMethodOfPaymentId = event.detail;
+
+                if (newMethodOfPaymentId !== this.checkout.payment.methodOfPaymentId)
+                {
+                    this.updateCheckoutAndBasket();
+                }
+            });
+        },
+
+        updateCheckoutAndBasket()
+        {
+            this.$store.commit("setIsBasketLoading", true);
+
+            const reloadBasketPromise = this.$store.dispatch("refreshBasket");
+            const reloadCheckoutPromise = this.$store.dispatch("refreshCheckout");
+
+            Promise.all([reloadBasketPromise, reloadCheckoutPromise])
+                .then(data =>
+                {
+                    this.$store.commit("setIsBasketLoading", false);
+                });
         },
 
         handleCheckoutChangedEvent(checkout)
@@ -37,12 +93,12 @@ Vue.component("checkout", {
             if (!this.isEquals(this.checkout.payment.methodOfPaymentList, checkout.paymentDataList, "id"))
             {
                 NotificationService.info(
-                    TranslationService.translate("Ceres::Template.orderMethodOfPaymentListChanged")
+                    TranslationService.translate("Ceres::Template.checkoutMethodOfPaymentListChanged")
                 );
                 this.$store.commit("setMethodOfPaymentList", checkout.paymentDataList);
             }
 
-            if (this.hasShippingProfileListChanged(this.checkout.shipping.shippingProfileList, checkout.shippingProfileList))
+            if (this.hasShippingProfileListChanged(this.checkout.shipping.shippingProfileList, checkout.shippingProfileList.slice()))
             {
                 this.$store.commit("setShippingProfileList", checkout.shippingProfileList);
             }
@@ -50,7 +106,7 @@ Vue.component("checkout", {
             if (this.checkout.payment.methodOfPaymentId !== checkout.methodOfPaymentId)
             {
                 NotificationService.warn(
-                    TranslationService.translate("Ceres::Template.orderMethodOfPaymentChanged")
+                    TranslationService.translate("Ceres::Template.checkoutMethodOfPaymentChanged")
                 );
                 this.$store.commit("setMethodOfPayment", checkout.methodOfPaymentId);
             }
@@ -58,7 +114,7 @@ Vue.component("checkout", {
             if (this.checkout.shipping.shippingProfileId !== checkout.shippingProfileId)
             {
                 NotificationService.warn(
-                    TranslationService.translate("Ceres::Template.orderShippingProfileChanged")
+                    TranslationService.translate("Ceres::Template.checkoutShippingProfileChanged")
                 );
                 this.$store.commit("setShippingProfile", checkout.shippingProfileId);
             }
@@ -74,7 +130,7 @@ Vue.component("checkout", {
             if (oldList.length !== newList.length)
             {
                 NotificationService.info(
-                    TranslationService.translate("Ceres::Template.orderShippingProfileListChanged")
+                    TranslationService.translate("Ceres::Template.checkoutShippingProfileListChanged")
                 );
                 return true;
             }
@@ -87,15 +143,19 @@ Vue.component("checkout", {
                 if (oldList[index].parcelServicePresetId !== newList[index].parcelServicePresetId)
                 {
                     NotificationService.info(
-                        TranslationService.translate("Ceres::Template.orderShippingProfileListChanged")
+                        TranslationService.translate("Ceres::Template.checkoutShippingProfileListChanged")
                     );
                     return true;
                 }
                 else if (oldList[index].shippingAmount !== newList[index].shippingAmount)
                 {
                     NotificationService.info(
-                        TranslationService.translate("Ceres::Template.orderShippingProfilePriceChanged")
+                        TranslationService.translate("Ceres::Template.checkoutShippingProfilePriceChanged")
                     );
+                    return true;
+                }
+                else if (oldList[index].shippingPrivacyInformation !== newList[index].shippingPrivacyInformation)
+                {
                     return true;
                 }
             }
@@ -137,6 +197,12 @@ Vue.component("checkout", {
 
                 return 0;
             });
+        },
+
+        showModal(content)
+        {
+            $(this.$refs.checkoutModalContent).html(content);
+            $(this.$refs.checkoutModal).modal("show");
         }
     }
 });

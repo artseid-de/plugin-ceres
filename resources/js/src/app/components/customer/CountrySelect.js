@@ -1,5 +1,3 @@
-var CountryService = require("services/CountryService");
-
 Vue.component("country-select", {
 
     delimiters: ["${", "}"],
@@ -9,7 +7,9 @@ Vue.component("country-select", {
         "selectedCountryId",
         "selectedStateId",
         "template",
-        "addressType"
+        "addressType",
+        "optionalAddressFields",
+        "requiredAddressFields"
     ],
 
     data()
@@ -31,7 +31,18 @@ Vue.component("country-select", {
     {
         this.$options.template = this.template;
 
-        CountryService.sortCountries(this.countryList);
+        this.countryList.sort(function(first, second)
+        {
+            if (first.currLangName < second.currLangName)
+            {
+                return -1;
+            }
+            if (first.currLangName > second.currLangName)
+            {
+                return 1;
+            }
+            return 0;
+        });
         this.updateSelectedCountry();
     },
 
@@ -79,13 +90,27 @@ Vue.component("country-select", {
 
             if (this.selectedCountry)
             {
-                this.stateList = CountryService.parseShippingStates(this.countryList, countryId);
+                this.stateList = this.selectedCountry.states || [];
             }
 
-            if (!this.selectedCountryId)
-            {
-                this.countryChanged(countryId);
-            }
+            this.countryChanged(countryId);
+        },
+
+        isInOptionalFields(locale, key)
+        {
+            return this.optionalAddressFields[locale].includes(key);
+        },
+
+        isInRequiredFields(locale, key)
+        {
+            return (this.requiredAddressFields && this.requiredAddressFields[locale] && this.requiredAddressFields[locale].includes(key));
+        }
+    },
+
+    filters: {
+        transformRequiredLabel(label, shouldMarkRequired)
+        {
+            return shouldMarkRequired ? label + "*" : label;
         }
     },
 

@@ -4,19 +4,39 @@ const NotificationService = require("services/NotificationService");
 
 Vue.component("add-to-wish-list", {
 
-    props: [
-        "isActive",
-        "variationId",
-        "template"
-    ],
+    props: {
+        template: {
+            type: String,
+            default: "#vue-add-to-wish-list"
+        },
+        variationId: Number
+    },
 
     data()
     {
         return {
-            wishListCount: 0,
-            _isActive: this.isActive,
             isLoading: false
         };
+    },
+
+    computed:
+    {
+        isVariationInWishList()
+        {
+            return this.wishListIds.includes(this.variationId);
+        },
+
+        ...Vuex.mapState({
+            wishListIds: state => state.wishList.wishListIds
+        })
+    },
+
+    watch:
+    {
+        isVariationInWishList()
+        {
+            this.changeTooltipText();
+        }
     },
 
     created()
@@ -24,19 +44,11 @@ Vue.component("add-to-wish-list", {
         this.$options.template = this.template;
     },
 
-    mounted()
-    {
-        this.$nextTick(() =>
-        {
-            this.changeTooltipText();
-        });
-    },
-
     methods:
     {
         switchState()
         {
-            if (this.$data._isActive)
+            if (this.isVariationInWishList)
             {
                 this.removeFromWishList();
             }
@@ -51,23 +63,18 @@ Vue.component("add-to-wish-list", {
             if (!this.isLoading)
             {
                 this.isLoading = true;
-                this.$data._isActive = true;
-                this.changeTooltipText();
-
                 this.$store.dispatch("addToWishList", parseInt(this.variationId)).then(
                     response =>
                     {
                         this.isLoading = false;
 
                         NotificationService.success(
-                            TranslationService.translate("Ceres::Template.itemWishListAdded")
+                            TranslationService.translate("Ceres::Template.singleItemWishListAdded")
                         );
                     },
                     error =>
                     {
                         this.isLoading = false;
-                        this.$data._isActive = false;
-                        this.changeTooltipText();
                     });
             }
         },
@@ -77,22 +84,17 @@ Vue.component("add-to-wish-list", {
             if (!this.isLoading)
             {
                 this.isLoading = true;
-                this.$data._isActive = false;
-                this.changeTooltipText();
-
-                this.$store.dispatch("removeWishListItem", {id: parseInt(this.variationId)}).then(response =>
+                this.$store.dispatch("removeWishListItem", { id: parseInt(this.variationId) }).then(response =>
                 {
                     this.isLoading = false;
 
                     NotificationService.success(
-                        TranslationService.translate("Ceres::Template.itemWishListRemoved")
+                        TranslationService.translate("Ceres::Template.singleItemWishListRemoved")
                     );
                 },
                 error =>
                 {
                     this.isLoading = false;
-                    this.$data._isActive = true;
-                    this.changeTooltipText();
                 });
             }
         },
@@ -100,7 +102,7 @@ Vue.component("add-to-wish-list", {
         changeTooltipText()
         {
             const tooltipText = TranslationService.translate(
-                "Ceres::Template." + this.$data._isActive ? "itemWishListRemove" : "itemWishListAdd"
+                "Ceres::Template." + (this.isVariationInWishList ? "singleItemWishListRemove" : "singleItemWishListAdd")
             );
 
             $(".add-to-wish-list")

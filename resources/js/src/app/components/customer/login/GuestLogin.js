@@ -1,6 +1,7 @@
-var ApiService = require("services/ApiService");
-
 import ValidationService from "services/ValidationService";
+import { navigateTo } from "services/UrlService";
+
+var ApiService = require("services/ApiService");
 
 Vue.component("guest-login", {
 
@@ -24,6 +25,18 @@ Vue.component("guest-login", {
         this.$options.template = this.template;
     },
 
+    mounted()
+    {
+        this.$nextTick(() =>
+        {
+            $("#guestLogin").on("hidden.bs.modal", () =>
+			{
+                this.email = "";
+                this.resetError();
+            });
+        });
+    },
+
     methods: {
         validate: function()
         {
@@ -42,19 +55,25 @@ Vue.component("guest-login", {
         {
             this.isDisabled = true;
 
-            ApiService.post("/rest/io/guest", {email: this.email})
+            ApiService.post("/rest/io/guest", { email: this.email })
                 .done(function()
                 {
                     if (this.backlink !== null && this.backlink)
                     {
-                        window.location.assign(this.backlink);
+                        navigateTo(decodeURIComponent(this.backlink));
                     }
                     else
                     {
-                        this.isDisabled = false;
+                        // Go back to Homepage
+                        navigateTo(window.location.origin);
                     }
 
                 }.bind(this));
+        },
+
+        resetError()
+        {
+            ValidationService.unmarkAllFields($("#guest-login-form-" + this._uid));
         }
     }
 });

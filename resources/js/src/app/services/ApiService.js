@@ -1,3 +1,5 @@
+import { normalizeUrl } from "../helper/url";
+
 var NotificationService = require("services/NotificationService");
 var WaitScreenService   = require("services/WaitScreenService");
 
@@ -98,21 +100,37 @@ module.exports = (function($)
     {
         var deferred = $.Deferred();
 
+        url = normalizeUrl(url);
         config = config || {};
-        config.data = data || null;
         config.dataType = config.dataType || "json";
-        config.contentType = config.contentType || "application/x-www-form-urlencoded; charset=UTF-8";
+        config.contentType = typeof config.contentType !== "undefined" ? config.contentType : "application/x-www-form-urlencoded; charset=UTF-8";
         config.doInBackground = !!config.doInBackground;
         config.supressNotifications = !!config.supressNotifications;
+        config.keepOriginalResponse = !!config.keepOriginalResponse;
+        config.headers = config.headers || { "Accept-Language": App.language };
+
+        if (data)
+        {
+            data.templateEvent = App.templateEvent;
+            config.data = data;
+        }
 
         if (!config.doInBackground)
         {
             WaitScreenService.showWaitScreen();
         }
+
         $.ajax(url, config)
             .done(function(response)
             {
-                deferred.resolve(response.data || response);
+                if (config.keepOriginalResponse)
+                {
+                    deferred.resolve(response);
+                }
+                else
+                {
+                    deferred.resolve(response.data || response);
+                }
             })
             .fail(function(jqXHR)
             {
@@ -145,9 +163,9 @@ module.exports = (function($)
             notification = NotificationService.success(response.success);
         }
 
-        if (response.warning && response.warning.message.length > 0)
+        if (response.warn && response.warn.message.length > 0)
         {
-            notification = NotificationService.warning(response.warning);
+            notification = NotificationService.warn(response.warn);
         }
 
         if (response.info && response.info.message.length > 0)

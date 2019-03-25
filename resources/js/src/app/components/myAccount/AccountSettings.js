@@ -73,18 +73,18 @@ Vue.component("account-settings", {
 
             if (this.newPassword !== "" && (this.newPassword === this.confirmPassword))
             {
-                APIService.post("/rest/io/customer/password", {password: this.newPassword, password2: this.confirmPassword})
+                APIService.post("/rest/io/customer/password", { password: this.newPassword, password2: this.confirmPassword })
                     .done(function(response)
                     {
                         self.clearFieldsAndClose();
                         NotificationService.success(
-                            TranslationService.translate("Ceres::Template.accChangePasswordSuccessful")
+                            TranslationService.translate("Ceres::Template.myAccountChangePasswordSuccessful")
                         ).closeAfter(3000);
                     }).fail(function(response)
                     {
                         self.clearFieldsAndClose();
                         NotificationService.error(
-                            TranslationService.translate("Ceres::Template.accChangePasswordFailed")
+                            TranslationService.translate("Ceres::Template.myAccountChangePasswordFailed")
                         ).closeAfter(5000);
                     });
             }

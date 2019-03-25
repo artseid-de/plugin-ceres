@@ -1,27 +1,26 @@
 import ExceptionMap from "exceptions/ExceptionMap";
 import TranslationService from "services/TranslationService";
+import { isNullOrUndefined } from "../../../helper/utils";
+import { transformBasketItemProperties } from "../../../services/VariationPropertyService";
 
 const NotificationService = require("services/NotificationService");
 
 Vue.component("basket-list-item", {
-
-    delimiters: ["${", "}"],
-
     props: [
         "basketItem",
         "size",
         "language",
-        "template"
+        "template",
+        "appearance"
     ],
 
     data()
     {
         return {
             waiting: false,
-            waitForDelete: false,
-            deleteConfirmed: false,
-            deleteConfirmedTimeout: null,
-            itemCondition: ""
+            waitingForDelete: false,
+            itemCondition: "",
+            showMoreInformation: false
         };
     },
 
@@ -29,16 +28,28 @@ Vue.component("basket-list-item", {
     {
         image()
         {
-            const img = this.$options.filters.itemImages(this.basketItem.variation.data.images, "urlPreview")[0];
+            const itemImages = this.$options.filters.itemImages(this.basketItem.variation.data.images, "urlPreview");
 
-            return img;
+            return this.$options.filters.itemImage(itemImages);
         },
 
         altText()
         {
-            const altText = this.image && this.image.alternate ? this.image.alternate : this.$options.filters.itemName(this.basketItem.variation.data);
+            const images = this.$options.filters.itemImages(this.basketItem.variation.data.images, "urlPreview");
+            const altText =  this.$options.filters.itemImageAlternativeText(images);
 
-            return altText;
+            if (altText)
+            {
+                return altText;
+            }
+
+            return this.itemName;
+
+        },
+
+        itemName()
+        {
+            return this.$options.filters.itemName(this.basketItem.variation.data);
         },
 
         isInputLocked()
@@ -46,8 +57,51 @@ Vue.component("basket-list-item", {
             return this.waiting || this.isBasketLoading;
         },
 
+        propertySurchargeSum()
+        {
+            let sum = 0;
+
+            for (const property of this.basketItem.basketItemOrderParams)
+            {
+                sum += this.$options.filters.propertySurcharge(this.basketItem.variation.data.properties, property.propertyId);
+            }
+
+            return sum;
+        },
+
+        itemTotalPrice()
+        {
+            return this.basketItem.quantity * this.basketItem.price;
+        },
+
+        unitPrice()
+        {
+            if (!isNullOrUndefined(this.basketItem.variation.data.prices.specialOffer))
+            {
+                return this.basketItem.variation.data.prices.specialOffer.unitPrice.value;
+            }
+
+            return this.basketItem.variation.data.prices.default.unitPrice.value;
+        },
+
+        basePrice()
+        {
+            if (!isNullOrUndefined(this.basketItem.variation.data.prices.specialOffer))
+            {
+                return this.basketItem.variation.data.prices.specialOffer.basePrice;
+            }
+
+            return this.basketItem.variation.data.prices.default.basePrice;
+        },
+
+        transformedVariationProperties()
+        {
+            return transformBasketItemProperties(this.basketItem, ["empty"], "displayInOrderProcess");
+        },
+
         ...Vuex.mapState({
-            isBasketLoading: state => state.basket.isBasketLoading
+            isBasketLoading: state => state.basket.isBasketLoading,
+            showNetPrice: state => state.basket.showNetPrices
         })
     },
 
@@ -63,33 +117,19 @@ Vue.component("basket-list-item", {
          */
         deleteItem()
         {
-            if (!this.deleteConfirmed)
+            if (!this.waiting && !this.waitingForDelete && !this.isBasketLoading)
             {
-                this.deleteConfirmed = true;
-                this.deleteConfirmedTimeout = window.setTimeout(
-                    () =>
-                    {
-                        this.resetDelete();
-                    },
-                    5000
-                );
-            }
-            else
-            {
-                this.waitForDelete = true;
-                this.waiting = true;
+                this.waitingForDelete = true;
 
                 this.$store.dispatch("removeBasketItem", this.basketItem.id).then(
                     response =>
                     {
-                        document.dispatchEvent(new CustomEvent("afterBasketItemRemoved", {detail: this.basketItem}));
-                        this.waiting = false;
+                        document.dispatchEvent(new CustomEvent("afterBasketItemRemoved", { detail: this.basketItem }));
+                        this.waitingForDelete = false;
                     },
                     error =>
                     {
-                        this.resetDelete();
-                        this.waitForDelete = false;
-                        this.waiting = false;
+                        this.waitingForDelete = false;
                     });
             }
         },
@@ -106,10 +146,10 @@ Vue.component("basket-list-item", {
 
                 const origQty = this.basketItem.quantity;
 
-                this.$store.dispatch("updateBasketItemQuantity", {basketItem: this.basketItem, quantity: quantity}).then(
+                this.$store.dispatch("updateBasketItemQuantity", { basketItem: this.basketItem, quantity: quantity }).then(
                     response =>
                     {
-                        document.dispatchEvent(new CustomEvent("afterBasketItemQuantityUpdated", {detail: this.basketItem}));
+                        document.dispatchEvent(new CustomEvent("afterBasketItemQuantityUpdated", { detail: this.basketItem }));
                         this.waiting = false;
                     },
                     error =>
@@ -142,16 +182,16 @@ Vue.component("basket-list-item", {
             }
         },
 
-        /**
-         * Cancel delete
-         */
-        resetDelete()
+        isPropertyVisible(propertyId)
         {
-            this.deleteConfirmed = false;
-            if (this.deleteConfirmedTimeout)
+            const property = this.basketItem.variation.data.properties.find(property => property.property.id === parseInt(propertyId));
+
+            if (property)
             {
-                window.clearTimeout(this.deleteConfirmedTimeout);
+                return property.property.isShownAtCheckout;
             }
+
+            return false;
         }
     }
 });

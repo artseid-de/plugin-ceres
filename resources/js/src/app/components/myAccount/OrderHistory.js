@@ -7,7 +7,16 @@ Vue.component("order-history", {
     delimiters: ["${", "}"],
 
     props: {
-        template: String
+        template:
+        {
+            type: String,
+            default: "#vue-order-history"
+        },
+        orderDetailsTemplate:
+        {
+            type: String,
+            default: "Ceres::Checkout.OrderDetails"
+        }
     },
 
     data()
@@ -37,7 +46,7 @@ Vue.component("order-history", {
             });
 
             ApiService
-                .get("/rest/io/order/template?template=Ceres::Checkout.OrderDetails&orderId=" + order.order.id)
+                .get("/rest/io/order/template?template=" + this.orderDetailsTemplate + "&orderId=" + order.order.id)
                 .done(response =>
                 {
                     this.isLoading = false;
@@ -51,7 +60,7 @@ Vue.component("order-history", {
             {
                 if (paymentStates[paymentState].typeId == 4)
                 {
-                    return TranslationService.translate("Ceres::Template.paymentStatus_" + paymentStates[paymentState].value);
+                    return TranslationService.translate("Ceres::Template.orderHistoryPaymentStatus_" + paymentStates[paymentState].value);
                 }
             }
 

@@ -1,3 +1,6 @@
+import { isNullOrUndefined } from "../../helper/utils";
+import TranslationService from "services/TranslationService";
+
 Vue.component("item-image-carousel", {
 
     delimiters: ["${", "}"],
@@ -120,6 +123,45 @@ Vue.component("item-image-carousel", {
                 }
             });
 
+            if (!isNullOrUndefined(window.lightbox))
+            {
+                window.lightbox.option({
+                    wrapAround: true
+                });
+                window.lightbox.imageCountLabel = (current, total) =>
+                {
+                    if (isNullOrUndefined(imageCount) || imageCount <= 1)
+                    {
+                        return "";
+                    }
+                    current -= ((total - imageCount) / 2);
+                    while (current <= 0)
+                    {
+                        current += imageCount;
+                    }
+                    while (current > imageCount)
+                    {
+                        current -= imageCount;
+                    }
+                    return TranslationService.translate("Ceres::Template.singleItemImagePreviewCaption", { current: current, total: imageCount });
+                };
+
+                const originalFn = window.lightbox.changeImage;
+
+                window.lightbox.changeImage = imageNumber =>
+                {
+                    if (window.lightbox.currentImageIndex === 0 && imageNumber === window.lightbox.album.length - 1)
+                    {
+                        imageNumber--;
+                    }
+                    else if (window.lightbox.currentImageIndex === window.lightbox.album.length - 1 && imageNumber === 0)
+                    {
+                        imageNumber++;
+                    }
+                    return originalFn.call(window.lightbox, imageNumber);
+                };
+            }
+
             $(this.$refs.single).on("changed.owl.carousel", event =>
             {
                 this.currentItem = event.page.index;
@@ -184,6 +226,11 @@ Vue.component("item-image-carousel", {
             const altText = image && image.alternate ? image.alternate : this.$options.filters.itemName(this.currentVariation.documents[0].data);
 
             return altText;
+        },
+
+        getItemName()
+        {
+            return this.$options.filters.itemName(this.currentVariation.documents[0].data);
         }
     }
 });

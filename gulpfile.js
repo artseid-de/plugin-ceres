@@ -22,6 +22,10 @@ var minifyCSS = require("gulp-minify-css");
 var eslint = require("gulp-eslint");
 var sass = require("gulp-sass");
 var autoprefixer = require("gulp-autoprefixer");
+var copy = require("gulp-copy");
+var insert = require("gulp-insert");
+var fs = require("fs");
+var path = require("path");
 
 gulp.task("default", ["build"]);
 
@@ -46,7 +50,11 @@ gulp.task("build:bundle", [
         .pipe(concat(OUTPUT_PREFIX + ".js"))
         .pipe(gulp.dest(JS_DIST))
         .pipe(rename(OUTPUT_PREFIX + ".min.js"))
-        .pipe(uglify().on("error", gutil.log))
+        .pipe(uglify({
+            compress: {
+                collapse_vars: false
+            }
+        }).on("error", gutil.log))
         .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(JS_DIST));
 });
@@ -136,6 +144,7 @@ gulp.task("build:lint", function()
     // Otherwise, the task may end before the stream has finished.
     return gulp.src([
         "resources/js/src/**/*.js",
+        "!resources/js/src/libraries/**",
         "!node_modules/**"
     ])
         .pipe(eslint({
@@ -152,20 +161,34 @@ gulp.task("build:lint", function()
 // SASS
 gulp.task("build:sass-min", ["build:sass"], function()
 {
+    buildSass(OUTPUT_PREFIX + "-legacy.min.css", "compressed", true);
     return buildSass(OUTPUT_PREFIX + ".min.css", "compressed");
 });
 
-gulp.task("build:sass", function()
+gulp.task("build:sass", ["copy:sass-vendor"], function()
 {
+    buildSass(OUTPUT_PREFIX + "-legacy.css", "expanded", true);
     return buildSass(OUTPUT_PREFIX + ".css", "expanded");
 });
 
-function buildSass(outputFile, outputStyle)
+gulp.task("copy:sass-vendor", function()
+{
+    return gulp
+        .src([
+            'node_modules/bootstrap/scss/**/*.scss',
+            'node_modules/font-awesome/scss/**/*.scss',
+            'node_modules/flag-icon-css/sass/**/*.scss'
+        ])
+        .pipe(copy(SCSS_SRC, {prefix: 1}))
+});
+
+function buildSass(outputFile, outputStyle, isLegacy)
 {
     var config = {
         scssOptions  : {
             errLogToConsole: true,
-            outputStyle    : outputStyle
+            outputStyle    : outputStyle,
+            data: ''
         },
         prefixOptions: {
             browsers: [
@@ -176,13 +199,44 @@ function buildSass(outputFile, outputStyle)
         }
     };
 
+    const pluginConfig = require("./config");
+    const getScssConfig = formFields =>
+    {
+        let scssConfig = "";
+
+        for (const entryKey in formFields)
+        {
+            const entry = formFields[entryKey];
+
+            if (entry.scss)
+            {
+                scssConfig += `$${entryKey.split(".").join("")}: ${entry.options.defaultValue};`;
+            }
+
+            if (entry.options && entry.options.containerEntries)
+            {
+                scssConfig += getScssConfig(entry.options.containerEntries, true);
+            }
+        }
+
+        return scssConfig;
+    };
+
+    let scssConfig = "";
+    const tabs = Object.values(pluginConfig.menu);
+
+    for (const tab of tabs)
+    {
+        scssConfig += getScssConfig(tab.formFields);
+    }
+
     return gulp
-        .src(SCSS_SRC + "Ceres.scss")
+        .src(SCSS_SRC + (isLegacy ? "Ceres_legacy.scss" : "Ceres.scss"))
+        .pipe(insert.prepend(scssConfig))
         .pipe(sourcemaps.init())
         .pipe(sass(config.scssOptions).on("error", sass.logError))
         .pipe(rename(outputFile))
         .pipe(autoprefixer(config.prefixOptions))
-        .pipe(minifyCSS())
         .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(SCSS_DIST));
 }

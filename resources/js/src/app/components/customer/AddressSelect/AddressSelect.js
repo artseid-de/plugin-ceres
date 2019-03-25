@@ -1,21 +1,41 @@
-import {isNullOrUndefined}from "../../../helper/utils";
+import { isNull, isDefined } from "../../../helper/utils";
 
 const ApiService = require("services/ApiService");
 const ModalService = require("services/ModalService");
-const AddressFieldService = require("services/AddressFieldService");
 
 import ValidationService from "services/ValidationService";
 import TranslationService from "services/TranslationService";
 
 Vue.component("address-select", {
 
-    delimiters: ["${", "}"],
-
-    props: [
-        "template",
-        "addressType",
-        "showError"
-    ],
+    props: {
+        template: {
+            type: String,
+            default: "#vue-address-select"
+        },
+        addressType: {
+            type: String,
+            required: true
+        },
+        showError: Boolean,
+        optionalAddressFields: {
+            type: Object,
+            default: () =>
+            {
+                return {
+                    de: [],
+                    gb: []
+                };
+            }
+        },
+        requiredAddressFields: {
+            type: Object,
+            default: () =>
+            {
+                return {};
+            }
+        }
+    },
 
     data()
     {
@@ -23,7 +43,11 @@ Vue.component("address-select", {
             addressModal   : {},
             modalType      : "",
             headline       : "",
-            addressToEdit  : {},
+            addressToEdit  : {
+                addressSalutation: 0,
+                gender: "male",
+                countryId        : this.shippingCountryId
+            },
             addressToDelete: {},
             deleteModal    : "",
             deleteModalWaiting: false,
@@ -32,7 +56,8 @@ Vue.component("address-select", {
                 1: "vatNumber",
                 4: "telephone",
                 9: "birthday",
-                11: "title"
+                11: "title",
+                12: "contactPerson"
             }
         };
     },
@@ -67,6 +92,15 @@ Vue.component("address-select", {
         isAddressListEmpty()
         {
             return !(this.addressList && this.addressList.length > 0);
+        },
+
+        isSalutationEnabled()
+        {
+            const countryId = parseInt(this.addressToEdit.countryId) || 1;
+            const addressKey = parseInt(this.addressType) === 1 ? "billing_address" : "delivery_address";
+            const countryKey = countryId === 12 ? "gb" : "de";
+
+            return this.optionalAddressFields[countryKey].includes(`${addressKey}.salutation`);
         },
 
         ...Vuex.mapState({
@@ -118,58 +152,33 @@ Vue.component("address-select", {
         },
 
         /**
-         * Check whether a company name exists and show it in bold
-         * @returns {boolean}
-         */
-        showNameStrong()
-        {
-            return !this.selectedAddress.name1 || this.selectedAddress.name1.length === 0;
-        },
-
-        /**
-         * Show the add modal initially, if no address is selected in checkout
-         */
-        showInitialAddModal()
-        {
-            this.modalType = "initial";
-
-            if (AddressFieldService.isAddressFieldEnabled(this.addressToEdit.countryId, this.addressType, "salutation"))
-            {
-                this.addressToEdit = {
-                    addressSalutation: 0,
-                    countryId        : this.shippingCountryId
-                };
-            }
-            else
-            {
-                this.addressToEdit = {countryId: this.shippingCountryId};
-            }
-
-            this.updateHeadline();
-            this.addressModal.show();
-        },
-
-        /**
          * Show the add modal
          */
-        showAddModal()
+        showAddModal(type)
         {
-            this.modalType = "create";
+            this.modalType = type || "create";
 
-            if (AddressFieldService.isAddressFieldEnabled(this.addressToEdit.countryId, this.addressType, "salutation"))
+            if (this.isSalutationEnabled)
             {
                 this.addressToEdit = {
                     addressSalutation: 0,
-                    countryId        : this.shippingCountryId
+                    gender: "male",
+                    countryId: this.shippingCountryId,
+                    showPickupStation: false
                 };
             }
             else
             {
-                this.addressToEdit = {countryId: this.shippingCountryId};
+                this.addressToEdit = { countryId: this.shippingCountryId };
             }
 
             this.updateHeadline();
-            ValidationService.unmarkAllFields($(this.$refs.addressModal));
+
+            if (this.modalType === "create")
+            {
+                ValidationService.unmarkAllFields($(this.$refs.addressModal));
+            }
+
             this.addressModal.show();
         },
 
@@ -182,9 +191,23 @@ Vue.component("address-select", {
             this.modalType = "update";
             this.addressToEdit = this.getAddressToEdit(address);
 
-            if (typeof this.addressToEdit.addressSalutation === "undefined")
+            if (this.addressToEdit.gender === "female")
+            {
+                this.addressToEdit.addressSalutation = 1;
+            }
+            else if (isNull(this.addressToEdit.gender) && this.addressToEdit.name1)
+            {
+                this.addressToEdit.addressSalutation = 2;
+            }
+            else
             {
                 this.addressToEdit.addressSalutation = 0;
+                this.addressToEdit.gender = "male";
+            }
+
+            if (isDefined(this.addressToEdit.address1) && (this.addressToEdit.address1 === "PACKSTATION" || this.addressToEdit.address1 === "POSTFILIALE") && this.$store.getters.isParcelOrOfficeAvailable)
+            {
+                this.addressToEdit.showPickupStation = true;
             }
 
             this.updateHeadline();
@@ -229,7 +252,7 @@ Vue.component("address-select", {
         {
             this.deleteModalWaiting = true;
 
-            this.$store.dispatch("deleteAddress", {address: this.addressToDelete, addressType: this.addressType})
+            this.$store.dispatch("deleteAddress", { address: this.addressToDelete, addressType: this.addressType })
                 .then(
                     response =>
                     {
@@ -268,34 +291,34 @@ Vue.component("address-select", {
 
             if (this.modalType === "initial")
             {
-                headline = TranslationService.translate("Ceres::Template.orderInvoiceAddressInitial");
+                headline = TranslationService.translate("Ceres::Template.addressInvoiceAddressInitial");
             }
             else if (this.addressType === "2")
             {
                 if (this.modalType === "update")
                 {
-                    headline = TranslationService.translate("Ceres::Template.orderShippingAddressEdit");
+                    headline = TranslationService.translate("Ceres::Template.addressShippingAddressEdit");
                 }
                 else if (this.modalType === "create")
                 {
-                    headline = TranslationService.translate("Ceres::Template.orderShippingAddressCreate");
+                    headline = TranslationService.translate("Ceres::Template.addressShippingAddressCreate");
                 }
                 else
                 {
-                    headline = TranslationService.translate("Ceres::Template.orderShippingAddressDelete");
+                    headline = TranslationService.translate("Ceres::Template.addressShippingAddressDelete");
                 }
             }
             else if (this.modalType === "update")
             {
-                headline = TranslationService.translate("Ceres::Template.orderInvoiceAddressEdit");
+                headline = TranslationService.translate("Ceres::Template.addressInvoiceAddressEdit");
             }
             else if (this.modalType === "create")
             {
-                headline = TranslationService.translate("Ceres::Template.orderInvoiceAddressCreate");
+                headline = TranslationService.translate("Ceres::Template.addressInvoiceAddressCreate");
             }
             else
             {
-                headline = TranslationService.translate("Ceres::Template.orderInvoiceAddressDelete");
+                headline = TranslationService.translate("Ceres::Template.addressInvoiceAddressDelete");
             }
 
             this.headline = headline;
@@ -307,30 +330,31 @@ Vue.component("address-select", {
          */
         getCountryName(countryId)
         {
-            if (countryId > 0)
-            {
-                const country = this.countryList.find(country => country.id === countryId);
-
-                if (!isNullOrUndefined(country))
-                {
-                    return country.currLangName;
-                }
-            }
-
-            return "";
+            return this.$store.getters.getCountryName(countryId);
         },
 
-        setAddressToEditField({field, value})
+        setAddressToEditField({ field, value })
         {
             this.addressToEdit[field] = value;
+            this.addressToEdit = Object.assign({}, this.addressToEdit);
+        },
+
+        onDropdownClicked(event)
+        {
+            if (this.isAddressListEmpty || (parseInt(this.addressType) === 2 && this.addressList.length === 1))
+            {
+                event.preventDefault();
+                event.stopPropagation();
+                this.showAddModal();
+            }
         }
     },
 
-    filters :
+    filters:
     {
         optionType(selectedAddress, typeId)
         {
-            if (selectedAddress && selectedAddress.name2)
+            if (selectedAddress && selectedAddress.options)
             {
                 for (const optionType of selectedAddress.options)
                 {
@@ -342,7 +366,17 @@ Vue.component("address-select", {
             }
 
             return "";
+        }
+    },
 
+    watch:
+    {
+        isSalutationEnabled(newVal)
+        {
+            if (!newVal)
+            {
+                delete this.addressToEdit.addressSalutation;
+            }
         }
     }
 });

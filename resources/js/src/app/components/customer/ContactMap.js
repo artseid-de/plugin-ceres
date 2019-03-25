@@ -28,12 +28,12 @@ Vue.component("contact-map", {
     {
         initMap()
         {
-            const coordinates = {lat: -34.397, lng: 150.644};
+            const coordinates = { lat: -34.397, lng: 150.644 };
 
             const gMap = new google.maps.Map(document.getElementById("contact-map"),
                 {
                     center: coordinates,
-                    zoom  : this.mapZoom
+                    zoom  : parseInt(this.mapZoom)
                 });
 
             this.getLatLngByAddress(new google.maps.Geocoder(), gMap);
@@ -43,7 +43,7 @@ Vue.component("contact-map", {
         {
             const addressData = this.zip + " " + this.street;
 
-            geocoder.geocode({address: addressData}, function(results, status)
+            geocoder.geocode({ address: addressData }, function(results, status)
             {
                 if (status === google.maps.GeocoderStatus.OK)
                 {

@@ -1,5 +1,5 @@
 {
-    "version"           : "2.3.2",
+    "version"           : "3.1.3",
     "name"              : "Ceres",
     "marketplaceName"   : {"de": "Ceres","en": "Ceres"},
     "description"       : "This is the official Ceres plugin developed by plentymarkets. Ceres is the default template plugin for plentymarkets 7 online stores.",
@@ -11,7 +11,7 @@
     "authorIcon"        : "icon_author_xs.png",
     "email"             : "sales@plentymarkets.com",
     "phone"             : "+49 561 98 681 100",
-    "categories"        : ["3517"],
+    "categories"        : ["3885"],
     "keywords"          : ["plentymarkets", "plugins", "layout", "template", "ceres"],
     "type"              : "template",
     "require"           : ["IO"],
@@ -19,7 +19,9 @@
     "serviceProvider"   : "Ceres\\Providers\\TemplateServiceProvider",
     "javaScriptFiles"   : [],
     "runOnBuild"        : [
-      "Ceres\\Migrations\\WebshopSettingsMigration_0_0_1"
+        "Ceres\\Migrations\\WebshopSettingsMigration_0_0_1",
+        "Ceres\\Migrations\\ConfigPropertiesMigration_0_0_1",
+        "Ceres\\Migrations\\Migration_2018_07_06_001_RebuildShopBuilderHomepage"
     ],
     "dataProviders"     :
     [
@@ -60,6 +62,11 @@
             "key"           : "Script.AfterScriptsLoaded",
             "name"          : "Script loader: After scripts loaded",
             "description"   : "Load scripts, events and other JS related items, e.g. Vue components, after frameworks and scripts have been initialised."
+        },
+        {
+            "key"           : "PageDesign.AfterOpeningBodyTag",
+            "name"          : "Page Design: After opening HTML body tag",
+            "description"   : "Add content after the opening HTML body tag."
         },
         {
             "key"           : "StaticPages.CancellationRights",
@@ -162,9 +169,19 @@
             "description"   : "Add a \"Certified by\" logo to the container on the homepage."
         },
         {
+            "key"           : "Header",
+            "name"          : "Header: Override header",
+            "description"   : "Override the complete header of all pages."
+        },
+        {
             "key"           : "Header.LeftSide",
             "name"          : "Header: Left header container",
             "description"   : "Add content to the container on the left in the header."
+        },
+        {
+            "key"           : "Footer",
+            "name"          : "Footer: Override footer",
+            "description"   : "Override the complete footer of all pages."
         },
         {
             "key"           : "Footer.RowOne",
@@ -232,6 +249,11 @@
             "description"   : "Add customer feedback in the single item view."
         },
         {
+            "key"           : "SingleItem.ImageCarousel",
+            "name"          : "Single item: Override image carousel",
+            "description"   : "Override the image carousel on the single item."
+        },
+        {
             "key"           : "BasketTotals.BeforeItemSum",
             "name"          : "Shopping cart: Before \"Value of items\"",
             "description"   : "Add content before the value of items in the Total column of the shopping cart."
@@ -272,6 +294,26 @@
             "description"   : "Add content before the total sum in the Total column of the shopping cart."
         },
         {
+            "key"           : "BasketList.BeforeItem",
+            "name"          : "Shopping cart items list: Before item",
+            "description"   : "Add content before the item in the Items list of the shopping cart."
+        },
+        {
+            "key"           : "BasketList.AfterItem",
+            "name"          : "Shopping cart items list: After item",
+            "description"   : "Add content after the item in the Items list of the shopping cart."
+        },
+        {
+            "key"           : "Basket.BeforeBasketTotals",
+            "name"          : "Shopping cart: Before basket totals",
+            "description"   : "Add content before the basket totals in the shopping cart."
+        },
+        {
+            "key"           : "Basket.AfterBasketTotals",
+            "name"          : "Shopping cart: After basket totals",
+            "description"   : "Add content after the basket totals in the shopping cart."
+        },
+        {
             "key"           : "Basket.BeforeCoupon",
             "name"          : "Shopping cart: Before the coupon input",
             "description"   : "Add content before the Coupon input field in the shopping cart."
@@ -290,6 +332,16 @@
             "key"           : "Basket.ExtendOverlayButtons",
             "name"          : "Shopping cart overlay: Extend buttons",
             "description"   : "Add additional content to the 'add to basket overlay' buttons."
+        },
+        {
+            "key"           : "BasketPreview.BeforeBasketTotals",
+            "name"          : "Shopping cart preview: Before basket totals",
+            "description"   : "Add content before the basket totals in the shopping cart preview."
+        },
+        {
+            "key"           : "BasketPreview.AfterBasketTotals",
+            "name"          : "Shopping cart preview: After basket totals",
+            "description"   : "Add content after the basket totals in the shopping cart preview."
         },
         {
             "key"           : "BasketPreview.BeforeCheckoutButton",
@@ -439,9 +491,19 @@
             "multiple"      : false
         },
         {
+            "key"           : "OrderConfirmation.AddContentAfterConfirmationThanks",
+            "name"          : "Order confirmation: Additional content after order confirmation thank you message",
+            "description"   : "Additional content after confirmation message on the order confirmation page."
+        },
+        {
             "key"           : "OrderConfirmation.AfterTotals",
             "name"          : "Order confirmation: Add content after totals",
             "description"   : "Add content after totals on the order confirmation page."
+        },
+        {
+            "key"           : "OrderConfirmation.AddContentAfterOrderDetailsRow",
+            "name"          : "Order confirmation: Add content before 'Back to Homepage' link",
+            "description"   : "Add content before the 'Back to Homepage' link"
         },
         {
             "key"           : "MyAccount.OrderHistoryPaymentInformation",
@@ -482,6 +544,11 @@
             "key"           : "RegistrationOverlay.ExtendOverlayButtons",
             "name"          : "Registration overlay: Container in a row with the buttons",
             "description"   : "Add content in the registration overlay."
+        },
+        {
+            "key"           : "Search.Filter",
+            "name"          : "Search: Override search filters",
+            "description"   : "Override search filters in item lists and search results."
         }
     ]
 }

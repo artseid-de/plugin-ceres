@@ -1,24 +1,53 @@
-import UrlService from "services/UrlService";
+import ApiService from "services/ApiService";
 import TranslationService from "services/TranslationService";
+import UrlService from "services/UrlService";
+import { isNullOrUndefined } from "../../helper/utils";
+import { pathnameEquals } from "../../helper/url";
 
 Vue.component("item-search", {
 
-    delimiters: ["${", "}"],
-
-    props: [
-        "template"
-    ],
+    props: {
+        template:
+        {
+            type: String,
+            default: "#vue-item-search"
+        },
+        showItemImages:
+        {
+            type: Boolean,
+            default: false
+        },
+        forwardToSingleItem:
+        {
+            type: Boolean,
+            default: App.config.search.forwardToSingleItem
+        }
+    },
 
     data()
     {
         return {
-            currentSearchString: ""
+            promiseCount: 0,
+            autocompleteResult: [],
+            selectedAutocompleteIndex: -1,
+            isSearchFocused: false
         };
     },
 
-    computed: Vuex.mapState({
-        searchString: state => state.itemList.searchString
-    }),
+    computed:
+    {
+        selectedAutocompleteItem()
+        {
+            const selectedAutocompleteItem = this.autocompleteResult[this.selectedAutocompleteIndex];
+
+            if (this.selectedAutocompleteIndex < 0 || !selectedAutocompleteItem)
+            {
+                return null;
+            }
+
+            return selectedAutocompleteItem;
+        }
+    },
 
     created()
     {
@@ -29,89 +58,177 @@ Vue.component("item-search", {
     {
         this.$nextTick(() =>
         {
-            this.initAutocomplete();
-
             const urlParams = UrlService.getUrlParams(document.location.search);
 
             this.$store.commit("setItemListSearchString", urlParams.query);
-            this.currentSearchString = urlParams.query;
+
+            this.$refs.searchInput.value = !isNullOrUndefined(urlParams.query) ? urlParams.query : "";
         });
     },
 
     methods:
     {
-        search()
+        prepareSearch()
         {
-            if (this.currentSearchString.length)
+            if (this.selectedAutocompleteItem)
             {
-                if (document.location.pathname === "/search")
+                if (this.forwardToSingleItem)
                 {
-                    this.updateTitle(this.currentSearchString);
-                    this.$store.dispatch("searchItems", this.currentSearchString);
+                    window.open(this.selectedAutocompleteItem.url, "_self", false);
                 }
                 else
                 {
-                    window.open("/search?query=" + this.currentSearchString, "_self", false);
+                    this.$refs.searchInput.value = this.selectedAutocompleteItem.name;
+                    this.$store.commit("setItemListSearchString", this.$refs.searchInput.value);
+
+                    this.search();
                 }
+            }
+            else
+            {
+                this.search();
+            }
+
+            $("#searchBox").collapse("hide");
+        },
+
+        search()
+        {
+            if (this.$refs.searchInput.value.length)
+            {
+                if (pathnameEquals(App.urls.search))
+                {
+                    this.updateTitle(this.$refs.searchInput.value);
+                    this.$store.dispatch("searchItems", this.$refs.searchInput.value);
+
+                    this.selectedAutocompleteIndex = -1;
+                    this.autocompleteResult = [];
+                }
+                else
+                {
+                    window.open(`${App.urls.search}?query=${this.$refs.searchInput.value}`, "_self", false);
+                }
+            }
+            else
+            {
+                this.preventSearch = false;
             }
         },
 
         updateTitle(searchString)
         {
-            document.querySelector("#searchPageTitle").innerHTML = TranslationService.translate("Ceres::Template.generalSearchResults") + " " + searchString;
-            document.title = TranslationService.translate("Ceres::Template.generalSearchResults") + " " + searchString + " | " + App.config.shopName;
-        },
+            const searchPageTitle = document.querySelector("#searchPageTitle");
+            const title = TranslationService.translate("Ceres::Template.itemSearchResults") + " " + searchString;
 
-        initAutocomplete()
-        {
-            $(".search-input").autocomplete({
-                serviceUrl: "/rest/io/item/search/autocomplete",
-                paramName: "query",
-                params: {template: "Ceres::ItemList.Components.ItemSearch"},
-                width: $(".search-box-shadow-frame").width(),
-                zIndex: 1070,
-                maxHeight: 310,
-                minChars: 2,
-                preventBadQueries: false,
-                onSelect: suggestion =>
-                {
-                    this.$store.commit("setItemListSearchString", suggestion.value);
-                    this.currentSearchString = suggestion.value;
-                    this.search();
-                },
-                beforeRender()
-                {
-                    $(".autocomplete-suggestions").width($(".search-box-shadow-frame").width());
-                },
-                transformResult: response =>
-                {
-                    return this.transformSuggestionResult(response);
-                }
-            });
-
-            $(window).resize(() =>
+            if (!isNullOrUndefined(searchPageTitle))
             {
-                $(".autocomplete-suggestions").width($(".search-box-shadow-frame").width());
-            });
+                searchPageTitle.innerHTML = "";
+                searchPageTitle.appendChild(document.createTextNode(title));
+            }
+
+            document.title = `${title} | ${TranslationService.translate("Ceres::Template.headerCompanyName")}`;
         },
 
-        transformSuggestionResult(result)
+        autocomplete(searchString)
         {
-            result = JSON.parse(result);
-            const suggestions =
+            if (searchString.length >= 2)
+            {
+                if (this.promiseCount >= Number.MAX_SAFE_INTEGER)
                 {
-                    suggestions: $.map(result.data.documents, dataItem =>
+                    this.promiseCount = 0;
+                }
+
+                const promiseCount = ++this.promiseCount;
+
+                ApiService.get("/rest/io/item/search/autocomplete", { template: "Ceres::ItemList.Components.ItemSearch", query: searchString })
+                    .done(response =>
                     {
-                        const value = this.$options.filters.itemName(dataItem.data);
+                        if (this.promiseCount === promiseCount)
+                        {
+                            this.transformAutocomplete(response, searchString);
+                        }
+                    });
+            }
+            else
+            {
+                this.autocompleteResult = [];
+            }
+        },
 
-                        return {
-                            value: value,
-                            data : value
-                        };
-                    })
-                };
+        // transform the autocomplete result to usable object
+        transformAutocomplete(data, searchString)
+        {
+            this.autocompleteResult = [];
+            this.selectedAutocompleteIndex = -1;
 
-            return suggestions;
+            if (data && data.documents.length)
+            {
+                for (const item of data.documents)
+                {
+                    const images = this.$options.filters.itemImages(item.data.images, "urlPreview");
+                    const img = this.$options.filters.itemImage(images);
+                    const url = this.$options.filters.itemURL(item.data);
+                    const name = this.$options.filters.itemName(item.data);
+
+                    let displayName = name;
+
+                    for (const split of searchString.split(" "))
+                    {
+                        displayName = displayName.replace(split, `<strong>${split}</strong>`);
+                    }
+
+                    this.autocompleteResult.push({
+                        img,
+                        url,
+                        name,
+                        displayName
+                    });
+                }
+            }
+        },
+
+        selectAutocompleteItem(item)
+        {
+            if (this.forwardToSingleItem)
+            {
+                window.open(item.url, "_self", false);
+            }
+            else
+            {
+                this.$refs.searchInput.value = item.name;
+                this.$store.commit("setItemListSearchString", this.$refs.searchInput.value);
+
+                this.search();
+            }
+        },
+
+        keyup()
+        {
+            this.selectedAutocompleteIndex--;
+
+            if (this.selectedAutocompleteIndex < 0)
+            {
+                this.selectedAutocompleteIndex = 0;
+            }
+        },
+
+        keydown()
+        {
+            this.selectedAutocompleteIndex++;
+
+            if (this.selectedAutocompleteIndex > this.autocompleteResult.length - 1)
+            {
+                this.selectedAutocompleteIndex = this.autocompleteResult.length - 1;
+            }
+        },
+
+        // hide autocomplete after 100ms to make clicking on it possible
+        setIsSearchFocused(value)
+        {
+            setTimeout(() =>
+            {
+                this.isSearchFocused = !!value;
+            }, 100);
         }
     }
 });

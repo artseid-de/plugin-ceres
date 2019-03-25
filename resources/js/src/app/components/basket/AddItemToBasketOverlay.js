@@ -1,21 +1,28 @@
+import { isNullOrUndefined } from "../../helper/utils";
+
 const ModalService        = require("services/ModalService");
 
 Vue.component("add-item-to-basket-overlay", {
 
     delimiters: ["${", "}"],
 
-    props: [
-        "basketAddInformation",
-        "template"
-    ],
+    props: {
+        basketAddInformation: String,
+        template: {
+            type: String,
+            default: "#vue-add-item-to-basket-overlay"
+        },
+        defaultTimeToClose: {
+            type: Number,
+            default: 15
+        }
+    },
 
     data()
     {
         return {
             currency: "",
-            price: 0,
-            timeToClose: 0,
-            timerVar: null
+            price: 0
         };
     },
 
@@ -40,9 +47,21 @@ Vue.component("add-item-to-basket-overlay", {
         {
             if (this.isLastBasketEntrySet)
             {
-                const img = this.$options.filters.itemImages(this.latestBasketEntry.item.images, "urlPreview")[0];
+                const images = this.$options.filters.itemImages(this.latestBasketEntry.item.images, "urlPreview");
+                const img = this.$options.filters.itemImage(images);
 
-                return img ? img.url : "";
+                return img;
+            }
+
+            return "";
+        },
+        imageAlternativeText()
+        {
+            if (this.isLastBasketEntrySet)
+            {
+                const images = this.$options.filters.itemImages(this.latestBasketEntry.item.images, "urlPreview");
+
+                return this.$options.filters.itemImageAlternativeText(images);
             }
 
             return "";
@@ -66,19 +85,21 @@ Vue.component("add-item-to-basket-overlay", {
             {
                 this.setPriceFromData();
 
-                ModalService.findModal(document.getElementById("add-item-to-basket-overlay")).show();
-
-                this.startCounter();
+                ModalService
+                    .findModal(document.getElementById("add-item-to-basket-overlay"))
+                    .setTimeout(this.defaultTimeToClose * 1000)
+                    .show();
             }
             else if (this.basketAddInformation === "preview" && Object.keys(this.latestBasketEntry.item).length !== 0)
             {
                 setTimeout(function()
                 {
                     const vueApp = document.querySelector("#vue-app");
+                    const basketOpenClass = (App.config.basket.previewType === "right") ? "open-right" : "open-hover";
 
                     if (vueApp)
                     {
-                        vueApp.classList.toggle("open-right");
+                        vueApp.classList.add(basketOpenClass);
                     }
                 }, 1);
             }
@@ -95,38 +116,25 @@ Vue.component("add-item-to-basket-overlay", {
                 const graduatedPrice = this.$options.filters.graduatedPrice(this.latestBasketEntry.item, this.latestBasketEntry.quantity);
                 const propertySurcharge = this.$options.filters.propertySurchargeSum(this.latestBasketEntry.item);
 
-                this.price = graduatedPrice + propertySurcharge;
+                this.price = this.$options.filters.specialOffer(graduatedPrice, this.latestBasketEntry.item.prices, "price", "value") + propertySurcharge;
             }
         },
 
-        closeOverlay()
+        orderParamValue(propertyId)
         {
-            if (this.timerVar)
-            {
-                clearInterval(this.timerVar);
-            }
-        },
+            const orderParams = this.latestBasketEntry.orderParams;
 
-        startCounter()
-        {
-            if (this.timerVar)
+            if (isNullOrUndefined(orderParams))
             {
-                clearInterval(this.timerVar);
+                return "";
             }
 
-            this.timeToClose = 10;
-
-            this.timerVar = setInterval(() =>
+            const orderParam = orderParams.find(param =>
             {
-                this.timeToClose -= 1;
+                return parseInt(param.property.id) === parseInt(propertyId);
+            });
 
-                if (this.timeToClose === 0)
-                {
-                    ModalService.findModal(document.getElementById("add-item-to-basket-overlay")).hide();
-
-                    clearInterval(this.timerVar);
-                }
-            }, 1000);
+            return orderParam.property.value;
         }
     }
 });

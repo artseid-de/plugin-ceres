@@ -17,7 +17,50 @@ Vue.component("address-input-group", {
             {
                 return {};
             }
+        },
+        optionalAddressFields: {
+            type: Object,
+            default: () =>
+            {
+                return {
+                    de:[],
+                    uk:[]
+                };
+            }
+        },
+        requiredAddressFields: {
+            type: Object,
+            default: () =>
+            {
+                return {
+                    de:[],
+                    uk:[]
+                };
+            }
         }
+    },
+
+    computed:
+    {
+        isPickupStation()
+        {
+            return this.value && this.value.address1 === "PACKSTATION" && this.isParcelBoxAvailable;
+        },
+
+        isPostOffice()
+        {
+            return this.value && this.value.address1 === "POSTFILIALE" && this.isPostOfficeAvailable;
+        },
+
+        isParcelOrOfficeAvailable()
+        {
+            return (this.isParcelBoxAvailable || this.isPostOfficeAvailable) && this.selectedCountry && this.selectedCountry.isoCode2 === "DE" && this.addressType === "2";
+        },
+
+        ...Vuex.mapState({
+            isParcelBoxAvailable: state => state.checkout.shipping.isParcelBoxAvailable,
+            isPostOfficeAvailable: state => state.checkout.shipping.isPostOfficeAvailable
+        })
     },
 
     data()
@@ -25,7 +68,8 @@ Vue.component("address-input-group", {
         return {
             stateList  : [],
             countryLocaleList: ["DE", "GB"],
-            localeToShow: this.defaultCountry
+            localeToShow: this.defaultCountry,
+            selectedCountry: null
         };
     },
 
@@ -45,6 +89,8 @@ Vue.component("address-input-group", {
          */
         onSelectedCountryChanged(shippingCountry)
         {
+            this.selectedCountry = shippingCountry;
+
             if (this.countryLocaleList.indexOf(shippingCountry.isoCode2) >= 0)
             {
                 this.localeToShow = shippingCountry.isoCode2;
@@ -55,6 +101,32 @@ Vue.component("address-input-group", {
             }
 
             this.emitInputEvent("countryId", shippingCountry.id);
+
+            if (this.isPickupStation || this.isPostOffice)
+            {
+                this.togglePickupStation(false);
+            }
+        },
+
+        togglePickupStation(showPickupStation)
+        {
+            const emitInputs =
+                {
+                    address1: "",
+                    address2: "",
+                    address3: "",
+                    showPickupStation: showPickupStation
+                };
+
+            if (showPickupStation)
+            {
+                emitInputs.address1 = this.isParcelBoxAvailable ? "PACKSTATION" : "POSTFILIALE";
+            }
+
+            for (const input in emitInputs)
+            {
+                this.emitInputEvent(input, emitInputs[input]);
+            }
         },
 
         /**
@@ -63,7 +135,25 @@ Vue.component("address-input-group", {
          */
         emitInputEvent(field, value)
         {
-            this.$emit("input", {field, value});
+            this.$emit("input", { field, value });
+        },
+
+        isInOptionalFields(locale, key)
+        {
+            return this.optionalAddressFields[locale].includes(key);
+        },
+
+        isInRequiredFields(locale, key)
+        {
+            return (this.requiredAddressFields && this.requiredAddressFields[locale] && this.requiredAddressFields[locale].includes(key));
+        }
+    },
+
+    filters:
+    {
+        transformRequiredLabel(label, shouldMarkRequired)
+        {
+            return shouldMarkRequired ? label + "*" : label;
         }
     }
 });

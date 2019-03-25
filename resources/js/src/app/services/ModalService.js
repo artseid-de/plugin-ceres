@@ -38,25 +38,39 @@ module.exports = (function($)
             pauseTimeout     : pauseTimeout,
             continueTimeout  : continueTimeout,
             stopTimeout      : stopTimeout,
-            getModalContainer: getModalContainer
+            getModalContainer: getModalContainer,
+            on               : on
         };
 
         function show()
         {
-            $bsModal.modal("show");
-
-            if ($bsModal.timeout > 0)
+            return new Promise((resolve, reject) =>
             {
-                startTimeout();
-            }
+                $bsModal.modal("show");
 
-            return self;
+                if ($bsModal.timeout > 0)
+                {
+                    startTimeout();
+                }
+
+                $bsModal.one("shown.bs.modal", function()
+                {
+                    resolve(self);
+                });
+
+            });
         }
 
         function hide()
         {
-            $bsModal.modal("hide");
-            return self;
+            return new Promise((resolve, reject) =>
+            {
+                $bsModal.modal("hide");
+                $bsModal.one("hidden.bs.modal", function()
+                {
+                    resolve(self);
+                });
+            });
         }
 
         function getModalContainer()
@@ -127,6 +141,11 @@ module.exports = (function($)
         {
             window.clearTimeout(timeout);
             window.clearInterval(interval);
+        }
+
+        function on(event, callback)
+        {
+            $bsModal.on(event, callback);
         }
     }
 })(jQuery);
