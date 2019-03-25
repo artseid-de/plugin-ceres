@@ -20,7 +20,7 @@
         <slot name="AddDetailTabs"></slot>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content updated">
         {% if 'item.description' in itemData or 'all' in itemData %}
             <div class="tab-pane active overflow-auto" :id="'details-' + currentVariation.variation.id" role="tabpanel" v-if="isDescriptionTabActive">
                 <div class="my-4" v-html="currentVariation.texts.description">
