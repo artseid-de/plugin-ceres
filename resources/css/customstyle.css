@@ -4,6 +4,7 @@ body {
     color: #4e4e4e;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-bottom: 35px;
 }
 body>#vue-app, body>#vue-error {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpg)  !important;
@@ -16,7 +17,6 @@ body>#vue-app, body>#vue-error {
     margin: 0 auto;
     background-color: transparent !important;
     position: relative;
-    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
 .multiply{
     mix-blend-mode: multiply;
@@ -156,16 +156,16 @@ a:focus, a:hover {
 .carousel-indicators li {
     border: 1px solid #fff !important;
 }
-header:after {
+header::after {
     display: block;
-    content:"";
-    width: 100%;
+    content: "";
+    width: calc(100% - 10px);
     height: 2px;
     background-color: #000;
     filter: blur(2px);
     z-index: -1;
     position: absolute;
-    margin-bottom: 0px;
+    margin: 0px 5px;
     bottom: -1px;
 }
 body .wrapper-main #page-header.top-bar {
@@ -201,6 +201,10 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
 }
 .top-bar .controls-list > li a:not(.btn) {
     color: #000;
+    transition: all 0.5s ease-in;
+}
+.top-bar .controls-list > li a:not(.btn):hover {
+    color: #fff;
 }
 .top-bar .controls-list>li a:hover, .top-bar .controls-list>li a[aria-expanded=true] {
     background-color: #523922 !important;
@@ -222,7 +226,7 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
     background: #000;
 }
 .top-bar .controls-list .control-basket .toggle-basket-preview {
-    background-color: #000;
+    background-color: transparent;
 }
 .anicon > .anicon-search-item::before {
     height: 2px;
@@ -695,7 +699,7 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
     color: #000;
 }
 .container-max.footer-content {
-    padding: 0;
+    padding: 0 0 10px;
 }
 .copyright > small {
     display: block;
