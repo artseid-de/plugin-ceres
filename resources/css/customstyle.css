@@ -179,6 +179,12 @@ header::after {
     margin: 0px 5px;
     bottom: -1px;
 }
+.widget-image-box.widget-image-box-fullwidth > .widget-inner .widget-caption {
+    background-color: transparent;
+}
+.widget-image-box.widget-image-box-fullwidth > .widget-inner .widget-caption h2, .widget-image-box.widget-image-box-fullwidth > .widget-inner .widget-caption .h2 {
+    text-shadow: 0 0 0.3em #000;
+}
 body .wrapper-main #page-header.top-bar {
     position: fixed;
     width: calc(100% + 10px);
@@ -362,6 +368,11 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
 }
 .parallax-img-container .parallax-text-wrapper {
     padding: 0 10%;
+}
+.wrapper-main > nav.container-max {
+    background: transparent;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 #twig-rendered-breadcrumbs, #vue-rendered-breadcrumbs {
     position: relative;
