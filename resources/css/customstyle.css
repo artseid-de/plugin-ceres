@@ -315,7 +315,7 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
     margin-top: 0px;
     padding: 0 25px;
 }
-.widget.widget-text.widget-none:first-of-type, .widget.widget-image-carousel {
+.widget.widget-primary.pt-0.pr-0.pb-0.pl-0, .widget.widget-image-carousel {
     margin: 0 -25px 50px;
 }
 .widget-image-carousel .widget-inner .carousel-item img.img-cover {
