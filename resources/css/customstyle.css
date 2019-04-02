@@ -145,6 +145,17 @@ a:focus, a:hover {
     padding: 5px;
     background-repeat: no-repeat;
 }
+.widget-image-carousel .widget-inner .carousel-control .fa {
+    transform: none;
+}
+.widget-image-carousel .widget-inner .carousel-control.carousel-control-next .fa {
+    right: 0;
+    left: auto;
+}
+.widget-image-carousel .widget-inner .carousel-control.carousel-control-prev .fa {
+    right: auto;
+    left: 0;
+}
 .cmp-hero .hero-main .carousel .carousel-indicators li.active {
     background: #fff;
     box-shadow: 0 0 5px rgba(0,0,0,.7);
