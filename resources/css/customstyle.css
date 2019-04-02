@@ -170,12 +170,15 @@ header:after {
 }
 body .wrapper-main #page-header.top-bar {
     position: fixed;
-    width: 100%;
-    max-width: 1200px;
+    width: calc(100% + 10px);
+    max-width: 1210px;
     z-index: 1060;
     color: #fff;
-    background-color: #000;
+    background-color: #fbf0e2;
     margin: 0 auto;
+}
+body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
 .container-max.ganzoben {
     position: relative;
@@ -192,10 +195,11 @@ body .wrapper-main #page-header.top-bar {
 .wrapper-main .navbar {
     background: #fff !important;
     border-bottom: 0px solid #fff !important;
-    margin-top: 0px;
-    z-index:10;
+    margin: 0px 5px;
+    z-index: 10;
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
-.top-bar .controls-list>li a {
+.top-bar .controls-list > li a:not(.btn) {
     color: #000;
 }
 .top-bar .controls-list>li a:hover, .top-bar .controls-list>li a[aria-expanded=true] {
@@ -279,7 +283,7 @@ body .wrapper-main #page-header.top-bar {
 }
 #page-body > .container-max {
     margin-top: 0px;
-    padding: 25px;
+    padding: 0 25px;
 }
 .widget.widget-text.widget-none:first-of-type, .widget.widget-image-carousel {
     margin: 0 -25px;
