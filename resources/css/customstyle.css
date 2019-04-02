@@ -223,7 +223,16 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
     background: #523922;
 }
 #mainNavbarCollapsable ul.mainmenu>li>ul {
-    background: #000;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
+}
+#mainNavbarCollapsable ul.mainmenu>li>ul:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    height: 5px;
+    width: 100%;
+    background: #fff;
 }
 .top-bar .controls-list .control-basket .toggle-basket-preview {
     background-color: transparent;
