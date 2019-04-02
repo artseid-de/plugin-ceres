@@ -137,7 +137,7 @@ a:focus, a:hover {
     display: block;
     height: 52px;
 }
-.cmp-hero .hero-main .carousel .carousel-control span:before, .owl-single-item-control:before  {
+.carousel .carousel-control span:before, .owl-single-item-control:before  {
     color: #FFF !important;
     font-size: 2.3rem;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/sliderarrowbg.png);
@@ -299,7 +299,14 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
     padding: 0 25px;
 }
 .widget.widget-text.widget-none:first-of-type, .widget.widget-image-carousel {
-    margin: 0 -25px;
+    margin: 0 -25px 50px;
+}
+.widget-image-carousel .widget-inner .carousel-item img.img-cover {
+    min-width: 100%;
+    min-height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    object-position: center bottom;
 }
 #page-body > .container-max.home, #page-body > .container-max.hasbg {
     margin-top: 0px;
