@@ -6,14 +6,6 @@
 <link href="https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/apple-touch-icon.png" rel="apple-touch-icon">
 {% set lang = services.sessionStorage.getLang() %}
 
-{% if ceresConfig.global.favicon is empty %}
-    {% set favicon = url ~ '/tpl/favicon_' ~ webstoreConfig.webstoreId ~ '.ico' %}
-{% else %}
-    {% set favicon = ceresConfig.global.favicon %}
-{% endif %}
-
-<link rel="icon" type="img/ico" href="{{ favicon }}">
-
 {% set canonicalUrl = services.url.getCanonicalURL() %}
 {% set languageUrls = services.url.getLanguageURLs() %}
 
@@ -91,3 +83,5 @@
 {{ get_shop_builder_styles() }}
 <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
 <link href="{{ plugin_path('Ceres') }}/css/customstyle.css" rel="stylesheet">
+<link href="{{ plugin_path('Ceres') }}/css/customstyle.css" rel="stylesheet">
+

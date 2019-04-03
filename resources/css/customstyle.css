@@ -4,6 +4,7 @@ body {
     color: #4e4e4e;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-bottom: 35px;
 }
 body>#vue-app, body>#vue-error {
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/background.jpg)  !important;
@@ -16,7 +17,6 @@ body>#vue-app, body>#vue-error {
     margin: 0 auto;
     background-color: transparent !important;
     position: relative;
-    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
 .multiply{
     mix-blend-mode: multiply;
@@ -52,6 +52,10 @@ a:focus, a:hover {
 .featured-category, .featured-sale-new, .wrapper-main .navbar {
     font-family: "Bree Serif", serif;
 }
+.cmp.cmp-hero {
+    width: 100%;
+    position: relative;
+}
 .hero-main {
     position: relative;
     height: 60vw;
@@ -60,15 +64,16 @@ a:focus, a:hover {
 #carousel-example-generic {
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 0px;
     left:0;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
 }
 .sliderbefore {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height:60%;
-    top: 0;
-    left:0;
+    height:40vh;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/headerbg.png);
     background-position: center bottom;
     background-size: cover;
@@ -77,6 +82,7 @@ a:focus, a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: -14vh;
 }
 .sliderbefore a {
     display: block;
@@ -86,9 +92,22 @@ a:focus, a:hover {
 .sliderbefore a img {
     width: 100%;
 }
+.cmp-hero .hero-main .carousel .carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
 .carousel-indicators , .carousel-control {
     filter: drop-shadow(0 0 2px rgba(0,0,0,0.7));
     transition: all 0.3s ease-in;
+    position: absolute;
+    bottom: 20%;
+}
+.carousel-control.left {
+    left: 0;
+}
+.carousel-control.right {
+    right: 0;
 }
 .cmp-hero .hero-main .carousel .carousel-control span {
     font-size: 60px;
@@ -118,13 +137,24 @@ a:focus, a:hover {
     display: block;
     height: 52px;
 }
-.cmp-hero .hero-main .carousel .carousel-control span:before, .owl-single-item-control:before  {
+.carousel .carousel-control span:before, .owl-single-item-control:before  {
     color: #FFF !important;
     font-size: 2.3rem;
     background-image: url(https://groemitzer.plentymarkets-cloud01.com/images/gallery/general/sliderarrowbg.png);
     background-size: cover;
     padding: 5px;
     background-repeat: no-repeat;
+}
+.widget-image-carousel .widget-inner .carousel-control .fa {
+    transform: none;
+}
+.widget-image-carousel .widget-inner .carousel-control.carousel-control-next .fa {
+    right: 0;
+    left: auto;
+}
+.widget-image-carousel .widget-inner .carousel-control.carousel-control-prev .fa {
+    right: auto;
+    left: 0;
 }
 .cmp-hero .hero-main .carousel .carousel-indicators li.active {
     background: #fff;
@@ -137,25 +167,35 @@ a:focus, a:hover {
 .carousel-indicators li {
     border: 1px solid #fff !important;
 }
-header:after {
+header::after {
     display: block;
-    content:"";
-    width: 100%;
+    content: "";
+    width: calc(100% - 10px);
     height: 2px;
     background-color: #000;
     filter: blur(2px);
     z-index: -1;
     position: absolute;
-    margin-bottom: 0px;
+    margin: 0px 5px;
     bottom: -1px;
 }
-.top-bar {
+.widget-image-box.widget-image-box-fullwidth > .widget-inner .widget-caption {
+    background-color: transparent;
+}
+.widget-image-box.widget-image-box-fullwidth > .widget-inner .widget-caption h2, .widget-image-box.widget-image-box-fullwidth > .widget-inner .widget-caption .h2 {
+    text-shadow: 0 0 0.3em #000;
+}
+body .wrapper-main #page-header.top-bar {
     position: fixed;
-    width: 100%;
-    max-width: 1200px;
+    width: calc(100% + 10px);
+    max-width: 1210px;
     z-index: 1060;
     color: #fff;
-    background-color: transparent;
+    background-color: #fbf0e2;
+    margin: 0 auto;
+}
+body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
 .container-max.ganzoben {
     position: relative;
@@ -172,11 +212,16 @@ header:after {
 .wrapper-main .navbar {
     background: #fff !important;
     border-bottom: 0px solid #fff !important;
-    margin-top: 0px;
-    z-index:10;
+    margin: 0px 5px;
+    z-index: 10;
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
 }
-.top-bar .controls-list>li a {
+.top-bar .controls-list > li a:not(.btn) {
     color: #000;
+    transition: all 0.5s ease-in;
+}
+.top-bar .controls-list > li a:not(.btn):hover {
+    color: #fff;
 }
 .top-bar .controls-list>li a:hover, .top-bar .controls-list>li a[aria-expanded=true] {
     background-color: #523922 !important;
@@ -195,10 +240,19 @@ header:after {
     background: #523922;
 }
 #mainNavbarCollapsable ul.mainmenu>li>ul {
-    background: #000;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,.7);
+}
+#mainNavbarCollapsable ul.mainmenu>li>ul:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    height: 5px;
+    width: 100%;
+    background: #fff;
 }
 .top-bar .controls-list .control-basket .toggle-basket-preview {
-    background-color: #000;
+    background-color: transparent;
 }
 .anicon > .anicon-search-item::before {
     height: 2px;
@@ -258,7 +312,18 @@ header:after {
     margin-top: 0px !important;
 }
 #page-body > .container-max {
-    margin-top: 120px;
+    margin-top: 0px;
+    padding: 0 25px;
+}
+.widget.widget-primary.pt-0.pr-0.pb-0.pl-0, .widget.widget-image-carousel {
+    margin: 0 -25px 50px;
+}
+.widget-image-carousel .widget-inner .carousel-item img.img-cover {
+    min-width: 100%;
+    min-height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    object-position: center bottom;
 }
 #page-body > .container-max.home, #page-body > .container-max.hasbg {
     margin-top: 0px;
@@ -303,6 +368,11 @@ header:after {
 }
 .parallax-img-container .parallax-text-wrapper {
     padding: 0 10%;
+}
+.wrapper-main > nav.container-max {
+    background: transparent;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 #twig-rendered-breadcrumbs, #vue-rendered-breadcrumbs {
     position: relative;
@@ -667,7 +737,7 @@ header:after {
     color: #000;
 }
 .container-max.footer-content {
-    padding: 0;
+    padding: 0 0 10px;
 }
 .copyright > small {
     display: block;
