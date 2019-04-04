@@ -27,4 +27,14 @@
             {{ ImageCarouselOverride }}
         {% endif %}
     </div>
+    <div slot="MyProperty">
+    {% for property in item.documents[0].data.properties %}
+      {# if property.property.id == x #}
+        <span class="articlenumber small text-muted">
+            <b>{{ property.property.names.name }}</b>
+            <span>{{ property.texts.value  }}</span>
+        </span>
+     {# endif #}
+    {% endfor %}
+    </div>
 </single-item>
