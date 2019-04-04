@@ -25,6 +25,17 @@
             <div class="tab-pane active overflow-auto" :id="'details-' + currentVariation.variation.id" role="tabpanel" v-if="isDescriptionTabActive">
                 <div class="my-4" v-html="currentVariation.texts.description">
                 </div>
+            <h4 class="m-t-1">Technische Daten</h4>
+                {# get all props of prop group id:3 #}
+                <ul>
+                {% for prop in item.documents[0].data.properties %}
+                    {% if prop.group.names.propertyGroupId == "1" %}
+                        <li>
+                            <p>{{ prop.property.names.name }}: {{ prop.texts.value }}</p>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
             </div>
         {% endif %}
    
