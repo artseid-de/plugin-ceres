@@ -550,7 +550,7 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
     color: #fff;
 }
 p.itemcont {
-    padding-top; 20px;
+    padding-top: 20px;
     border-top: 1px solid #888;
 }
 p.itemcont > * {
