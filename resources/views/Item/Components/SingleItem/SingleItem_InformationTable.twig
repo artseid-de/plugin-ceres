@@ -1,5 +1,5 @@
 <!-- ITEM DESCRIPTION -->
-<div class="my-5 multiply">
+<div class="my-5">
     <ul class="nav nav-tabs" role="tablist">
         {% if 'item.description' in itemData or 'all' in itemData %}
             <li class="nav-item" v-if="isDescriptionTabActive">
@@ -20,7 +20,7 @@
         <slot name="AddDetailTabs"></slot>
     </ul>
 
-    <div class="tab-content updated">
+    <div class="tab-content">
         {% if 'item.description' in itemData or 'all' in itemData %}
             <div class="tab-pane active overflow-auto" :id="'details-' + currentVariation.variation.id" role="tabpanel" v-if="isDescriptionTabActive">
                 <div class="my-4" v-html="currentVariation.texts.description">
