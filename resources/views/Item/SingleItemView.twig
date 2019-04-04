@@ -28,13 +28,16 @@
         {% endif %}
     </div>
     <div slot="MyProperty">
+    <p class="itemcont">
+    <b class="h4">Produktinformationen</b>
     {% for property in item.documents[0].data.properties %}
-      {# if property.property.id == x #}
-        <span class="articlenumber small text-muted">
+      {% if property.property.id != 7 %}
+        <span>
             <b>{{ property.property.names.name }}</b>
             <span>{{ property.texts.value  }}</span>
         </span>
-     {# endif #}
+     {% endif %}
     {% endfor %}
+    <p>
     </div>
 </single-item>
