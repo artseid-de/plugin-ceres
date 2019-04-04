@@ -28,12 +28,7 @@
             </div>
         {% endif %}
         
-        {% if 'item.properties' in itemData or 'all' in itemData %}
-            <div class="tab-pane active overflow-auto" :id="'details-' + currentVariation.variation.id" role="tabpanel" v-if="isDescriptionTabActive">
-                <div class="my-4" v-html="currentVariation.properties">
-                </div>
-            </div>
-        {% endif %}
+        {% include "Ceres::Item.Components.OrderPropertyList.twig" %}
 
         {% if 'item.technical_data' in itemData or 'all' in itemData %}
             <div :class="{ 'active': !isDescriptionTabActive && isTechnicalDataTabActive }" class="tab-pane" :id="'data-' + currentVariation.variation.id" role="tabpanel" v-if="isTechnicalDataTabActive">
