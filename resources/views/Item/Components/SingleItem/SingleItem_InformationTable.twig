@@ -25,11 +25,6 @@
             <div class="tab-pane active overflow-auto" :id="'details-' + currentVariation.variation.id" role="tabpanel" v-if="isDescriptionTabActive">
                 <div class="my-4" v-html="currentVariation.texts.description">
                 </div>
-                <ul style="list-style:none">
-                {% for key, val in currentVariation.item.properties %}
-                <li>{{key}}:{{value}}</li>
-                {% endfor %}
-                </ul>
             </div>
         {% endif %}
    
