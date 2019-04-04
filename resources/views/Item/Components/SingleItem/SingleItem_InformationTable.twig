@@ -1,5 +1,5 @@
 <!-- ITEM DESCRIPTION -->
-<div class="my-5">
+<div class="my-5 multiply">
     <ul class="nav nav-tabs" role="tablist">
         {% if 'item.description' in itemData or 'all' in itemData %}
             <li class="nav-item" v-if="isDescriptionTabActive">
@@ -25,10 +25,14 @@
             <div class="tab-pane active overflow-auto" :id="'details-' + currentVariation.variation.id" role="tabpanel" v-if="isDescriptionTabActive">
                 <div class="my-4" v-html="currentVariation.texts.description">
                 </div>
+                <ul style="list-style:none">
+                {% for key, val in item.properties %}
+                <li>{{key}}:{{value}}</li>
+                {% endfor %}
+                </ul>
             </div>
         {% endif %}
-        
-        {% include "Ceres::Item.Components.OrderPropertyList.twig" %}
+   
 
         {% if 'item.technical_data' in itemData or 'all' in itemData %}
             <div :class="{ 'active': !isDescriptionTabActive && isTechnicalDataTabActive }" class="tab-pane" :id="'data-' + currentVariation.variation.id" role="tabpanel" v-if="isTechnicalDataTabActive">
