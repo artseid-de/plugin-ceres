@@ -374,8 +374,7 @@ body > #vue-app .wrapper-main, body > #vue-error .wrapper-main {
 }
 .wrapper-main > nav.container-max {
     background: transparent;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 15px 25px;
 }
 #twig-rendered-breadcrumbs, #vue-rendered-breadcrumbs {
     position: relative;
