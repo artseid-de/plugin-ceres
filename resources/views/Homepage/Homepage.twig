@@ -18,13 +18,7 @@
     <script type="application/ld+json">
         {"@context": "http://schema.org","@type": "WebSite","url": "{{ services.webstoreConfig.getWebstoreConfig().domainSsl }}","potentialAction":{"@type": "SearchAction","target": "{{ services.webstoreConfig.getWebstoreConfig().domainSsl ~ urls.search }}?query={search_term}","query-input": "required name=search_term"}}
     </script>
-    
-    <!-- Layer -->
-    <script>
-        $(document).ready(function(){
-        $('body').append('<div style="position:fixed;top:0;left:0;width:100%;height:100vh;z-index:20000;beackground-color:#fff;"><p>Diese Seite befindet sich im Aufbau.</p></div>')})
-    </script>
-    <!-- Layer Ende -->
+
     <title>{{ companyName }}</title>
 {% endblock %}
 
