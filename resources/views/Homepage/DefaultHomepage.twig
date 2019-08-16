@@ -69,7 +69,12 @@
     {{ component( "Ceres::ItemList.Components.ItemList") }}
     {{ component( "Ceres::ItemList.Components.CategoryImageCarousel") }}
     {{ component( "Ceres::Basket.Components.AddToBasket" ) }}
-
+    <!-- Layer -->
+    <script>
+        $(document).ready(function(){
+        $('body').append('<div style="position:fixed;top:0;left:0;width:100%;height:100vh;z-index:20000;beackground-color:#fff;"><p>Diese Seite befindet sich im Aufbau.</p></div>')})
+    </script>
+    <!-- Layer Ende -->
     <div class="home container-max">
 
         <div class="row">
