@@ -365,5 +365,12 @@
 </script>
 
 {{ get_shop_builder_scripts( "latest", ceresConfig.log.performanceLevel == 'live') }}
+
+<!-- Layer -->
+    <script>
+        $(document).ready(function(){
+        $('body').append('<div style="position:fixed;top:0;left:0;width:100%;height:100vh;z-index:20000;beackground-color:#fff;"><p>Diese Seite befindet sich im Aufbau.</p></div>')})
+    </script>
+<!-- Layer Ende -->
 </body>
 </html>
